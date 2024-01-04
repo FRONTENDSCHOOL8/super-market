@@ -1,13 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff"
       rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <title>Document</title>
+    <script type="module" src="/main.js"></script>
+    <title>로그인 - super-market</title>
   </head>
-  <body></body>
+  <body>
+    <div class="login-container">
+      <h1 class="heading-title">로그인</h1>
+      <div class="form-wrapper">
+        <form action="/src/pages/login/" method="post">
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="userId"
+              name="userId"
+              placeholder="아이디를 입력해주세요"
+              class="input-id"
+              required
+            />
+            <input
+              type="password"
+              id="userPw"
+              name="userPw"
+              placeholder="비밀번호를 입력해주세요"
+              class="input-pw"
+              required
+            />
+          </div>
+          <div class="forget-wrapper">
+            <a href="/" class="forget-id">아이디 찾기</a>
+            <span class="forget-bar"></span>
+            <a href="/" class="forget-pw">비밀번호 찾기</a>
+          </div>
+          <div class="button-wrapper">
+            <button type="submit" class="button-login">로그인</button>
+            <button type="button" class="button-register">회원가입</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
