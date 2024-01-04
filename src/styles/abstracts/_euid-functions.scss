@@ -1,0 +1,302 @@
+@use 'sass:math';
+@use 'sass:string';
+@use 'sass:map';
+@use 'sass:list';
+
+// 루트 요소 기본 단위 --------------------------------------------------------------- /
+$rootUnit: 16px;
+
+// 단위 제거 함수 ------------------------------------------------------------------ /
+@function removeUnit($value) {
+  $unitless: $value * 0 + 1;
+  @return math.div($value, $unitless);
+}
+
+// px을 rem 단위로 변경하는 함수 ------------------------------------------------------- /
+@function rem($value, $base: 16) {
+  @return math.div(removeUnit($value), $base) * 1rem;
+}
+
+// px을 em 단위로 변경하는 함수 ------------------------------------------------------- /
+@function em($value, $base: 16) {
+  @return math.div(removeUnit($value), $base) * 1em;
+}
+
+// 문자
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+
+  @return $string;
+}
+
+@function str-split($string, $separator: ',') {
+  $split-list: ();
+  $index: str-index($string, $separator);
+
+  @while $index != null {
+    $item: str-slice($string, 1, $index - 1);
+    $split-list: append($split-list, $item);
+    $string: str-slice($string, $index + 1);
+    $index: str-index($string, $separator);
+  }
+
+  @return append($split-list, $string);
+}
+
+@function str-to-num($str-number, $max-number: 100) {
+  $numbers: ();
+
+  @for $n from 1 through $max-number {
+    $numbers: map.set($numbers, $n + '', $n);
+  }
+
+  @if map-has-key($numbers, $str-number) {
+    @return map.get($numbers, $str-number);
+  } @else {
+    @error 'str-to-num() 함수는 #{$max-number} 이하의 숫자형 문자 값만 처리 가능합니다.';
+  }
+}
+
+@function str-repeat($count: null, $text: null) {
+  // 전달 인자 유효성 검사
+  @if type-of($count) != 'number' {
+    @error 'str-repeat() 믹스인은 첫번째 인자로 숫자 값만 전달 받을 수 있습니다.';
+  }
+  @if type-of($text) != 'string' {
+    @error 'str-repeat() 믹스인은 두번째 인자로 문자 값만 전달 받을 수 있습니다.';
+  }
+
+  // 반복 텍스트 변수
+  $repeat-text: '';
+
+  // 반복 횟수만큼 문자 반복 접합 처리
+  @for $i from 1 through $count {
+    $repeat-text: str-insert($repeat-text, '#{$text} ', 1);
+  }
+
+  // 끝 공백 제거
+  @return str-slice($repeat-text, 1, -2);
+}
+
+@function str-extract-count-keyword($text: null) {
+  $index: str-index($text, 'x');
+
+  @if $index {
+    $keyword: str-replace(str-slice($text, 1, $index - 1), ' ');
+    $count: str-slice($text, $index + 1);
+    @return (count: str-to-num($count), keyword: $keyword);
+  } @else {
+    @return $text;
+  }
+}
+
+// 리스트
+
+@function first($list) {
+  @return nth($list, 1);
+}
+
+@function last($list) {
+  @return nth($list, length($list));
+}
+
+@function copy-list($list) {
+  $copyed-list: ();
+
+  @each $item in $list {
+    $copyed-list: append($copyed-list, $item);
+  }
+
+  @return $copyed-list;
+}
+
+@function merge-list($list1: (), $list2: ()) {
+  $merge-list: copy-list($list1);
+
+  @if length($list2) > 1 {
+    @for $i from 1 through length($list2) {
+      $merge-list: set-nth($merge-list, $i, nth($list2, $i));
+    }
+  }
+
+  @return $merge-list;
+}
+
+@function get-value-after-key($key-value-list, $key) {
+  $key-index: index($key-value-list, $key);
+  @return if($key-index, nth($key-value-list, $key-index + 1), null);
+}
+
+// 키(key) 집합(list)을 순환하여 일치하는 값을 최종 계산하여 반환
+// 예: get-match-value-of-keys(b 30px, bottom b);
+@function get-match-value-of-keys($values, $keys) {
+  $value: null;
+
+  @each $key in $keys {
+    $value: if($value, $value, get-value-after-key($values, $key));
+  }
+  @return $value;
+}
+
+// 이징
+$easings: (
+  in-sine: cubic-bezier(0.47, 0, 0.745, 0.715),
+  out-sine: cubic-bezier(0.39, 0.575, 0.565, 1),
+  inout-sine: cubic-bezier(0.39, 0.575, 0.565, 1),
+  in-quad: cubic-bezier(0.55, 0.085, 0.68, 0.53),
+  out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94),
+  inout-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94),
+  in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19),
+  out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1),
+  inout-cubic: cubic-bezier(0.215, 0.61, 0.355, 1),
+  in-quart: cubic-bezier(0.895, 0.03, 0.685, 0.22),
+  out-quart: cubic-bezier(0.165, 0.84, 0.44, 1),
+  inout-quart: cubic-bezier(0.165, 0.84, 0.44, 1),
+  in-quint: cubic-bezier(0.755, 0.05, 0.855, 0.06),
+  out-quint: cubic-bezier(0.23, 1, 0.32, 1),
+  inout-quint: cubic-bezier(0.23, 1, 0.32, 1),
+  in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035),
+  out-expo: cubic-bezier(0.19, 1, 0.22, 1),
+  inout-expo: cubic-bezier(0.19, 1, 0.22, 1),
+  in-circ: cubic-bezier(0.6, 0.04, 0.98, 0.335),
+  out-circ: cubic-bezier(0.075, 0.82, 0.165, 1),
+  inout-circ: cubic-bezier(0.075, 0.82, 0.165, 1),
+  in-back: cubic-bezier(0.6, -0.28, 0.735, 0.045),
+  out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275),
+  inout-back: cubic-bezier(0.68, -0.55, 0.265, 1.55),
+) !default;
+
+//* -------------------------------------------------------------------------- */
+
+@function ease($keyword) {
+  @if map-has-key($easings, $keyword) {
+    @return map-get($easings, $keyword);
+  } @else {
+    @error 'ease() 함수에 전달 가능한 값은 다음 중 하나입니다 → #{map-keys($easings)}';
+  }
+}
+
+@function ease-add($keyword, $easing-function) {
+  @if not meta.global-variable-exists('easings') {
+    @error '$easings 이징 함수 맵 글로벌 변수가 존재하지 않습니다.';
+  }
+  @return map.set($easings, $keyword, $easing-function);
+}
+
+@function ease-merge($extend-easings: ()) {
+  @if not meta.global-variable-exists('easings') {
+    @error '$easings 이징 함수 맵 글로벌 변수가 존재하지 않습니다.';
+  }
+  @return map.deep-merge($easings, $extend-easings);
+}
+
+// 타입 or 키워드 검사 유틸리티
+
+@function is-valid-types($data, $typelist) {
+  @each $valid-type in $typelist {
+    @if type-of($data) == $valid-type {
+      @return true;
+    }
+  }
+  @return false;
+}
+
+@function is-valid-keywords($data, $keywordslist) {
+  @each $valid-keyword in $keywordslist {
+    @if $data == $valid-keyword {
+      @return true;
+    }
+  }
+  @return false;
+}
+
+@function is-include-items($list, $comparelist) {
+  $result-list: ();
+
+  @each $item in $list {
+    $result-list: append($result-list, is-valid-keywords($item, $comparelist));
+  }
+
+  @return type-of(index($result-list, true)) == 'number';
+}
+
+// 단위 없는 값인 경우, px 값으로 반환
+@function unitless-px($value) {
+  @return if(unitless($value), if($value != 0, $value * 1px, $value), $value);
+}
+
+// 전달 받은 값이 숫자인 경우 unitless-px() 함수 결과 값 반환
+// 전달 받은 값이 문자인 경우, 문자 그대로 반환
+@function get-number-or-string($value) {
+  @return if(type-of($value) == 'number', unitless-px($value), $value);
+}
+
+/// 컬러 구성표(Color Scheme)
+
+$colors: (
+  black: #010101,
+  white: #fefefe,
+  gray: #787878,
+  state-normal: #707070,
+  state-hover: #35a1af,
+  state-focus: #1870d4,
+  state-active: #185158,
+  state-disabled: #dedede,
+  state-valid: #219c5e,
+  state-invalid: #e72e6c,
+) !default;
+
+//* -------------------------------------------------------------------------- */
+
+/// 컬러 값 반환 유틸리티
+/// @param {string} $name [null] color 이름
+/// @return {color} 등록된 컬러 이름과 전달된 컬러 이름이 매칭 될 경우 컬러 값 반환
+
+@function get-color($name: null) {
+  @if has-color($name) {
+    @return map-get($colors, $name);
+  } @else {
+    @error '설정 가능한 컬러 값은 #{map-keys($colors)} 중 하나입니다.';
+  }
+}
+
+/// 컬러 이름 반환 유틸리티
+/// @param {color} $value [null] color 값
+/// @return {string} 등록된 컬러 값과 전달된 컬러 값이 매칭 될 경우 컬러 이름 반환
+
+@function get-color-name($value: null) {
+  $color-keys: map-keys($colors);
+  $color-values: map-values($colors);
+  $color-value-index: index($color-values, $value);
+  @if $color-value-index {
+    @return nth($color-keys, $color-value-index);
+  } @else {
+    @error '#{$value} 컬러 값과 매칭되는 컬러 이름이 존재하지 않습니다.';
+  }
+}
+
+/// 컬러 이름 소유 여부 반환 유틸리티
+/// @param {string} $name color 이름
+/// @return {bool} $colors 맵 안에 color 이름이 존재하는 지 여부 반환
+
+@function has-color($name) {
+  @return map-has-key($colors, $name);
+}
+
+/// 대체 컬러 유틸리티
+/// @param {string} $name color 이름
+/// @param {color} $alt-value 대체 color 값
+/// @return {color} $colors 맵 안에 color 이름이 존재할 경우 해당 값, 존재하지 않을 경우 대체 값 반환
+
+@function alt-color($name, $alt-value) {
+  @return if(has-color($name), get-color($name), $alt-value);
+}

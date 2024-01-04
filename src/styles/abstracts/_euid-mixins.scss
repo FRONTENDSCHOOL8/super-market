@@ -1,0 +1,1957 @@
+@use 'sass:string';
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:color';
+@use './euid-functions' as *;
+
+// 컨테이너 최소, 최대 너비 믹스인
+@mixin container-width($property-name, $width) {
+  #{$property-name}-width: $width;
+}
+
+// 가운데 정렬을 위한 auto margin
+@mixin auto-margin {
+  @include mx(auto);
+}
+
+// border-radius 설정을 위한 믹스인
+@mixin rounded($rounded) {
+  @if $rounded == sm {
+    border-radius: 4px;
+  } @else if $rounded == md {
+    border-radius: 8px;
+  } @else if $rounded == md {
+    border-radius: 16px;
+  } @else if $rounded == lg {
+    border-radius: 32px
+  } @else {
+    border-radius: $rounded;
+  }
+}
+
+// width, height 설정을 위한 믹스인
+@mixin size($width, $height: null) {
+  width: $width;
+  @if $height != null {
+    height: $height;
+  }
+}
+
+// 미디어쿼리 중단점
+$breakpoints: (
+  sm: 640,
+  md: 768,
+  lg: 960,
+  xl: 1024,
+  2xl: 1280,
+);
+
+// 미디어쿼리 믹스인
+@mixin mq($breakpoint) {
+  @each $key, $value in $breakpoints {
+    @if not map.has-key($breakpoints, $breakpoint) {
+      @error '#{$breakpoint}는 유효한 중단점이 아닙니다.(유효한 값:sm, md, lg, xl, 2xl)';
+    }
+  }
+
+  $viewport: map.get($breakpoints, $breakpoint);
+  $query: string.unquote('min-width: #{$viewport}px');
+
+  @media ($query) {
+    @content;
+  }
+}
+
+// 플렉스 박스 믹스인
+@mixin flex-container($args, $mode: flex) {
+  display: if($mode == flex, flex, inline-flex);
+  @include flex-container-append($args);
+}
+
+@mixin flex-container-append($args) {
+  @if $args != null {
+    // flex-direction ------------------------------------------
+    @each $direction in row row-reverse column column-reverse {
+      $direction-index: index($args, $direction);
+
+      @if $direction-index {
+        flex-direction: nth($args, $direction-index);
+      }
+    }
+
+    // flex-wrap -----------------------------------------------
+    @each $wrap in nowrap wrap wrap-reverse {
+      $wrap-index: index($args, $wrap);
+
+      @if $wrap-index {
+        flex-wrap: nth($args, $wrap-index);
+      }
+    }
+
+    // justify-content ------------------------------------------
+    @each $justifyContent
+      in justify-start
+      justify-center
+      justify-end
+      justify-left
+      justify-right
+      justify-normal
+      justify-between
+      justify-around
+      justify-evenly
+      justify-safe
+      justify-unsafe
+      justify-inherit
+      justify-initial
+      justify-unset
+    {
+      $justifyContent-index: index($args, $justifyContent);
+
+      @if $justifyContent-index {
+        $justifyContent-value: str-replace(
+          nth($args, $justifyContent-index),
+          'justify-'
+        );
+        @include justify-content($justifyContent-value, flex);
+      }
+    }
+
+    // align-items ------------------------------------------------
+    @each $alignItems
+      in items-normal
+      items-stretch
+      items-start
+      items-end
+      items-center
+      items-baseline
+      items-first-baseline
+      items-last-baseline
+      items-safe
+      items-unsafe
+      items-inherit
+      items-initial
+      items-unset
+    {
+      $alignItems-index: index($args, $alignItems);
+
+      @if $alignItems-index {
+        $alignItems-value: str-replace(nth($args, $alignItems-index), 'items-');
+        @include align-items($alignItems-value, flex);
+      }
+    }
+
+    // align-content ------------------------------------------------
+    @each $alignContent
+      in content-start
+      content-center
+      content-end
+      content-left
+      content-right
+      content-normal
+      content-baseline
+      content-first-baseline
+      content-last-baseline
+      content-between
+      content-around
+      content-evenly
+      content-stretch
+      content-safe
+      content-unsafe
+      content-inherit
+      content-initial
+      content-unset
+    {
+      $alignContent-index: index($args, $alignContent);
+
+      @if $alignContent-index {
+        $alignContent-value: str-replace(
+          nth($args, $alignContent-index),
+          'content-'
+        );
+        @include align-content($alignContent-value, flex);
+      }
+    }
+  }
+}
+
+@mixin flex-item($args) {
+  @if $args != null {
+    // align-self
+    @each $keyword
+      in self-auto
+      self-normal
+      self-start
+      self-end
+      self-center
+      self-stretch
+      self-baseline
+      self-first-baseline
+      self-last-baseline
+      self-safe
+      self-unsafe
+      self-inherit
+      self-initial
+      self-unset
+    {
+      $self-value-index: index($args, $keyword);
+      @if $self-value-index {
+        $self-value: nth($args, $self-value-index);
+        @include align-self($self-value, flex);
+      }
+    }
+
+    @if is-include-items($args, auto initial none) {
+      @if index($args, auto) {
+        @include flex(auto);
+      }
+      @if index($args, initial) {
+        @include flex(initial);
+      }
+      @if index($args, none) {
+        @include flex(none);
+      }
+    }
+
+    @if is-include-items($args, grow g shrink s basis b) {
+      // flex-grow
+      $grow-value: get-match-value-of-keys($args, grow g);
+      // flex-shrink
+      $shrink-value: get-match-value-of-keys($args, shrink s);
+      // flex-basis
+      $basis-value: get-match-value-of-keys($args, basis b);
+
+      // flex
+      @include flex(
+        if($grow-value, $grow-value, 0) if($shrink-value, $shrink-value, 1)
+          if($basis-value, $basis-value, auto)
+      );
+    }
+
+    // order
+    $order-value: get-match-value-of-keys($args, order o);
+    @if $order-value {
+      @include order($order-value);
+    }
+  }
+}
+
+@mixin flex($value) {
+  @if $value == 1 {
+    flex: 1 1 0;
+  }
+  @if $value == auto {
+    flex: 1 1 auto;
+  }
+  @if $value == initial {
+    flex: 0 1 auto;
+  }
+  @if $value == none {
+    flex: 0 0 auto;
+  }
+  @if not is-valid-keywords($value, 1 auto initial none) {
+    flex: $value;
+  }
+}
+
+// 박스 정렬 관련 믹스인
+$using-place-layout: false;
+
+@mixin box-alignment($type, $justify, $align) {
+  @if not $using-place-layout {
+    justify-#{$type}: $justify;
+    align-#{$type}: $align;
+  } @else {
+    place-#{$type}: $align $justify;
+  }
+}
+
+@mixin place($type, $justify, $align) {
+  @include box-alignment($type, $justify, $align);
+}
+
+@mixin content($justify: null, $align: null) {
+  @include box-alignment('content', $justify, $align);
+}
+
+@mixin items($justify: null, $align: null) {
+  @include box-alignment('items', $justify, $align);
+}
+
+@mixin self($justify: null, $align: null) {
+  @include box-alignment('self', $justify, $align);
+}
+
+@mixin justify-content($value, $mode: grid) {
+  @if $value == 'start' {
+    justify-content: if($mode == grid, start, flex-start);
+  }
+  @if $value == 'end' {
+    justify-content: if($mode == grid, end, flex-end);
+  }
+  @if $value == 'center' {
+    justify-content: center;
+  }
+  @if $value == 'left' {
+    justify-content: left;
+  }
+  @if $value == 'right' {
+    justify-content: right;
+  }
+
+  @if $value == 'normal' {
+    justify-content: normal;
+  }
+
+  @if $value == 'between' {
+    justify-content: space-between;
+  }
+  @if $value == 'around' {
+    justify-content: space-around;
+  }
+  @if $value == 'evenly' {
+    justify-content: space-evenly;
+  }
+  @if $value == 'stretch' {
+    justify-content: stretch;
+  }
+
+  @if $value == 'safe' {
+    justify-content: safe center;
+  }
+  @if $value == 'unsafe' {
+    justify-content: unsafe center;
+  }
+
+  @if $value == 'inherit' {
+    justify-content: inherit;
+  }
+  @if $value == 'initial' {
+    justify-content: initial;
+  }
+  @if $value == 'unset' {
+    justify-content: unset;
+  }
+}
+
+@mixin align-content($value, $mode: grid) {
+  @if $value == 'start' {
+    align-content: if($mode == grid, start, flex-start);
+  }
+  @if $value == 'end' {
+    align-content: if($mode == grid, end, flex-end);
+  }
+  @if $value == 'center' {
+    align-content: center;
+  }
+  @if $value == 'left' {
+    align-content: left;
+  }
+  @if $value == 'right' {
+    align-content: right;
+  }
+
+  @if $value == 'normal' {
+    align-content: normal;
+  }
+
+  @if $value == 'baseline' {
+    align-content: baseline;
+  }
+  @if $value == 'first-baseline' {
+    align-content: first baseline;
+  }
+  @if $value == 'last-baseline' {
+    align-content: last baseline;
+  }
+
+  @if $value == 'between' {
+    align-content: space-between;
+  }
+  @if $value == 'around' {
+    align-content: space-around;
+  }
+  @if $value == 'evenly' {
+    align-content: space-evenly;
+  }
+  @if $value == 'stretch' {
+    align-content: stretch;
+  }
+
+  @if $value == 'safe' {
+    align-content: safe center;
+  }
+  @if $value == 'unsafe' {
+    align-content: unsafe center;
+  }
+
+  @if $value == 'inherit' {
+    align-content: inherit;
+  }
+  @if $value == 'initial' {
+    align-content: initial;
+  }
+  @if $value == 'unset' {
+    align-content: unset;
+  }
+}
+
+@mixin justify-items($value) {
+  @if $value == 'auto' {
+    justify-items: auto;
+  }
+  @if $value == 'normal' {
+    justify-items: normal;
+  }
+  @if $value == 'stretch' {
+    justify-items: stretch;
+  }
+
+  @if $value == 'start' {
+    justify-items: start;
+  }
+  @if $value == 'end' {
+    justify-items: end;
+  }
+  @if $value == 'center' {
+    justify-items: center;
+  }
+  @if $value == 'left' {
+    justify-items: left;
+  }
+  @if $value == 'right' {
+    justify-items: right;
+  }
+
+  @if $value == 'baseline' {
+    justify-items: baseline;
+  }
+  @if $value == 'first-baseline' {
+    justify-items: first baseline;
+  }
+  @if $value == 'last-baseline' {
+    justify-items: last baseline;
+  }
+
+  @if $value == 'safe' {
+    justify-items: safe center;
+  }
+  @if $value == 'unsafe' {
+    justify-items: unsafe center;
+  }
+
+  @if $value == 'inherit' {
+    justify-items: inherit;
+  }
+  @if $value == 'initial' {
+    justify-items: initial;
+  }
+  @if $value == 'unset' {
+    justify-items: unset;
+  }
+}
+
+@mixin align-items($value, $mode: grid) {
+  @if $value == 'normal' {
+    align-items: normal;
+  }
+  @if $value == 'stretch' {
+    align-items: stretch;
+  }
+
+  @if $value == 'start' {
+    align-items: if($mode == grid, start, flex-start);
+  }
+  @if $value == 'end' {
+    align-items: if($mode == grid, end, flex-end);
+  }
+  @if $value == 'center' {
+    align-items: center;
+  }
+
+  @if $value == 'baseline' {
+    align-items: baseline;
+  }
+  @if $value == 'first-baseline' {
+    align-items: first baseline;
+  }
+  @if $value == 'last-baseline' {
+    align-items: last baseline;
+  }
+  @if $value == 'safe' {
+    align-items: safe center;
+  }
+  @if $value == 'unsafe' {
+    align-items: unsafe center;
+  }
+
+  @if $value == 'inherit' {
+    align-items: inherit;
+  }
+  @if $value == 'initial' {
+    align-items: initial;
+  }
+  @if $value == 'unset' {
+    align-items: unset;
+  }
+}
+
+@mixin justify-self($value, $mode: grid) {
+  @if $value == 'auto' {
+    justify-self: auto;
+  }
+  @if $value == 'normal' {
+    justify-self: normal;
+  }
+  @if $value == 'stretch' {
+    justify-self: stretch;
+  }
+
+  @if $value == 'start' {
+    justify-self: if($mode == grid, start, flex-start);
+  }
+  @if $value == 'end' {
+    justify-self: if($mode == grid, end, flex-end);
+  }
+  @if $value == 'center' {
+    justify-self: center;
+  }
+  @if $value == 'left' {
+    justify-self: left;
+  }
+  @if $value == 'right' {
+    justify-self: right;
+  }
+
+  @if $value == 'baseline' {
+    justify-self: baseline;
+  }
+  @if $value == 'first-baseline' {
+    justify-self: first baseline;
+  }
+  @if $value == 'last-baseline' {
+    justify-self: last baseline;
+  }
+
+  @if $value == 'safe' {
+    justify-self: safe center;
+  }
+  @if $value == 'unsafe' {
+    justify-self: unsafe center;
+  }
+
+  @if $value == 'inherit' {
+    justify-self: inherit;
+  }
+  @if $value == 'initial' {
+    justify-self: initial;
+  }
+  @if $value == 'unset' {
+    justify-self: unset;
+  }
+}
+
+@mixin align-self($value, $mode: grid) {
+  @if $value == 'auto' {
+    align-self: auto;
+  }
+
+  @if $value == 'normal' {
+    align-self: normal;
+  }
+
+  @if $value == 'start' {
+    align-self: if($mode == grid, start, flex-start);
+  }
+  @if $value == 'end' {
+    align-self: if($mode == grid, end, flex-end);
+  }
+  @if $value == 'center' {
+    align-self: center;
+  }
+  @if $value == 'stretch' {
+    align-self: stretch;
+  }
+
+  @if $value == 'baseline' {
+    align-self: baseline;
+  }
+  @if $value == 'first-baseline' {
+    align-self: first baseline;
+  }
+  @if $value == 'last-baseline' {
+    align-self: last baseline;
+  }
+
+  @if $value == 'safe' {
+    align-self: safe center;
+  }
+  @if $value == 'unsafe' {
+    align-self: unsafe center;
+  }
+
+  @if $value == 'inherit' {
+    align-self: inherit;
+  }
+  @if $value == 'initial' {
+    align-self: initial;
+  }
+  @if $value == 'unset' {
+    align-self: unset;
+  }
+}
+
+// 디스플레이
+@mixin hide {
+  display: none;
+}
+
+@mixin show($mode: block) {
+  display: $mode;
+}
+
+@mixin order($value) {
+  @if not $value {
+    @error 'order() 믹스인은 none, first, last 또는 정수 값을 전달 받아야 합니다.';
+  }
+  @if $value == 'none' {
+    order: 0;
+  }
+  @if $value == 'first' {
+    order: -9999;
+  }
+  @if $value == 'last' {
+    order: 9999;
+  }
+  @if not is-valid-keywords($value, none first last) {
+    order: $value;
+  }
+}
+
+// 포지션 믹스인
+@mixin position($position, $args: null) {
+  position: $position;
+
+  @if $args != null {
+    $top-value: get-match-value-of-keys($args, top t);
+    $right-value: get-match-value-of-keys($args, right r);
+    $bottom-value: get-match-value-of-keys($args, bottom b);
+    $left-value: get-match-value-of-keys($args, left l);
+
+    z-index: get-match-value-of-keys($args, z-index z);
+    top: if($top-value, unitless-px($top-value), null);
+    right: if($right-value, unitless-px($right-value), null);
+    bottom: if($bottom-value, unitless-px($bottom-value), null);
+    left: if($left-value, unitless-px($left-value), null);
+  }
+}
+
+@mixin relative($args: null) {
+  @include position(relative, $args);
+}
+
+@mixin absolute($args: null) {
+  @include position(absolute, $args);
+}
+
+@mixin fixed($args: null) {
+  @include position(fixed, $args);
+}
+
+@mixin sticky($args: null) {
+  @include position(sticky, $args);
+}
+
+@mixin static {
+  @include position(static, null);
+}
+
+// 이니셜라이즈
+@mixin reset-button() {
+  user-select: none;
+  cursor: pointer;
+}
+@mixin reset-list() {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+// 접근성
+@mixin sr-only($focus-visible: false, $focus-state-class: 'focus') {
+  overflow: hidden;
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  clip-path: circle(0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+
+  @if $focus-visible {
+    &#{'--' + $focus-state-class}:focus {
+      overflow: visible;
+      position: static;
+      clip: auto;
+      width: auto;
+      height: auto;
+      margin: 0;
+      white-space: normal;
+    }
+  }
+}
+
+@mixin focus-visible(
+  $color: rgba(alt-color(state-focus, #1870d4), 0.7),
+  $thickness: 3px
+) {
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 $thickness $color;
+    @content;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 $thickness $color;
+    @content;
+  }
+}
+
+@mixin margin($args...) {
+  @if length($args) == 0 {
+    @error 'margin() 믹스인은 margin 속성의 설정 방향 top, right, bottom, left와 값을 연이어 전달 받을 수 있습니다. 뿐만 아니라 x, y 방향으로 속성을 일괄 설정 가능합니다.';
+  }
+
+  @each $value in $args {
+    $type: type-of($value);
+
+    @if $type == 'number' or $type == 'string' {
+      margin: get-number-or-string($value);
+    }
+
+    @if $type == 'list' {
+      @if is-include-items($value, top t) {
+        margin-top: get-number-or-string(
+          get-match-value-of-keys($value, top t)
+        );
+      }
+      @if is-include-items($value, right r) {
+        margin-right: get-number-or-string(
+          get-match-value-of-keys($value, right r)
+        );
+      }
+      @if is-include-items($value, bottom b) {
+        margin-bottom: get-number-or-string(
+          get-match-value-of-keys($value, bottom b)
+        );
+      }
+      @if is-include-items($value, left l) {
+        margin-left: get-number-or-string(
+          get-match-value-of-keys($value, left l)
+        );
+      }
+      @if is-include-items($value, x) {
+        $x-value: get-value-after-key($value, x);
+        margin-left: get-number-or-string($x-value);
+        margin-right: get-number-or-string($x-value);
+      }
+      @if is-include-items($value, y) {
+        $y-value: get-value-after-key($value, y);
+        margin-top: get-number-or-string($y-value);
+        margin-bottom: get-number-or-string($y-value);
+      }
+    }
+  }
+}
+
+@mixin m($args: null) {
+  @if not $args {
+    @error 'm() 믹스인은 margin 속성의 설정 방향 top, right, bottom, left와 값을 연이어 전달 받을 수 있습니다. 뿐만 아니라 x, y 방향으로 속성을 일괄 설정 가능합니다.';
+  }
+  @include margin($args);
+}
+
+@mixin mx($value) {
+  $value_length: length($value);
+  @if $value_length == 1 {
+    @include m(l $value r $value);
+  }
+  @if $value_length == 2 {
+    @include m(l first($value) r last($value));
+  }
+}
+
+@mixin my($value) {
+  $value_length: length($value);
+  @if $value_length == 1 {
+    @include m(t $value b $value);
+  }
+  @if $value_length == 2 {
+    @include m(t first($value) b last($value));
+  }
+}
+
+// padding 관련 믹스인
+@mixin padding($args...) {
+  @if length($args) == 0 {
+    @error 'padding() 믹스인은 padding 속성의 설정 방향 top, right, bottom, left와 값을 연이어 전달 받을 수 있습니다. 뿐만 아니라 x, y 방향으로 속성을 일괄 설정 가능합니다.';
+  }
+
+  @each $value in $args {
+    $type: type-of($value);
+
+    @if $type == 'number' or $type == 'string' {
+      padding: get-number-or-string($value);
+    }
+
+    @if $type == 'list' {
+      @if is-include-items($value, top t) {
+        padding-top: get-number-or-string(
+          get-match-value-of-keys($value, top t)
+        );
+      }
+      @if is-include-items($value, right r) {
+        padding-right: get-number-or-string(
+          get-match-value-of-keys($value, right r)
+        );
+      }
+      @if is-include-items($value, bottom b) {
+        padding-bottom: get-number-or-string(
+          get-match-value-of-keys($value, bottom b)
+        );
+      }
+      @if is-include-items($value, left l) {
+        padding-left: get-number-or-string(
+          get-match-value-of-keys($value, left l)
+        );
+      }
+      @if is-include-items($value, x) {
+        $x-value: get-value-after-key($value, x);
+        padding-left: get-number-or-string($x-value);
+        padding-right: get-number-or-string($x-value);
+      }
+      @if is-include-items($value, y) {
+        $y-value: get-value-after-key($value, y);
+        padding-top: get-number-or-string($y-value);
+        padding-bottom: get-number-or-string($y-value);
+      }
+    }
+  }
+}
+
+@mixin p($args: null) {
+  @if not $args {
+    @error 'p() 믹스인은 padding 속성의 설정 방향 top, right, bottom, left와 값을 연이어 전달 받을 수 있습니다. 뿐만 아니라 x, y 방향으로 속성을 일괄 설정 가능합니다.';
+  }
+  @include padding($args);
+}
+
+@mixin px($value) {
+  $value_length: length($value);
+  @if $value_length == 1 {
+    @include p(l $value r $value);
+  }
+  @if $value_length == 2 {
+    @include p(l first($value) r last($value));
+  }
+}
+
+@mixin py($value) {
+  $value_length: length($value);
+  @if $value_length == 1 {
+    @include p(t $value b $value);
+  }
+  @if $value_length == 2 {
+    @include p(t first($value) b last($value));
+  }
+}
+
+// 폼 - button
+@mixin button($font-size: rem(14), $padding: rem(12) rem(24), $radius: rem(3)) {
+  cursor: pointer;
+  box-sizing: border-box;
+
+  min-height: rem(39);
+
+  outline: none;
+  margin-bottom: rem(10);
+  border: none;
+  border-radius: $radius;
+  padding: $padding;
+
+  font-family: inherit;
+  font-size: $font-size;
+  text-decoration: none;
+
+  background-color: alt-color(white, #fff);
+
+  // Firefox 점선 제거
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 rem(2) 0 alt-color(state-normal, #707070);
+  }
+
+  &:active {
+    box-shadow: inset 0 rem(2) 0 darken(alt-color(state-active, #185158), 10%);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: darken(alt-color(state-disabled, #dedede), 30%);
+    background-color: alt-color(state-disabled, #dedede);
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  @content;
+}
+
+// 폼 - checkbox
+@mixin checkbox($font-size: rem(14), $size: rem(18), $radius: rem(9)) {
+  @include absolute(left rem(-1000));
+
+  + label {
+    cursor: pointer;
+    position: relative;
+
+    margin-right: rem(15);
+    padding-left: rem(25);
+
+    font-size: $font-size;
+
+    &::before {
+      content: '';
+      @include absolute(left 0 bottom 0);
+
+      height: $size;
+      width: $size;
+
+      border-radius: $radius;
+      background-color: alt-color(state-normal, #707070);
+      font-family: sans-serif;
+    }
+
+    &::after {
+      content: '';
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+  }
+
+  &:checked + label::after {
+    content: '';
+    opacity: 1;
+    display: block;
+    @include absolute(left rem(5) top 0);
+
+    width: rem(3);
+    height: rem(11);
+    border: solid alt-color(state-active, #185158);
+    border-width: 0 rem(3) rem(3) 0;
+    transform: rotate(45deg);
+    line-height: rem(16);
+  }
+
+  &:focus + label::before {
+    box-shadow: 0 rem(1) 0 darken(alt-color(state-focus, #1870d4), 30%);
+  }
+
+  &:disabled {
+    + label {
+      cursor: not-allowed;
+
+      &::before {
+        background-color: alt-color(state-disabled, #dedede);
+      }
+    }
+
+    &:checked + label::after {
+      background-color: darken(alt-color(state-disabled, #dedede), 30%);
+    }
+  }
+
+  @content;
+}
+
+// 폼 - input
+@mixin input($font-size: rem(14), $padding: rem(10), $radius: rem(3)) {
+  outline: none;
+  box-sizing: border-box;
+
+  width: 100%;
+  min-height: rem(39);
+
+  margin-bottom: rem(10);
+  border: rem(1) solid lighten(alt-color(state-normal, #707070), 10%);
+  border-radius: $radius;
+  padding: $padding;
+
+  font-family: inherit;
+  font-size: $font-size;
+  vertical-align: middle;
+
+  background-color: alt-color(white, #fff);
+
+  &:hover {
+    border-color: alt-color(state-hover, #35a1af);
+  }
+
+  &:focus {
+    border-color: alt-color(state-focus, #1870d4);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: alt-color(state-disabled, #dedede);
+  }
+
+  @content;
+}
+
+// 폼 - placeholder
+@mixin placeholder {
+  ::-webkit-input-placeholder {
+    @content;
+  }
+  :-ms-input-placeholder {
+    @content;
+  }
+  ::-moz-placeholder {
+    @content;
+  }
+  ::placeholder {
+    @content;
+  }
+}
+
+// 폼 - radio
+@mixin radio($font-size: rem(14), $size: rem(18), $radius: rem(9)) {
+  @include absolute(left rem(-1000));
+
+  + label {
+    cursor: pointer;
+    position: relative;
+
+    margin-right: rem(15);
+    padding-left: rem(25);
+
+    font-size: $font-size;
+
+    &::before {
+      content: '';
+      @include absolute(left 0 bottom 0);
+
+      height: $size;
+      width: $size;
+
+      border-radius: $radius;
+      background-color: alt-color(state-normal, #707070);
+      font-family: sans-serif;
+    }
+
+    &::after {
+      content: '';
+      transition: background-color 0.3s;
+    }
+  }
+
+  &:checked + label::after {
+    content: '';
+    @include absolute(left rem(5) top rem(3));
+
+    height: rem(8);
+    width: rem(8);
+    border-radius: rem(15);
+    background-color: alt-color(state-active, #185158);
+    text-align: center;
+  }
+
+  &:focus + label::before {
+    box-shadow: 0 rem(1) 0 darken(alt-color(state-focus, #1870d4), 30%);
+  }
+
+  &:disabled {
+    + label {
+      cursor: not-allowed;
+
+      &::before {
+        background-color: alt-color(state-disabled, #dedede);
+      }
+    }
+
+    &:checked + label::after {
+      background-color: darken(alt-color(state-disabled, #dedede), 30%);
+    }
+  }
+
+  @content;
+}
+
+// 폼 - search
+@mixin search($padding: 0 rem(4)) {
+  @include appearance(none);
+  @include input;
+  padding: $padding;
+}
+
+// 폼 - select
+@mixin select($font-size: rem(14), $radius: rem(3)) {
+  position: relative;
+  color: inherit;
+
+  &::after {
+    pointer-events: none;
+    content: '\25BE';
+    @include absolute(top rem(10) right rem(15));
+    color: alt-color(state-normal, #707070);
+  }
+
+  // IE9, IE10
+  select::-ms-expand {
+    display: none;
+  }
+
+  select {
+    @include appearance(none);
+
+    width: 100%;
+    height: rem(39);
+
+    outline: none;
+    margin-bottom: rem(10);
+    border: rem(1) solid lighten(alt-color(state-normal, #707070), 10%);
+    border-radius: $radius;
+    padding-left: rem(10);
+
+    font-family: inherit;
+    font-size: $font-size;
+
+    background-color: alt-color(white, #fff);
+
+    &:focus {
+      border-color: alt-color(state-focus, #1870d4);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: alt-color(state-disabled, #dedede);
+    }
+  }
+}
+
+@mixin select-multiple(
+  $font-size: rem(14),
+  $padding: 0 rem(10),
+  $radius: rem(3)
+) {
+  @include appearance(none);
+
+  width: 100%;
+
+  outline: none;
+  margin-bottom: rem(10);
+  border: rem(1) solid lighten(alt-color(state-normal, #707070), 10%);
+  border-radius: $radius;
+  padding: $padding;
+
+  font-family: inherit;
+  font-size: $font-size;
+
+  background-color: white;
+
+  &:focus {
+    border-color: alt-color(state-focus, #1870d4);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: alt-color(state-disabled, #dedede);
+  }
+}
+
+// 폼 - textarea
+@mixin textarea {
+  overflow: auto;
+  display: block;
+  @include input;
+}
+
+// UI
+@mixin appearance($value: none) {
+  -webkit-appearance: $value;
+  -moz-appearance: $value;
+  appearance: $value;
+}
+
+@mixin selection($selector: null) {
+  @if $selector == null {
+    ::-moz-selection {
+      @content;
+    }
+    ::selection {
+      @content;
+    }
+  } @else {
+    @each $selector in str-split($selector, ',') {
+      #{$selector}::-moz-selection {
+        @content;
+      }
+      #{$selector}::selection {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin scrollbar(
+  $size: 10px,
+  $thumb-color: get-color(black),
+  $thumb-radius: 3px,
+  $bar-color:
+    mix(
+      $thumb-color,
+      if(
+        color.blackness($thumb-color) >= 50%,
+        get-color(white),
+        get-color(black)
+      ),
+      45%
+    )
+) {
+  // IE
+  & {
+    scrollbar-face-color: $thumb-color;
+    scrollbar-track-color: $bar-color;
+  }
+
+  // Firefox
+  // 참고: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Scrollbars
+  & {
+    scrollbar-width: thin;
+    scrollbar-color: $thumb-color $bar-color;
+  }
+
+  // Webkit, Blick
+  // 참고: https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $thumb-radius;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bar-color;
+  }
+}
+
+// 그리드박스
+@mixin gap($value: null) {
+  @if $value == null {
+    @error 'gap() 믹스인은 숫자 값을 1 또는 2개의 값을 전달 받아야 합니다.';
+  }
+  @if length($value) == 1 {
+    gap: unitless-px($value);
+  }
+  @if length($value) == 2 {
+    row-gap: unitless-px(nth($value, 1));
+    column-gap: unitless-px(nth($value, 2));
+  }
+}
+
+@mixin grid-area($rows: null, $cols: null) {
+  $rows-type: type-of($rows);
+  $cols-type: type-of($cols);
+
+  @if $rows-type == 'list' {
+    $span-value: get-match-value-of-keys($rows, span);
+    $start-value: get-match-value-of-keys($rows, start s);
+    $end-value: get-match-value-of-keys($rows, end e);
+    @if $span-value {
+      @include grid-row(span, $span-value);
+    } @else if $start-value {
+      @include grid-row(start, $start-value);
+    } @else if $end-value {
+      @include grid-row(end, $end-value);
+    } @else {
+      @include grid-row(se, $rows);
+    }
+  }
+  @if $rows-type == 'number' or $rows-type == 'string' and str-index($rows, '/')
+  {
+    @include grid-row($rows);
+  }
+
+  @if $cols-type == 'list' {
+    $span-value: get-match-value-of-keys($cols, span);
+    $start-value: get-match-value-of-keys($cols, start s);
+    $end-value: get-match-value-of-keys($cols, end e);
+    @if $span-value {
+      @include grid-col(span, $span-value);
+    } @else if $start-value {
+      @include grid-col(start, $start-value);
+    } @else if $end-value {
+      @include grid-col(end, $end-value);
+    } @else {
+      @include grid-col(se, $cols);
+    }
+  }
+  @if $cols-type == 'number' or $cols-type == 'string' and str-index($cols, '/')
+  {
+    @include grid-col($cols);
+  }
+
+  // 그리드 영역(grid-area)을 문자 값으로 전달한 경우
+  @if $rows-type == 'string' and not str-index($rows, '/') {
+    grid-area: $rows;
+  }
+}
+
+@mixin grid-areas($areas: null) {
+  $areas-list: ();
+
+  @each $area in $areas {
+    $compiled-text: str-extract-count-keyword($area);
+
+    @if type-of($compiled-text) == 'map' {
+      $compiled-text: str-repeat(
+        map-get($compiled-text, count),
+        map-get($compiled-text, keyword)
+      );
+    }
+
+    $areas-list: append($areas-list, $compiled-text);
+  }
+
+  grid-template-areas: $areas-list;
+}
+
+// @include auto-flow(row);
+// @include auto-flow(col);
+// @include auto-flow(row dense);
+// @include auto-flow(col dense);
+
+@mixin auto-flow($value: null) {
+  $keywords: (
+    row,
+    column,
+    dense,
+    row-dense,
+    column-dense,
+    inherit,
+    initial,
+    unset
+  );
+
+  @if $value == null or not is-valid-keywords($value, $keywords) {
+    @error 'auto-flow() 믹스인은 #{$keywords} 값만 전달 받을 수 있습니다.';
+  }
+
+  grid-auto-flow: str-replace($value, '-', ' ');
+}
+
+// @include auto-rows(auto);
+// @include auto-rows(min);
+// @include auto-rows(max);
+// @include auto-rows(fr);
+
+@mixin auto-rows($value: null) {
+  // 아무런 값을 전달 받지 않은 경우
+  @if $value == null {
+    @error 'auto-rows() 믹스인 사용 시, 숫자 또는 문자, auto, min, max, fr 값을 전달해야 합니다.';
+  }
+  @if $value == auto {
+    grid-auto-rows: auto;
+  }
+  @if $value == min {
+    grid-auto-rows: min-content;
+  }
+  @if $value == max {
+    grid-auto-rows: max-content;
+  }
+  @if $value == fr {
+    grid-auto-rows: minmax(0, 1fr);
+  }
+  @if not is-valid-keywords($value, auto min max fr) {
+    grid-auto-rows: $value;
+  }
+}
+
+// @include auto-cols(auto);
+// @include auto-cols(min);
+// @include auto-cols(max);
+// @include auto-cols(fr);
+
+@mixin auto-cols($value: null) {
+  // 아무런 값을 전달 받지 않은 경우
+  @if $value == null {
+    @error 'auto-cols() 믹스인 사용 시, 숫자 또는 문자, auto, min, max, fr 값을 전달해야 합니다.';
+  }
+  @if $value == auto {
+    grid-auto-columns: auto;
+  }
+  @if $value == min {
+    grid-auto-columns: min-content;
+  }
+  @if $value == max {
+    grid-auto-columns: max-content;
+  }
+  @if $value == fr {
+    grid-auto-columns: minmax(0, 1fr);
+  }
+  @if not is-valid-keywords($value, auto min max fr) {
+    grid-auto-columns: $value;
+  }
+}
+
+// @include grid-auto(flow, row-dense);
+
+@mixin grid-auto($args: null) {
+  @if $args != null and is-include-items($args, flow f rows r cols c) {
+    $flow-value: get-match-value-of-keys($args, flow f);
+    @if $flow-value {
+      @include auto-flow($flow-value);
+    }
+
+    $rows-value: get-match-value-of-keys($args, rows r);
+    @if $rows-value {
+      @include auto-rows($rows-value);
+    }
+
+    $cols-value: get-match-value-of-keys($args, cols c);
+    @if $cols-value {
+      @include auto-cols($cols-value);
+    }
+  }
+}
+
+// @include col-span(3);
+// 참고: https://tailwindcss.com/docs/grid-column
+
+@mixin col-span($value: null) {
+  @if type-of($value) != 'number' and $value != 'full' {
+    @error 'col-span() 믹스인은 숫자 또는 full 문자 값만 전달 받을 수 있습니다.';
+  }
+  @if $value == 'full' {
+    grid-column: unquote('1 / -1');
+  } @else {
+    grid-column: unquote('span #{$value} / span #{$value}');
+  }
+}
+
+// @include col-start(4);
+// 참고: https://tailwindcss.com/docs/grid-column
+
+@mixin col-start($value: null) {
+  @if type-of($value) != 'number' and $value != 'auto' {
+    @error 'col-start() 믹스인은 숫자 또는 auto 문자 값만 전달 받을 수 있습니다.';
+  }
+  grid-column-start: $value;
+}
+
+// @include col-end(5);
+// 참고: https://tailwindcss.com/docs/grid-column
+
+@mixin col-end($value: null) {
+  @if type-of($value) != 'number' and $value != 'auto' {
+    @error 'col-end() 믹스인은 숫자 또는 auto 문자 값만 전달 받을 수 있습니다.';
+  }
+  grid-column-end: $value;
+}
+
+// @include grid-col(span, 2);
+// @include grid-col(start, 3);
+// @include grid-col(end, 5);
+// @include grid-col(start-end, 3 5);
+
+@mixin grid-col($type, $value: null) {
+  @if $type == 'span' {
+    @include col-span($value);
+  }
+  @if $type == 'start' or $type == 's' {
+    @include col-start($value);
+  }
+  @if $type == 'end' or $type == 'e' {
+    @include col-end($value);
+  }
+  @if $type == 'start-end' or $type == 'se' {
+    @include col-start(nth($value, 1));
+    @include col-end(nth($value, 2));
+  }
+  @if not is-valid-keywords($type, span start end start-end s e se) {
+    grid-column: if(type-of($type) == string, unquote($type), $type);
+  }
+}
+
+// @include grid-cols(5);
+// @include grid-cols(none);
+// @include grid-cols(200px);
+// @include grid-cols(200px 400px 1fr);
+// 참고: https://tailwindcss.com/docs/grid-template-cols
+
+@mixin grid-cols($value: null) {
+  // 아무런 값을 전달 받지 않은 경우
+  @if $value == null {
+    @error 'grid-cols() 믹스인 사용 시, 숫자 또는 none 값을 전달해야 합니다.';
+  }
+
+  // none 값을 전달 받은 경우
+  @if $value == 'none' {
+    grid-template-columns: none;
+  }
+
+  $type: type-of($value);
+  $unitless-value: unit($value);
+
+  // 단위 없는 숫자 값만 전달받은 경우
+  @if $type == 'number' and $unitless-value {
+    grid-template-columns: repeat($value, minmax(0, 1fr));
+  }
+
+  // 단위가 있는 숫자 또는 리스트 값을 전달받은 경우
+  @if $type == 'number' and not $unitless-value or $type == 'list' {
+    grid-template-columns: $value;
+  }
+}
+
+// justify-*
+// justify-items-*
+// justify-self-*
+// content-*
+// items-*
+// self-*
+
+@mixin grid-container-append(
+  $rows: null,
+  $cols: null,
+  $gap: null,
+  $auto: null,
+  $align: null,
+  $areas: null
+) {
+  // ——————————————————————————————————————————————————————————————————————————————————
+  // grid-template-rows
+  @if $rows != null {
+    @include grid-rows($rows);
+  }
+
+  // ——————————————————————————————————————————————————————————————————————————————————
+  // grid-template-cols
+  @if $cols != null {
+    @include grid-cols($cols);
+  }
+
+  // ——————————————————————————————————————————————————————————————————————————————————
+  // grid-template-areas
+  @if $areas != null {
+    @include grid-areas($areas);
+  }
+
+  // ——————————————————————————————————————————————————————————————————————————————————
+  // gap
+  @if $gap != null {
+    @include gap($gap);
+  }
+
+  // ——————————————————————————————————————————————————————————————————————————————————
+  // grid-auto-*
+  @if $auto != null {
+    @include grid-auto($auto);
+  }
+
+  // ——————————————————————————————————————————————————————————————————————————————————
+  // box alignment
+
+  @if $align != null {
+    // justify-content
+    $justify-content-values: (
+      justify-start,
+      justify-center,
+      justify-end,
+      justify-left,
+      justify-right,
+      justify-normal,
+      justify-between,
+      justify-around,
+      justify-evenly,
+      justify-stretch,
+      justify-safe,
+      justify-unsafe,
+      justify-inherit,
+      justify-initial,
+      justify-unset
+    );
+
+    @if is-include-items($align, $justify-content-values) {
+      @each $value in $align {
+        @if str-index($value, 'justify-') and not
+          str-index($value, 'justify-items-') and not
+          str-index($value, 'justify-self-')
+        {
+          @include justify-content(str-replace($value, 'justify-'));
+        }
+      }
+    }
+
+    // justify-items
+    $justify-items-values: (
+      justify-items-auto,
+      justify-items-normal,
+      justify-items-stretch,
+      justify-items-start,
+      justify-items-center,
+      justify-items-end,
+      justify-items-left,
+      justify-items-right,
+      justify-items-normal,
+      justify-items-baseline,
+      justify-items-first-baseline,
+      justify-items-last-baseline,
+      justify-items-safe,
+      justify-items-unsafe,
+      justify-items-inherit,
+      justify-items-initial,
+      justify-items-unset
+    );
+
+    @if is-include-items($align, $justify-items-values) {
+      @each $value in $align {
+        @if str-index($value, 'justify-items-') {
+          @include justify-items(str-replace($value, 'justify-items-'));
+        }
+      }
+    }
+
+    // align-content
+    $align-content-values: (
+      content-start,
+      content-center,
+      content-end,
+      content-left,
+      content-right,
+      content-normal,
+      content-baseline,
+      content-first-baseline,
+      content-last-baseline,
+      content-between,
+      content-around,
+      content-evenly,
+      content-stretch,
+      content-safe,
+      content-unsafe,
+      content-inherit,
+      content-initial,
+      content-unset
+    );
+
+    @if is-include-items($align, $align-content-values) {
+      @each $value in $align {
+        @if str-index($value, 'content-') {
+          @include align-content(str-replace($value, 'content-'));
+        }
+      }
+    }
+
+    // align-items
+    $align-items-values: (
+      items-normal,
+      items-stretch,
+      items-start,
+      items-center,
+      items-end,
+      items-baseline,
+      items-first-baseline,
+      items-last-baseline,
+      items-safe,
+      items-unsafe,
+      items-inherit,
+      items-initial,
+      items-unset
+    );
+
+    @if is-include-items($align, $align-items-values) {
+      @each $value in $align {
+        @if str-index($value, 'items-') and not
+          str-index($value, 'justify-items-')
+        {
+          @include align-items(str-replace($value, 'items-'));
+        }
+      }
+    }
+  }
+}
+// @include grid-container(2, 3, rem(20px), rows fr, justify-center items-center, 'header' 'footer');
+
+@mixin grid-container(
+  $rows: null,
+  $cols: null,
+  $gap: null,
+  $auto: null,
+  $align: null,
+  $areas: null
+) {
+  display: grid;
+  @include grid-container-append($rows, $cols, $gap, $auto, $align, $areas);
+}
+
+@mixin grid-c(
+  $rows: null,
+  $cols: null,
+  $gap: null,
+  $auto: null,
+  $align: null,
+  $areas: null
+) {
+  @include grid-container($rows, $cols, $gap, $auto, $align, $areas);
+}
+
+@mixin inline-grid-container(
+  $rows: null,
+  $cols: null,
+  $gap: null,
+  $auto: null,
+  $align: null,
+  $areas: null
+) {
+  display: inline-grid;
+  @include grid-container-append($rows, $cols, $gap, $auto, $align, $areas);
+}
+
+@mixin inline-grid-c(
+  $rows: null,
+  $cols: null,
+  $gap: null,
+  $auto: null,
+  $align: null,
+  $areas: null
+) {
+  @include inline-grid-container($rows, $cols, $gap, $auto, $align, $areas);
+}
+
+// @include grid-item('header');
+// @include grid-item(2 10);
+// @include grid-item((2 4, 1 -1));
+// @include grid-item(('2 / 4', '1 / -1'));
+// @include grid-item((span 2, end 4);
+// @include grid-item(2 3, justify-self-center self-center);
+
+@mixin grid-item($area: null, $align: null) {
+  // ——————————————————————————————————————————————————————————————————————————————————
+  // grid-row,column,area
+
+  @if $area != null {
+    $type: type-of($area);
+
+    // grid-area
+    @if $type == 'string' {
+      @include grid-area($area);
+    }
+
+    // grid-row
+    // grid-column
+    @if $type == 'list' {
+      $row-value: first($area);
+      $col-value: last($area);
+      @include grid-area($row-value, $col-value);
+    }
+  }
+
+  // ——————————————————————————————————————————————————————————————————————————————————
+  // box alignment
+
+  @if $align != null {
+    // justify-self
+    $justify-self-values: (
+      justify-self-auto,
+      justify-self-normal,
+      justify-self-stretch,
+      justify-self-start,
+      justify-self-center,
+      justify-self-end,
+      justify-self-left,
+      justify-self-right,
+      justify-self-baseline,
+      justify-self-first-baseline,
+      justify-self-last-baseline,
+      justify-self-safe,
+      justify-self-unsafe,
+      justify-self-inherit,
+      justify-self-initial,
+      justify-self-unset
+    );
+
+    @if is-include-items($align, $justify-self-values) {
+      @each $value in $align {
+        @if str-index($value, 'justify-self-') {
+          @include justify-self(str-replace($value, 'justify-self-'));
+        }
+      }
+    }
+
+    // align-self
+    $align-self-values: (
+      self-normal,
+      self-stretch,
+      self-start,
+      self-center,
+      self-end,
+      self-baseline,
+      self-first-baseline,
+      self-last-baseline,
+      self-safe,
+      self-unsafe,
+      self-inherit,
+      self-initial,
+      self-unset
+    );
+
+    @if is-include-items($align, $align-self-values) {
+      @each $value in $align {
+        @if str-index($value, 'self-') and not
+          str-index($value, 'justify-self-')
+        {
+          @include align-self(str-replace($value, 'self-'));
+        }
+      }
+    }
+  }
+}
+
+@mixin grid-i($area: null, $align: null) {
+  @include grid-item($area, $align);
+}
+
+// @include row-span(3);
+// 참고: https://tailwindcss.com/docs/grid-row
+
+@mixin row-span($value: null) {
+  @if type-of($value) != 'number' and $value != 'full' {
+    @error 'row-span() 믹스인은 숫자 또는 full 문자 값만 전달 받을 수 있습니다.';
+  }
+  @if $value == 'full' {
+    grid-row: unquote('1 / -1');
+  } @else {
+    grid-row: unquote('span #{$value} / span #{$value}');
+  }
+}
+
+// @include row-start(4);
+// 참고: https://tailwindcss.com/docs/grid-row
+
+@mixin row-start($value: null) {
+  @if type-of($value) != 'number' and $value != 'auto' {
+    @error 'row-start() 믹스인은 숫자 또는 auto 문자 값만 전달 받을 수 있습니다.';
+  }
+  grid-row-start: $value;
+}
+
+// @include row-end(5);
+// 참고: https://tailwindcss.com/docs/grid-row
+
+@mixin row-end($value: null) {
+  @if type-of($value) != 'number' and $value != 'auto' {
+    @error 'row-end() 믹스인은 숫자 또는 auto 문자 값만 전달 받을 수 있습니다.';
+  }
+  grid-row-end: $value;
+}
+
+// @include grid-row(span, 2);
+// @include grid-row(start, 3);
+// @include grid-row(end, 5);
+// @include grid-row(start-end, 3 5);
+
+@mixin grid-row($type, $value: null) {
+  @if $type == 'span' {
+    @include row-span($value);
+  }
+  @if $type == 'start' or $type == 's' {
+    @include row-start($value);
+  }
+  @if $type == 'end' or $type == 'e' {
+    @include row-end($value);
+  }
+  @if $type == 'start-end' or $type == 'se' {
+    @include row-start(nth($value, 1));
+    @include row-end(nth($value, 2));
+  }
+  @if not is-valid-keywords($type, span start end start-end s e se) {
+    grid-row: if(type-of($type) == string, unquote($type), $type);
+  }
+}
+
+// @include grid-rows(2);
+// @include grid-rows(none);
+// @include grid-rows(200px);
+// @include grid-rows(200px 400px 1fr);
+// 참고: https://tailwindcss.com/docs/grid-template-rows
+
+@mixin grid-rows($value: null) {
+  // 아무런 값을 전달 받지 않은 경우
+  @if $value == null {
+    @error 'grid-rows() 믹스인 사용 시, 숫자 또는 none, 단위 있는 숫자, 리스트 값을 전달해야 합니다.';
+  }
+
+  // none 값을 전달 받은 경우
+  @if $value == 'none' {
+    grid-template-rows: none;
+  }
+
+  $type: type-of($value);
+  $unitless-value: unitless($value);
+
+  // 단위 없는 숫자 값만 전달받은 경우
+  @if $type == 'number' and $unitless-value {
+    grid-template-rows: repeat($value, minmax(0, 1fr));
+  }
+
+  // 단위가 있는 숫자 또는 리스트 값을 전달받은 경우
+  @if $type == 'number' and not $unitless-value or $type == 'list' {
+    grid-template-rows: $value;
+  }
+}
+
+// font 관련 믹스인
+
+// font-style
+// font-weight
+// font-variant
+// font-family
+// font-size
+// font-size-adjust
+// font-stretch
+// font-kerning
+// line-height
+
+@mixin font($args) {
+  $props: style weight variant size size-adjust family stretch kerning
+    line-height lh;
+
+  @each $prop in $props {
+    $prop-index: index($args, $prop);
+    @if $prop-index {
+      $value: nth($args, $prop-index + 1);
+      @if $prop == 'line-height' or $prop == 'lh' {
+        line-height: $value;
+      } @else {
+        font-#{$prop}: $value;
+      }
+    }
+  }
+}
