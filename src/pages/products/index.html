@@ -159,8 +159,752 @@
 
 
     <main class="main">
-      <div class="product-container">
+      <div class="products-container">
+        <h1 class="products-container__category">베스트</h1>
+        <div class="products-container__products">
+          <nav class="products-navigation">
+            <div class="products-navigation__header">
+              <span>필터</span>
+              <button type="button">초기화</button>
+            </div>
+            <div class="products-navigation__set">
+              <div class="nav-category">
+                <button type="button">
+                  <span>카테고리<em class="category-count">11</em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="vegetable" id="vegetable" />
+                    <label for="vegetable">채소<span class="sub-count">6</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="fruit" id="fruit" />
+                    <label for="fruit">과일&middot;견과&middot;쌀<span class="sub-count">30</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="seafood" id="seafood" />
+                    <label for="seafood">수산&middot;해산&middot;건어물<span class="sub-count">16</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="meat" id="meat" />
+                    <label for="meat">정육&middot;계란<span class="sub-count">41</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cook" id="cook" />
+                    <label for="cook">국&middot;반찬&middot;메인요리<span class="sub-count">52</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="salad" id="salad" />
+                    <label for="salad">샐러드&middot;간편식<span class="sub-count">65</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="oil" id="oil" />
+                    <label for="oil">면&middot;양념&middot;오일<span class="sub-count">11</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="coffee" id="coffee" />
+                    <label for="coffee">생수&middot;음료&middot;우유&middot;커피<span class="sub-count">17</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cookie" id="cookie" />
+                    <label for="cookie">간식&middot;과자&middot;떡<span class="sub-count">18</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="bakery" id="bakery" />
+                    <label for="bakery">베이커리&middot;치즈&middot;델리<span class="sub-count">13</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="medicine" id="medicine" />
+                    <label for="medicine">건강식품<span class="sub-count">10</span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-brand">
+                <button type="button">
+                  <span>브랜드<em class="category-count">6</em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="vegetable" id="vegetable" />
+                    <label for="vegetable">채소<span class="sub-count">6</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="fruit" id="fruit" />
+                    <label for="fruit">과일&middot;견과&middot;쌀<span class="sub-count">30</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="seafood" id="seafood" />
+                    <label for="seafood">수산&middot;해산&middot;건어물<span class="sub-count">16</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="meat" id="meat" />
+                    <label for="meat">정육&middot;계란<span class="sub-count">41</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cook" id="cook" />
+                    <label for="cook">국&middot;반찬&middot;메인요리<span class="sub-count">52</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="salad" id="salad" />
+                    <label for="salad">샐러드&middot;간편식<span class="sub-count">65</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="oil" id="oil" />
+                    <label for="oil">면&middot;양념&middot;오일<span class="sub-count">11</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="coffee" id="coffee" />
+                    <label for="coffee">생수&middot;음료&middot;우유&middot;커피<span class="sub-count">17</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cookie" id="cookie" />
+                    <label for="cookie">간식&middot;과자&middot;떡<span class="sub-count">18</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="bakery" id="bakery" />
+                    <label for="bakery">베이커리&middot;치즈&middot;델리<span class="sub-count">13</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="medicine" id="medicine" />
+                    <label for="medicine">건강식품<span class="sub-count">10</span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-price">
+                <button type="button">
+                  <span>가격<em class="category-count">27</em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="vegetable" id="vegetable" />
+                    <label for="vegetable">채소<span class="sub-count">6</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="fruit" id="fruit" />
+                    <label for="fruit">과일&middot;견과&middot;쌀<span class="sub-count">30</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="seafood" id="seafood" />
+                    <label for="seafood">수산&middot;해산&middot;건어물<span class="sub-count">16</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="meat" id="meat" />
+                    <label for="meat">정육&middot;계란<span class="sub-count">41</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cook" id="cook" />
+                    <label for="cook">국&middot;반찬&middot;메인요리<span class="sub-count">52</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="salad" id="salad" />
+                    <label for="salad">샐러드&middot;간편식<span class="sub-count">65</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="oil" id="oil" />
+                    <label for="oil">면&middot;양념&middot;오일<span class="sub-count">11</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="coffee" id="coffee" />
+                    <label for="coffee">생수&middot;음료&middot;우유&middot;커피<span class="sub-count">17</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cookie" id="cookie" />
+                    <label for="cookie">간식&middot;과자&middot;떡<span class="sub-count">18</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="bakery" id="bakery" />
+                    <label for="bakery">베이커리&middot;치즈&middot;델리<span class="sub-count">13</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="medicine" id="medicine" />
+                    <label for="medicine">건강식품<span class="sub-count">10</span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-bonus">
+                <button type="button">
+                  <span>혜택<em class="category-count">14</em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="vegetable" id="vegetable" />
+                    <label for="vegetable">채소<span class="sub-count">6</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="fruit" id="fruit" />
+                    <label for="fruit">과일&middot;견과&middot;쌀<span class="sub-count">30</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="seafood" id="seafood" />
+                    <label for="seafood">수산&middot;해산&middot;건어물<span class="sub-count">16</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="meat" id="meat" />
+                    <label for="meat">정육&middot;계란<span class="sub-count">41</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cook" id="cook" />
+                    <label for="cook">국&middot;반찬&middot;메인요리<span class="sub-count">52</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="salad" id="salad" />
+                    <label for="salad">샐러드&middot;간편식<span class="sub-count">65</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="oil" id="oil" />
+                    <label for="oil">면&middot;양념&middot;오일<span class="sub-count">11</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="coffee" id="coffee" />
+                    <label for="coffee">생수&middot;음료&middot;우유&middot;커피<span class="sub-count">17</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cookie" id="cookie" />
+                    <label for="cookie">간식&middot;과자&middot;떡<span class="sub-count">18</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="bakery" id="bakery" />
+                    <label for="bakery">베이커리&middot;치즈&middot;델리<span class="sub-count">13</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="medicine" id="medicine" />
+                    <label for="medicine">건강식품<span class="sub-count">10</span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-type">
+                <button type="button">
+                  <span>유형<em class="category-count">2</em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="vegetable" id="vegetable" />
+                    <label for="vegetable">채소<span class="sub-count">6</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="fruit" id="fruit" />
+                    <label for="fruit">과일&middot;견과&middot;쌀<span class="sub-count">30</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="seafood" id="seafood" />
+                    <label for="seafood">수산&middot;해산&middot;건어물<span class="sub-count">16</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="meat" id="meat" />
+                    <label for="meat">정육&middot;계란<span class="sub-count">41</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cook" id="cook" />
+                    <label for="cook">국&middot;반찬&middot;메인요리<span class="sub-count">52</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="salad" id="salad" />
+                    <label for="salad">샐러드&middot;간편식<span class="sub-count">65</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="oil" id="oil" />
+                    <label for="oil">면&middot;양념&middot;오일<span class="sub-count">11</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="coffee" id="coffee" />
+                    <label for="coffee">생수&middot;음료&middot;우유&middot;커피<span class="sub-count">17</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cookie" id="cookie" />
+                    <label for="cookie">간식&middot;과자&middot;떡<span class="sub-count">18</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="bakery" id="bakery" />
+                    <label for="bakery">베이커리&middot;치즈&middot;델리<span class="sub-count">13</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="medicine" id="medicine" />
+                    <label for="medicine">건강식품<span class="sub-count">10</span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-except">
+                <button type="button">
+                  <span>특정상품 제외<em class="category-count">19</em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="vegetable" id="vegetable" />
+                    <label for="vegetable">채소<span class="sub-count">6</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="fruit" id="fruit" />
+                    <label for="fruit">과일&middot;견과&middot;쌀<span class="sub-count">30</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="seafood" id="seafood" />
+                    <label for="seafood">수산&middot;해산&middot;건어물<span class="sub-count">16</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="meat" id="meat" />
+                    <label for="meat">정육&middot;계란<span class="sub-count">41</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cook" id="cook" />
+                    <label for="cook">국&middot;반찬&middot;메인요리<span class="sub-count">52</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="salad" id="salad" />
+                    <label for="salad">샐러드&middot;간편식<span class="sub-count">65</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="oil" id="oil" />
+                    <label for="oil">면&middot;양념&middot;오일<span class="sub-count">11</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="coffee" id="coffee" />
+                    <label for="coffee">생수&middot;음료&middot;우유&middot;커피<span class="sub-count">17</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="cookie" id="cookie" />
+                    <label for="cookie">간식&middot;과자&middot;떡<span class="sub-count">18</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="bakery" id="bakery" />
+                    <label for="bakery">베이커리&middot;치즈&middot;델리<span class="sub-count">13</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="medicine" id="medicine" />
+                    <label for="medicine">건강식품<span class="sub-count">10</span></label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <section class="list-area">
+            <div class="list-info">
+              <strong class="products-total-count">총 284건</strong>
+              <ul class="sort-area">
+                <li>
+                  <a href="#">추천순</a>
+                  <div><img src="/images/menu/help.svg" alt="추천순 이란?" /></div>
+                </li>
+                <li>
+                  <a href="#">신상품순</a>
+                </li>
+                <li>
+                  <a href="#">판매량순</a>
+                </li>
+                <li>
+                  <a href="#">혜택순</a>
+                </li>
+                <li>
+                  <a href="#">낮은 가격순</a>
+                </li>
+                <li>
+                  <a href="#">높은 가격순</a>
+                </li>
+              </ul>
+            </div>
+            <div class="product-wrapper">
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>   
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div>
+              <div class="product">
+                <div class="product__images">
+                  <img
+                    src="/src/assets/main/product02.png"
+                    class="product__images__thumbnail"
+                    alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                  />
+                  <img
+                    src="/images/menu/cart.svg"
+                    alt="장바구니에 담기"
+                    class="cart"
+                  />
+                </div>
+                <span class="product__brand">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <span class="product__title">
+                  [온더바디] 죠르디 시카 자석 선쿠션
+                </span>
+                <p class="product__discount">
+                  <span class="product__discount-rate">24%</span>
+                  <span class="product__price">32,500원</span>
+                </p>
+                <span class="product__regular-price">24,000원</span>
+                <span class="product__description">
+                  CJ즉석밥 고소한 맛의 발아 현미밥
+                </span>
+                <p class="product__keyword-list">
+                  <span class="product__keyword only">Karly Only</span>
+                  <span class="product__keyword">한정수량</span>
+                </p>
+              </div> 
+            </div>                
+            <div class="pagination-area">
+              <button type="button"><img src="/images/pagination/firstpage.svg" alt="첫 페이지로 이동하기" /></button>
+              <button type="button"><img src="/images/pagination/prev.svg" alt="이전 페이지로 이동하기" /></button>
+              <button type="button">1</button>
+              <button type="button">2</button>
+              <button type="button">3</button>
+              <button type="button"><img src="/images/pagination/next.svg" alt="다음 페이지로 이동하기" /></button>
+              <button type="button"><img src="/images/pagination/lastpage.svg" alt="마지막 페이지로 이동하기" /></button>
+            </div>
 
+          </section>
+        </div>
       </div>
     </main>
 
