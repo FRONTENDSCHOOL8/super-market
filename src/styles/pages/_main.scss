@@ -1,0 +1,147 @@
+@use '/src/styles/base' as *;
+@use '/src/styles/abstracts' as *;
+@use '/src/styles/components/' as *;
+@use '/src/styles/layout/' as *;
+@use '/src/styles/themes/' as *;
+
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+figcaption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: polygon(0 0, 0 0, 0 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.banner {
+  width: 100vw;
+  position: relative;
+  &__wrapper {
+    width: 100%;
+    max-width: 1900px;
+    overflow-x: auto;
+    white-space: nowrap;
+    margin: 0 auto;
+    figure {
+      display: inline-block;
+      img {
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
+  &__wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  &__button {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    right: 15%;
+  }
+  .left {
+    transform: rotate(180deg);
+  }
+  .right {
+    left: 15%;
+  }
+}
+
+.recommend-products,
+.discount-products {
+  max-width: 1050px;
+  margin: 40px auto;
+  position: relative;
+
+  h2 {
+    font-size: $headingxl;
+    text-align: center;
+    margin-bottom: 40px;
+    color: $content;
+  }
+}
+.product-list {
+  width: 100%;
+  max-width: 1050px;
+  overflow-x: auto;
+  white-space: nowrap;
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  .product__button {
+    position: absolute;
+    top: 40%;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .product__button.left {
+    left: -26px;
+  }
+  .product__button.right {
+    right: -26px;
+    transform: rotate(180deg);
+  }
+}
+
+.product-list::-webkit-scrollbar {
+  display: none;
+}
+.line-banner {
+  img {
+    max-width: 1050px;
+    margin: 0 auto;
+  }
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  &__wrapper {
+    width: 100%;
+    max-width: 440px;
+    border-radius: 16px;
+  }
+  &__image {
+    border-radius: 16px 16px 0px 0px;
+  }
+  &__button__wrapper {
+    background-color: $gray100;
+    border-radius: 0px 0px 16px 16px;
+
+    color: $content;
+    width: 100%;
+    display: flex;
+
+    button {
+      width: calc(100% / 2);
+      padding: 30px 0;
+      border: 0;
+      background-color: transparent;
+    }
+    button:first-child {
+      border-right: 1px solid $content;
+    }
+  }
+}
+
+.modal.is-active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

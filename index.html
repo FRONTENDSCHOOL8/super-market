@@ -1,15 +1,477 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko-KR">
   <head>
     <title>Vite Scss</title>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" src="./main.js"></script>
+    <link
+      rel="stylesheet"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <script type="module" src="/main.js"></script>
   </head>
   <body>
-    <div id="app">
-      hello scss !
+    <header class="header">
+      <div class="header__wrapper">
+        <ul class="sign_menu">
+          <li>
+            <a href="/src/pages/register/" class="menu_join">회원가입</a>
+          </li>
+          <li>
+            <a href="/src/pages/login/" class="menu_login">로그인</a>
+          </li>
+          <li>
+            <a href="/" class="menu_customer">
+              고객센터
+              <span class="icon_down"></span>
+            </a>
+          </li>
+        </ul>
+        <div class="visual">
+          <div class="visual__title">
+            <a href="/" class="logo">
+              <img src="/logo.svg" alt="Karly" />
+            </a>
+            <span class="karly-wrapper">
+              <button type="button" class="market-karly">마켓칼리</button>
+              <button type="button" class="beauty-karly">뷰티칼리</button>
+            </span>
+          </div>
+          <div class="search_box">
+            <form action="/src/pages/products/" method="POST">
+              <input type="text" placeholder="검색어를 입력해주세요" />
+              <button type="button" class="erase"></button>
+            </form>
+            <button type="submit" class="search"></button>
+          </div>
+          <div class="menu_link">
+            <button type="button" aria-label="배송지"></button>
+            <button type="button" aria-label="찜하기"></button>
+            <button type="button" aria-label="장바구니"></button>
+          </div>
+        </div>
+      </div>
+      <!-- start: nav -->
+      <nav class="menu">
+        <div class="menu__category">
+          <a href="" class="menu__category--button">
+            <span></span>
+            카테고리
+          </a>
+          <ul class="menu__category--list">
+            <li>
+              <a href="">
+                <img src="/images/menu/gift.svg" alt="" />
+                <span>선물하기</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Vegetable.svg" alt="" />
+                <span>채소</span>
+              </a>
+              <ul class="sub-list">
+                <li><a href="/src/pages/products/">친환경</a></li>
+                <li>
+                  <a href="/src/pages/products/">
+                    고구마&middot;감자&middot;당근
+                  </a>
+                </li>
+                <li>
+                  <a href="/src/pages/products/">
+                    시금치&middot;쌈채소&middot;나물
+                  </a>
+                </li>
+                <li>
+                  <a href="/src/pages/products/">
+                    브로콜리&middot;파프리카&middot;양배추
+                  </a>
+                </li>
+                <li>
+                  <a href="/src/pages/products/">
+                    양파&middot;대파&middot;마늘&middot;배추
+                  </a>
+                </li>
+                <li>
+                  <a href="/src/pages/products/">
+                    오이&middot;호박&middot;고추
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Fruit.svg" alt="" />
+                <span>과일&middot;견과&middot;쌀</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/SeaFood.svg" alt="" />
+                <span>수산&middot;해산&middot;건어물</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Meat.svg" alt="" />
+                <span>정육&middot;계란</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Cook.svg" alt="" />
+                <span>국&middot;반찬&middot;메인요리</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Salad.svg" alt="" />
+                <span>샐러드&middot;간편식</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Oil.svg" alt="" />
+                <span>면&middot;양념&middot;오일</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Coffee.svg" alt="" />
+                <span>생수&middot;음료&middot;우유&middot;커피</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Snack.svg" alt="" />
+                <span>간식&middot;과자&middot;떡</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Bread.svg" alt="" />
+                <span>베이커리&middot;치즈&middot;델리</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/medicine.svg" alt="" />
+                <span>건강식품</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="menu__list">
+          <ul>
+            <li><a href="/src/pages/products/">신상품</a></li>
+            <li><a href="/src/pages/products/">베스트</a></li>
+            <li><a href="/src/pages/products/">알뜰쇼핑</a></li>
+            <li><a href="/src/pages/products/">특가/혜택</a></li>
+          </ul>
+        </div>
+        <a href="" class="menu__info"><em>샛별&middot;낮</em>배송안내</a>
+      </nav>
+    </header>
+    <main>
+      <div class="banner">
+        <div class="banner__wrapper">
+          <figure>
+            <img src="./src/assets/main/banner01.png" />
+            <figcaption>
+              부드러운 달콤한 컬리 과일 광고, 멜론 9,900원
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="./src/assets/main/banner02.png" />
+            <figcaption>카드 혜택 광고, 최대 10% 카드 쿠폰</figcaption>
+          </figure>
+          <figure>
+            <img src="./src/assets/main/banner03.png" />
+            <figcaption>퍼플 위크 광고, 더 높은 적립과 3종 쿠폰팩</figcaption>
+          </figure>
+          <figure>
+            <img src="./src/assets/main/banner04.png" />
+            <figcaption>이번주 특가 한눈에 보기</figcaption>
+          </figure>
+        </div>
+        <img
+          src="./public/images/menu/banner-arrow.svg"
+          class="banner__button left"
+          alt="이전 광고로 이동"
+        />
+        <img
+          src="./public/images/menu/banner-arrow.svg"
+          class="banner__button right"
+          alt="다음 광고로 이동"
+        />
+      </div>
+      <!-- start: recommend-products -->
+      <section class="recommend-products">
+        <h2>이 상품 어때요?</h2>
+        <div class="product-list">
+          <div class="product-list__wrapper">
+            <!-- start: product1 -->
+            <div class="product">
+              <div class="product__images">
+                <img
+                  src="./src/assets/main/product01.png"
+                  class="product__images__thumbnail"
+                  alt="탱탱쫄면 봉지 4개입"
+                />
+                <img
+                  src="./public/images/menu/cart.svg"
+                  alt="장바구니에 담기"
+                  class="cart"
+                />
+              </div>
+              <span class="product__title">[풀무원] 탱탱쫄면 (4개입)</span>
+              <p class="product__discount">
+                <span class="product__price">4,980원</span>
+              </p>
+            </div>
+            <!-- start: product2 -->
+            <div class="product">
+              <div class="product__images">
+                <img
+                  src="./src/assets/main/product02.png"
+                  class="product__images__thumbnail"
+                  alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                />
+                <img
+                  src="./public/images/menu/cart.svg"
+                  alt="장바구니에 담기"
+                  class="cart"
+                />
+              </div>
+              <span class="product__brand">
+                [온더바디] 죠르디 시카 자석 선쿠션
+              </span>
+              <span class="product__title">
+                [온더바디] 죠르디 시카 자석 선쿠션
+              </span>
+              <p class="product__discount">
+                <span class="product__discount-rate">24%</span>
+                <span class="product__price">32,500원</span>
+              </p>
+              <span class="product__regular-price">24,000원</span>
+              <span class="product__description">
+                CJ즉석밥 고소한 맛의 발아 현미밥
+              </span>
+              <p class="product__keyword-list">
+                <span class="product__keyword only">Karly Only</span>
+                <span class="product__keyword">한정수량</span>
+              </p>
+            </div>
+            <!-- start: product3 -->
+            <div class="product">
+              <div class="product__images">
+                <img
+                  src="./src/assets/main/product03.png"
+                  class="product__images__thumbnail"
+                  alt="지퍼백에 들어있는 현미 4kg"
+                />
+                <img
+                  src="./public/images/menu/cart.svg"
+                  alt="장바구니에 담기"
+                  class="cart"
+                />
+              </div>
+              <span class="product__title"> 유기농 밀키퀸 현미 4kg </span>
+              <p class="product__discount">
+                <span class="product__price">25,000원</span>
+              </p>
+            </div>
+            <!-- start: product4 -->
+            <div class="product">
+              <div class="product__images">
+                <img
+                  src="./src/assets/main/product04.png"
+                  class="product__images__thumbnail"
+                  alt="분무기와 통에 든 세탁세제 1.5리터"
+                />
+                <img
+                  src="./public/images/menu/cart.svg"
+                  alt="장바구니에 담기"
+                  class="cart"
+                />
+              </div>
+              <span class="product__title">[프로쉬] 베이비 세탁세제</span>
+              <p class="product__discount">
+                <span class="product__discount-rate">24%</span>
+                <span class="product__price">18,900원</span>
+              </p>
+              <span class="product__regular-price">24,000원</span>
+            </div>
+            <img
+              src="./public/images/menu/arrow.svg"
+              class="product__button left"
+              alt="이전 상품 리스트로 이동"
+            />
+            <img
+              src="./public/images/menu/arrow.svg"
+              class="product__button right"
+              alt="이후 상품 리스트로 이동"
+            />
+          </div>
+        </div>
+      </section>
+      <!-- start: line-banner -->
+      <div class="line-banner">
+        <figure>
+          <img src="./src/assets/main/line-banner.png" />
+          <figcaption>퍼플 위크 광고, 더 높은 적립과 3종 쿠폰팩</figcaption>
+        </figure>
+      </div>
+      <!-- start: discount-products -->
+      <section class="discount-products">
+        <h2>놓치면 후회할 가격</h2>
+        <div class="product-list">
+          <div class="product-list__wrapper">
+            <!-- start: product1 -->
+            <div class="product">
+              <div class="product__images">
+                <img
+                  src="./src/assets/main/product01.png"
+                  class="product__images__thumbnail"
+                  alt="탱탱쫄면 봉지 4개입"
+                />
+                <img
+                  src="./public/images/menu/cart.svg"
+                  alt="장바구니에 담기"
+                  class="cart"
+                />
+              </div>
+              <span class="product__title">[풀무원] 탱탱쫄면 (4개입)</span>
+              <p class="product__discount">
+                <span class="product__price">4,980원</span>
+              </p>
+            </div>
+            <!-- start: product2 -->
+            <div class="product">
+              <div class="product__images">
+                <img
+                  src="./src/assets/main/product02.png"
+                  class="product__images__thumbnail"
+                  alt="노란색 죠르디 선쿠션과 붉은 하트 선글라스 자석"
+                />
+                <img
+                  src="./public/images/menu/cart.svg"
+                  alt="장바구니에 담기"
+                  class="cart"
+                />
+              </div>
+              <span class="product__title">
+                [온더바디] 죠르디 시카 자석 선쿠션
+              </span>
+              <p class="product__discount">
+                <span class="product__price">32,500원</span>
+              </p>
+            </div>
+            <!-- start: product3 -->
+            <div class="product">
+              <div class="product__images">
+                <img
+                  src="./src/assets/main/product03.png"
+                  class="product__images__thumbnail"
+                  alt="지퍼백에 들어있는 현미 4kg"
+                />
+                <img
+                  src="./public/images/menu/cart.svg"
+                  alt="장바구니에 담기"
+                  class="cart"
+                />
+              </div>
+              <span class="product__title"> 유기농 밀키퀸 현미 4kg </span>
+              <p class="product__discount">
+                <span class="product__price">25,000원</span>
+              </p>
+            </div>
+            <!-- start: product4 -->
+            <div class="product">
+              <div class="product__images">
+                <img
+                  src="./src/assets/main/product04.png"
+                  class="product__images__thumbnail"
+                  alt="분무기와 통에 든 세탁세제 1.5리터"
+                />
+                <img
+                  src="./public/images/menu/cart.svg"
+                  alt="장바구니에 담기"
+                  class="cart"
+                />
+              </div>
+              <span class="product__title">[프로쉬] 베이비 세탁세제</span>
+              <p class="product__discount">
+                <span class="product__discount-rate">24%</span>
+                <span class="product__price">18,900원</span>
+              </p>
+              <span class="product__regular-price">24,000원</span>
+            </div>
+            <img
+              src="./public/images/menu/arrow.svg"
+              class="product__button left"
+              alt="이전 상품 리스트로 이동"
+            />
+            <img
+              src="./public/images/menu/arrow.svg"
+              class="product__button right"
+              alt="이후 상품 리스트로 이동"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+    <aside class="recently">
+      <div class="recently__wrapper">
+        <span class="recently__title">최근 본 상품</span>
+        <ul class="recently__product-list">
+          <li class="recently__product">
+            <img
+              src="./src/assets/main/product01.png"
+              alt="탱탱쫄면 봉지 4개입"
+              class="recently__product__image"
+            />
+          </li>
+          <li class="recently__product">
+            <img
+              src="./src/assets/main/product02.png"
+              alt="탱탱쫄면 봉지 4개입"
+              class="recently__product__image"
+            />
+          </li>
+          <li class="recently__product">
+            <img
+              src="./src/assets/main/product03.png"
+              alt="탱탱쫄면 봉지 4개입"
+              class="recently__product__image"
+            />
+          </li>
+        </ul>
+        <img
+          src="./public/images/menu/arrow.svg"
+          alt="최근 본 상품 위로 가기"
+          class="recently__button up"
+        />
+        <img
+          src="./public/images/menu/arrow.svg"
+          alt="최근 본 상품 아래로 가기"
+          class="recently__button down"
+        />
+      </div>
+    </aside>
+    <div class="modal is-active">
+      <div class="modal__wrapper">
+        <img
+          src="./src/assets/main/popup.png"
+          alt="마켓컬리 뷰티 플랫폼으로 이동하기"
+          class="modal__image"
+        />
+        <div class="modal__button__wrapper">
+          <button>오늘 하루 안 보기</button><button>닫기</button>
+        </div>
+      </div>
     </div>
-    </body>
+    <!-- <footer>푸터</footer> -->
+  </body>
 </html>
