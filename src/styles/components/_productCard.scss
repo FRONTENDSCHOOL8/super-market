@@ -1,0 +1,57 @@
+@use '/src/styles/abstracts/' as *;
+
+.product {
+  max-width: 250px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  &__images {
+    position: relative;
+    width: 250px;
+    display: block;
+    .cart {
+      position: absolute;
+      bottom: 3%;
+      right: 3%;
+      cursor: pointer;
+    }
+  }
+  &__brand {
+    color: $gray400;
+    font-size: $labelSmall;
+  }
+  &__title {
+    color: $content;
+    font-size: $paraGraphMedium;
+  }
+  &__discount-rate {
+    color: $accentYellow;
+    font-size: $labelLarge;
+  }
+  &__price {
+    font-size: $labelLarge;
+    margin-left: 8px;
+    font-weight: bold;
+  }
+  &__regular-price {
+    color: $content;
+    text-decoration: line-through;
+  }
+  &__description {
+    color: $content;
+    font-size: $paraGraphSmall;
+  }
+  &__keyword {
+    background-color: $gray100;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: $labelSmall;
+  }
+  &__keyword.only {
+    color: $primary;
+    font-weight: bold;
+  }
+}
