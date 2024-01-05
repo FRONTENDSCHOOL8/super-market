@@ -3,11 +3,172 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff"
-      rel="stylesheet"
-    />
-    <title>Document</title>
+    <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <script type="module" src="/main.js"></script>
+    <title>상품 목록 페이지</title>
+
   </head>
-  <body></body>
+  <body>
+    
+    <header class="header">
+      <div class="header__wrapper">
+
+        <ul class="sign_menu">
+          <li>
+            <a href="/src/pages/register/" class="menu_join">회원가입</a>
+          </li>
+          <li>
+            <a href="/src/pages/login/" class="menu_login">로그인</a>
+          </li>
+          <li>
+            <a href="/" class="menu_customer">
+              고객센터
+              <span class="icon_down"></span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="visual">
+          <div class="visual__title">
+            <a href="/" class="logo">
+              <img src="/logo.svg" alt="Karly" />
+            </a>
+            <span class="karly-wrapper">
+              <button type="button" class="market-karly">마켓칼리</button>
+              <button type="button" class="beauty-karly">뷰티칼리</button>
+            </span>
+          </div>
+    
+          <div class="search_box">
+            <form action="/src/pages/products/" method="POST">
+              <input type="text" placeholder="검색어를 입력해주세요"/>
+              <button type="button" class="erase"></button>
+            </form>
+            <button type="submit" class="search"></button>
+          </div>
+    
+          <div class="menu_link">
+            <button type="button" aria-label="배송지"></button>
+            <button type="button" aria-label="찜하기"></button>
+            <button type="button" aria-label="장바구니"></button>
+          </div>
+        </div>
+      </div>      
+
+      <nav class="menu">
+        <div class="menu__category">
+          <a href="" class="menu__category--button">
+            <span></span>
+            카테고리
+          </a>
+          <ul class="menu__category--list">
+            <li>
+              <a href="">
+                <img src="/images/menu/gift.svg" alt="" />
+                <span>선물하기</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Vegetable.svg" alt="" />
+                <span>채소</span>
+              </a>
+              <ul class="sub-list">
+                <li><a href="/src/pages/products/">친환경</a></li>
+                <li><a href="/src/pages/products/">고구마&middot;감자&middot;당근</a></li>
+                <li><a href="/src/pages/products/">시금치&middot;쌈채소&middot;나물</a></li>
+                <li><a href="/src/pages/products/">브로콜리&middot;파프리카&middot;양배추</a></li>
+                <li><a href="/src/pages/products/">양파&middot;대파&middot;마늘&middot;배추</a></li>
+                <li><a href="/src/pages/products/">오이&middot;호박&middot;고추</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Fruit.svg" alt="" />
+                <span>과일&middot;견과&middot;쌀</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/SeaFood.svg" alt="" />
+                <span>수산&middot;해산&middot;건어물</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Meat.svg" alt="" />
+                <span>정육&middot;계란</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Cook.svg" alt="" />
+                <span>국&middot;반찬&middot;메인요리</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Salad.svg" alt="" />
+                <span>샐러드&middot;간편식</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Oil.svg" alt="" />
+                <span>면&middot;양념&middot;오일</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Coffee.svg" alt="" />
+                <span>생수&middot;음료&middot;우유&middot;커피</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Snack.svg" alt="" />
+                <span>간식&middot;과자&middot;떡</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/Bread.svg" alt="" />
+                <span>베이커리&middot;치즈&middot;델리</span>
+              </a>
+            </li>
+            <li>
+              <a href="/src/pages/products/">
+                <img src="/images/menu/medicine.svg" alt="" />
+                <span>건강식품</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="menu__list">
+          <ul>
+            <li><a href="/src/pages/products/">신상품</a></li>
+            <li><a href="/src/pages/products/">베스트</a></li>
+            <li><a href="/src/pages/products/">알뜰쇼핑</a></li>
+            <li><a href="/src/pages/products/">특가/혜택</a></li>
+          </ul>
+        </div>
+        <a href="" class="menu__info"><em>샛별&middot;낮</em>배송안내</a>
+      </nav>
+    
+    </header>
+
+
+    <main class="main">
+      <div class="product-container">
+
+      </div>
+    </main>
+
+
+    <footer class="footer">
+
+    </footer>
+
+
+  </body>
 </html>
