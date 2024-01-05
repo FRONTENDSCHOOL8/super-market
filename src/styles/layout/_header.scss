@@ -21,8 +21,17 @@
     @include font(size $paraGraphSmall weight 400);
 
     &:first-child {
+      @include mx(0 12);
+      @include px(0 12);
+      border-right: 1px solid #d9d9d9;
       color: $primary;
     }    
+
+    &:last-child {
+      @include mx(12 0);
+      @include px(12 0);
+      border-left: 1px solid #d9d9d9;
+    }
   }
 
   & .icon_down {
@@ -36,13 +45,6 @@
     height: 5px;
 
   }
-}
-
-.divider {
-  @include mx($paraGraphSmall);
-  width: 1px;
-  height: 13px;
-  background-color: #d9d9d9;
 }
 
 .visual {
@@ -74,11 +76,6 @@
 .karly-wrapper {
   @include flex-container(row items-center);
 
-  & > .divider {
-    @include mx(0.3rem);
-    height: 14px;
-  }
-
   & > button {
     @include font(size $paraGraphLarge weight 600 lh 1.5);
     background: transparent;
@@ -88,6 +85,15 @@
 
 .market-karly {
   color: $primary;
+
+  &::after {
+    @include mx(12 0);
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 16px;
+    background-color: #d9d9d9;
+  }
 }
 
 .beauty-karly {
