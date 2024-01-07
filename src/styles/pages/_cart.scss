@@ -1,17 +1,17 @@
 @use '/src/styles/abstracts' as *;
-
 body {
   width: 100vw;
 }
 .cart__wrapper {
-  max-width: 1920px;
+  max-width: 1200px;
   width: 100%;
-  margin: 80px auto 0 auto;
+  margin: 80px auto;
   h2 {
     text-align: center;
+    font-size: $labelLarge;
   }
   input[type='checkbox'] {
-    display: none;
+    @include hide;
   }
   input[type='checkbox'] + label {
     background-image: url('/public/images/checkbox/roundcheck.png');
@@ -23,20 +23,17 @@ body {
   }
 }
 .cart__description {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
+  @include size(100%);
+  @include flex-container(row item-center);
+  @include gap(16);
 }
 .select__wrapper {
-  width: 100%;
-  display: flex;
-  gap: 16px;
-  flex-direction: column;
+  @include size(100%);
+  @include flex-container(column item-center);
+  @include gap(16);
   margin-top: 60px;
   .select__all {
-    width: 100%;
-    display: flex;
+    @include size(100%);
     align-items: center;
     color: $content;
     input[type='checkbox'] + label {
@@ -49,8 +46,8 @@ body {
     }
     span {
       padding-left: 8px;
-      cursor: pointer;
       padding-top: 4px;
+      cursor: pointer;
     }
   }
 }
@@ -58,15 +55,13 @@ body {
   background-color: white;
   .cart-product__wrapper {
     &__bar {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 4px;
+      @include size(100%);
+      @include flex-container(row items-center);
+      @include gap(4);
       border-top: 1px solid $black;
       span {
         flex: 1;
-        font-size: $labelMedium;
+        @include font(size $labelMedium);
       }
       .arrow {
         transform: rotate(-90deg);
@@ -78,13 +73,12 @@ body {
     border-bottom: 1px solid $black;
   }
   .cart-product {
-    width: 100%;
-    display: flex;
-    display: none;
-    align-items: center;
-    gap: 8px;
+    @include size(100%);
+    @include gap(8);
+    @include hide();
     padding: 8px 0;
-
+    display: flex;
+    align-items: center;
     label {
       content: ' ';
       display: block;
@@ -92,28 +86,26 @@ body {
       padding-left: 24px;
       padding-top: 24px;
     }
-    img {
-      width: 60px;
+    .thumbnail {
+      @include size(60px);
     }
     &__content {
       flex: 1;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      @include size(100%);
+      @include flex-container(column);
+      @include gap(8);
       &__title {
-        font-size: $labelMedium;
-        font-weight: 600;
+        @include font(size $labelMedium weight 600);
       }
       &__description {
+        @include font(size $paraGraphMedium);
         color: $content;
-        font-size: $paraGraphMedium;
       }
     }
     &__count {
-      border: 1px solid $gray200;
-      width: 100%;
+      @include size(100%);
       max-width: 90px;
+      border: 1px solid $gray200;
       display: flex;
       justify-content: space-between;
       text-align: center;
@@ -150,6 +142,7 @@ body {
       }
     }
     &__delete {
+      @include size(30px);
       cursor: pointer;
     }
   }
@@ -161,10 +154,9 @@ body {
     }
   }
 }
-// 배송지 및 금액
 .information__wrapper {
   background-color: $white;
-  width: 100%;
+  @include size(100%);
   max-width: 280px;
   margin-left: 20px;
   .location__wrapper {
@@ -172,21 +164,18 @@ body {
   }
 }
 .shipping {
-  width: 100%;
-  padding: 18px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-direction: column;
-  font-size: $labelMedium;
+  @include size(100%);
+  @include p(18);
+  @include flex-container(column center);
+  @include gap(12);
+  @include font(size $labelMedium);
   &__title {
-    width: 100%;
+    @include size(100%);
     display: flex;
-    align-items: flex-end;
     align-items: center;
     margin-bottom: 12px;
     img {
-      width: 30px;
+      @include size(30px);
       color: $content;
     }
     span {
@@ -194,9 +183,8 @@ body {
     }
   }
   &__address-type {
+    @include font(size $labelSmall weight 600);
     color: $primary;
-    font-size: $labelSmall;
-    font-weight: 600;
   }
   &__address-change {
     padding: 10px;
@@ -207,16 +195,13 @@ body {
     font-weight: 600;
   }
 }
-
 .payment {
-  width: 100%;
-  padding: 20px;
-  margin: 0 auto;
+  @include size(100%);
+  @include p(20px);
   background-color: $gray50;
   border-top: 2px solid $gray100;
-
   &__detail {
-    width: 100%;
+    @include size(100%);
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(2, 1fr);
@@ -231,27 +216,28 @@ body {
     }
   }
   &__result {
+    @include size(100%);
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     &__description {
-      font-size: $paraGraphMedium;
+      @include font(size $paraGraphMedium);
       color: $content;
     }
     &__price {
-      font-size: $labelMedium;
+      @include font(size $labelMedium);
       text-align: right;
       b {
-        font-size: $headingxl;
+        @include font(size $headingxl);
       }
     }
   }
   &__grade {
+    @include size(100%);
+    @include font(size $labelSmall);
     margin-top: 11px;
-    width: 100%;
     text-align: right;
-    font-size: $labelSmall;
     &__type {
       background-color: $accentYellow;
       color: $white;
@@ -263,18 +249,18 @@ body {
   }
 }
 .order-button {
+  @include size(100%);
+  @include py(10);
+  @include my(16);
   background-color: $primary;
-  border: none;
-  width: 100%;
-  padding: 10px 0;
   color: $white;
+  border: none;
   border-radius: 4px;
-  margin: 16px 0;
 }
 .detail {
+  @include font(size $labelSmall);
   color: $gray400;
-  font-size: $labelSmall;
   li {
-    line-height: 150%;
+    line-height: 1.5;
   }
 }
