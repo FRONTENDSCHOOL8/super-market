@@ -1,11 +1,6 @@
 @use '/src/styles/base' as *;
 @use '/src/styles/abstracts' as *;
 
-.product-container {
-
-  min-height: calc(100vh - 629px);
-}
-
 .footer {
   @include relative;
   height: 629px;
