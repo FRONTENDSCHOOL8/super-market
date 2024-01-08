@@ -3,6 +3,8 @@
   <head>
     <title>Vite Scss</title>
     <meta charset="UTF-8" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script type="module" src="./main.js"></script>
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link
       rel="stylesheet"
@@ -174,35 +176,35 @@
       </nav>
     </header>
     <main>
-      <div class="banner">
-        <div class="banner__wrapper">
-          <figure>
+      <div class="banner swiper-container">
+        <div class="banner__wrapper swiper-wrapper">
+          <figure class="swiper-slide">
             <img src="./src/assets/main/banner01.png" />
             <figcaption>
               부드러운 달콤한 컬리 과일 광고, 멜론 9,900원
             </figcaption>
           </figure>
-          <figure>
+          <figure class="swiper-slide">
             <img src="./src/assets/main/banner02.png" />
             <figcaption>카드 혜택 광고, 최대 10% 카드 쿠폰</figcaption>
           </figure>
-          <figure>
+          <figure class="swiper-slide">
             <img src="./src/assets/main/banner03.png" />
             <figcaption>퍼플 위크 광고, 더 높은 적립과 3종 쿠폰팩</figcaption>
           </figure>
-          <figure>
+          <figure class="swiper-slide">
             <img src="./src/assets/main/banner04.png" />
             <figcaption>이번주 특가 한눈에 보기</figcaption>
           </figure>
         </div>
         <img
           src="./public/images/menu/banner-arrow.svg"
-          class="banner__button left"
+          class="banner__button swiper-button-prev"
           alt="이전 광고로 이동"
         />
         <img
           src="./public/images/menu/banner-arrow.svg"
-          class="banner__button right"
+          class="banner__button swiper-button-next"
           alt="다음 광고로 이동"
         />
       </div>

@@ -12,11 +12,7 @@ body {
   @include size(100vw);
   @include relative();
   &__wrapper {
-    @include size(100%);
-    max-width: 1900px;
-    overflow-x: auto;
     white-space: nowrap;
-    margin: 0 auto;
     figure {
       display: inline-block;
       img {
@@ -28,20 +24,17 @@ body {
       }
     }
   }
-  &__wrapper::-webkit-scrollbar {
-    @include hide();
-  }
   &__button {
     @include absolute();
     cursor: pointer;
     top: 40%;
     right: 15%;
   }
-  .left {
-    transform: rotate(180deg);
-  }
-  .right {
+  .swiper-button-prev {
     left: 15%;
+  }
+  .swiper-button-next {
+    transform: rotate(180deg);
   }
 }
 .recommend-products,
