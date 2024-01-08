@@ -16,4 +16,4 @@ const handleHeaderScroll = e => {
 }
 
 
-export const headerFix = () => document.addEventListener('scroll', handleHeaderScroll);
+export const fixHeader = () => document.addEventListener('scroll', handleHeaderScroll);
