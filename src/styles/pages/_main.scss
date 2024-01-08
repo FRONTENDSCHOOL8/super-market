@@ -8,25 +8,11 @@ body {
   width: 100vw;
   overflow-x: hidden;
 }
-
-figcaption {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  clip-path: polygon(0 0, 0 0, 0 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
 .banner {
-  width: 100vw;
-  position: relative;
+  @include size(100vw);
+  @include relative();
   &__wrapper {
-    width: 100%;
+    @include size(100%);
     max-width: 1900px;
     overflow-x: auto;
     white-space: nowrap;
@@ -37,14 +23,17 @@ figcaption {
         display: block;
         margin: 0 auto;
       }
+      figcaption {
+        @include sr-only();
+      }
     }
   }
   &__wrapper::-webkit-scrollbar {
-    display: none;
+    @include hide();
   }
   &__button {
+    @include absolute();
     cursor: pointer;
-    position: absolute;
     top: 40%;
     right: 15%;
   }
@@ -55,32 +44,30 @@ figcaption {
     left: 15%;
   }
 }
-
 .recommend-products,
 .discount-products {
   max-width: 1050px;
   margin: 40px auto;
   position: relative;
-
   h2 {
-    font-size: $headingxl;
+    @include font(size $headingxl);
     text-align: center;
     margin-bottom: 40px;
     color: $content;
   }
 }
 .product-list {
-  width: 100%;
+  @include size(100%);
   max-width: 1050px;
   overflow-x: auto;
   white-space: nowrap;
   &__wrapper {
+    @include gap(18);
     display: flex;
     justify-content: space-between;
-    gap: 18px;
   }
   .product__button {
-    position: absolute;
+    @include absolute();
     top: 40%;
     border-radius: 50%;
     cursor: pointer;
@@ -95,25 +82,27 @@ figcaption {
 }
 
 .product-list::-webkit-scrollbar {
-  display: none;
+  @include hide();
 }
 .line-banner {
   img {
     max-width: 1050px;
     margin: 0 auto;
   }
+  figcaption {
+    @include sr-only();
+  }
 }
 
 .modal {
+  @include size(100vw, 100vh);
+  @include hide();
   background-color: rgba(0, 0, 0, 0.4);
-  position: absolute;
+  @include absolute();
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: none;
   &__wrapper {
-    width: 100%;
+    @include size(100%);
     max-width: 440px;
     border-radius: 16px;
   }
@@ -121,16 +110,14 @@ figcaption {
     border-radius: 16px 16px 0px 0px;
   }
   &__button__wrapper {
+    @include size(100%);
+    @include flex-container(row);
     background-color: $gray100;
     border-radius: 0px 0px 16px 16px;
-
     color: $content;
-    width: 100%;
-    display: flex;
-
     button {
-      width: calc(100% / 2);
-      padding: 30px 0;
+      @include size(calc(100% / 2));
+      @include py(30);
       border: 0;
       background-color: transparent;
     }
