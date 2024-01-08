@@ -3,6 +3,7 @@
 
 .header {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
+  background: white;
 
   &__wrapper {
     @include mx(auto);
@@ -10,6 +11,56 @@
     @include gap(32);
     @include py(0 20);
     width: 1050px;
+  }
+
+  &.fixed {
+    @include size(100vw);
+
+    position: fixed;
+    z-index: 50;
+
+    & .header__wrapper {
+      @include size(1050px, auto);
+      @include py(0);
+      
+      & .sign_menu, & .visual__title {
+        @include show(none);
+      }
+
+      & .search_box {
+        @include absolute(t 17px r 160px);
+        @include size(194px, 36px);
+        @include px(8);
+
+        & input[type="text"] {
+          @include font(size $paraGraphSmall weight 400 lh 1.6);
+          @include size(98%);
+        }
+
+        & .erase {
+          @include absolute(t 9px r 35px);
+          @include size(16px, 16px);
+          background-size: 40%;
+
+        }
+
+        & .search {
+          // transform: translateX(7px);
+        }
+      }
+
+      & .menu_link {
+        @include absolute(t 17px r 0);
+      }
+    }
+
+    & .menu {
+      @include justify-content(start);
+
+      &__info {
+        @include show(none);
+      }
+    }
   }
 }
 
@@ -167,11 +218,14 @@
         background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 50% 50%;
       }
     }
-    &:nth-child(3) {
-      background: url('/images/menu/menulink-Icon.svg') no-repeat 100% 50%;
-      &:hover {
-        background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 100% 50%;
-      }
+  }
+
+  & a {
+    width: 36px;
+    height: 36px;    
+    background: url('/images/menu/menulink-Icon.svg') no-repeat 100% 50%;
+    &:hover {
+      background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 100% 50%;
     }
   }
 }
