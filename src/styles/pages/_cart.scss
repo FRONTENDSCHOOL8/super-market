@@ -1,1 +1,264 @@
-
+@use '/src/styles/abstracts' as *;
+body {
+  width: 100vw;
+}
+.cart__wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: 80px auto;
+  h2 {
+    text-align: center;
+    font-size: $labelLarge;
+  }
+  input[type='checkbox'] {
+    @include hide;
+  }
+  input[type='checkbox'] + label {
+    background-image: url('/public/images/checkbox/roundcheck.png');
+    background-repeat: no-repeat;
+  }
+  input[type='checkbox']:checked + label {
+    background-image: url('/public/images/checkbox/rounduncheck.png');
+    background-repeat: no-repeat;
+  }
+}
+.cart__description {
+  @include size(100%);
+  @include flex-container(row item-center);
+  @include gap(16);
+}
+.select__wrapper {
+  @include size(100%);
+  @include flex-container(column item-center);
+  @include gap(16);
+  margin-top: 60px;
+  .select__all {
+    @include size(100%);
+    align-items: center;
+    color: $content;
+    input[type='checkbox'] + label {
+      padding-left: 30px;
+      padding-top: 7px;
+    }
+    label {
+      border-right: 1px solid $gray100;
+      padding-right: 8px;
+    }
+    span {
+      padding-left: 8px;
+      padding-top: 4px;
+      cursor: pointer;
+    }
+  }
+}
+.cart-product-list {
+  background-color: white;
+  .cart-product__wrapper {
+    &__bar {
+      @include size(100%);
+      @include flex-container(row items-center);
+      @include gap(4);
+      border-top: 1px solid $black;
+      span {
+        flex: 1;
+        @include font(size $labelMedium);
+      }
+      .arrow {
+        transform: rotate(-90deg);
+        cursor: pointer;
+      }
+    }
+  }
+  .room-temperature {
+    border-bottom: 1px solid $black;
+  }
+  .cart-product {
+    @include size(100%);
+    @include gap(8);
+    @include hide();
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    label {
+      content: ' ';
+      display: block;
+      margin-left: 4px;
+      padding-left: 24px;
+      padding-top: 24px;
+    }
+    .thumbnail {
+      @include size(60px);
+    }
+    &__content {
+      flex: 1;
+      @include size(100%);
+      @include flex-container(column);
+      @include gap(8);
+      &__title {
+        @include font(size $labelMedium weight 600);
+      }
+      &__description {
+        @include font(size $paraGraphMedium);
+        color: $content;
+      }
+    }
+    &__count {
+      @include size(100%);
+      max-width: 90px;
+      border: 1px solid $gray200;
+      @include flex-container(row items-center);
+      @include justify-content(space-between);
+      text-align: center;
+      &__change {
+        border: none;
+        background-color: transparent;
+        color: $gray300;
+      }
+      &__change.is--active {
+        color: $content;
+      }
+      &__change,
+      &__result {
+        width: 100%;
+        max-width: 30px;
+        height: 30px;
+        line-height: 30px;
+      }
+    }
+    &__price {
+      width: 100%;
+      max-width: 120px;
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+      &__discount {
+        font-size: $labelMedium;
+        font-weight: 600;
+      }
+      &__regular {
+        font-size: $labelSmall;
+        color: $content;
+        text-decoration: line-through;
+      }
+    }
+    &__delete {
+      @include size(30px);
+      cursor: pointer;
+    }
+  }
+  .refrigeration.is--active,
+  .cold-and-warm.is--active,
+  .room-temperature.is--active {
+    .cart-product {
+      display: flex;
+    }
+  }
+}
+.information__wrapper {
+  background-color: $white;
+  @include size(100%);
+  max-width: 280px;
+  margin-left: 20px;
+  .location__wrapper {
+    border: 1px solid $gray100;
+  }
+}
+.shipping {
+  @include size(100%);
+  @include p(18);
+  @include flex-container(column center);
+  @include gap(12);
+  @include font(size $labelMedium);
+  &__title {
+    @include size(100%);
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    img {
+      @include size(30px);
+      color: $content;
+    }
+    span {
+      margin-top: 3px;
+    }
+  }
+  &__address-type {
+    @include font(size $labelSmall weight 600);
+    color: $primary;
+  }
+  &__address-change {
+    padding: 10px;
+    background-color: inherit;
+    border: 1px solid $primary;
+    border-radius: 4px;
+    color: $primary;
+    font-weight: 600;
+  }
+}
+.payment {
+  @include size(100%);
+  @include p(20px);
+  background-color: $gray50;
+  border-top: 2px solid $gray100;
+  &__detail {
+    @include size(100%);
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    border-bottom: 1px dashed $gray100;
+    margin-bottom: 24px;
+    .amount {
+      margin-bottom: 16px;
+      text-align: right;
+    }
+    .description {
+      margin-bottom: 16px;
+    }
+  }
+  &__result {
+    @include size(100%);
+    @include flex-container(row items-center);
+    @include justify-content(space-between);
+    &__description {
+      @include font(size $paraGraphMedium);
+      color: $content;
+    }
+    &__price {
+      @include font(size $labelMedium);
+      text-align: right;
+      b {
+        @include font(size $headingxl);
+      }
+    }
+  }
+  &__grade {
+    @include size(100%);
+    @include font(size $labelSmall);
+    margin-top: 11px;
+    text-align: right;
+    &__type {
+      background-color: $accentYellow;
+      color: $white;
+      padding: 2px 8px;
+    }
+    &__description {
+      color: $content;
+    }
+  }
+}
+.order-button {
+  @include size(100%);
+  @include py(10);
+  @include my(16);
+  background-color: $primary;
+  color: $white;
+  border: none;
+  border-radius: 4px;
+}
+.detail {
+  @include font(size $labelSmall);
+  color: $gray400;
+  li {
+    line-height: 1.5;
+  }
+}
