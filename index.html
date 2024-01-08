@@ -16,6 +16,7 @@
   <body>
     <header class="header">
       <div class="header__wrapper">
+
         <ul class="sign_menu">
           <li>
             <a href="/src/pages/register/" class="menu_join">회원가입</a>
@@ -30,6 +31,7 @@
             </a>
           </li>
         </ul>
+
         <div class="visual">
           <div class="visual__title">
             <a href="/" class="logo">
@@ -40,21 +42,23 @@
               <button type="button" class="beauty-karly">뷰티칼리</button>
             </span>
           </div>
+    
           <div class="search_box">
             <form action="/src/pages/products/" method="POST">
-              <input type="text" placeholder="검색어를 입력해주세요" />
+              <input type="text" placeholder="검색어를 입력해주세요"/>
               <button type="button" class="erase"></button>
             </form>
             <button type="submit" class="search"></button>
           </div>
+    
           <div class="menu_link">
             <button type="button" aria-label="배송지"></button>
             <button type="button" aria-label="찜하기"></button>
-            <button type="button" aria-label="장바구니"></button>
+            <a href="/src/pages/cart/" role="button" aria-label="장바구니"></a>
           </div>
         </div>
-      </div>
-      <!-- start: nav -->
+      </div>      
+
       <nav class="menu">
         <div class="menu__category">
           <a href="" class="menu__category--button">
@@ -75,31 +79,11 @@
               </a>
               <ul class="sub-list">
                 <li><a href="/src/pages/products/">친환경</a></li>
-                <li>
-                  <a href="/src/pages/products/">
-                    고구마&middot;감자&middot;당근
-                  </a>
-                </li>
-                <li>
-                  <a href="/src/pages/products/">
-                    시금치&middot;쌈채소&middot;나물
-                  </a>
-                </li>
-                <li>
-                  <a href="/src/pages/products/">
-                    브로콜리&middot;파프리카&middot;양배추
-                  </a>
-                </li>
-                <li>
-                  <a href="/src/pages/products/">
-                    양파&middot;대파&middot;마늘&middot;배추
-                  </a>
-                </li>
-                <li>
-                  <a href="/src/pages/products/">
-                    오이&middot;호박&middot;고추
-                  </a>
-                </li>
+                <li><a href="/src/pages/products/">고구마&middot;감자&middot;당근</a></li>
+                <li><a href="/src/pages/products/">시금치&middot;쌈채소&middot;나물</a></li>
+                <li><a href="/src/pages/products/">브로콜리&middot;파프리카&middot;양배추</a></li>
+                <li><a href="/src/pages/products/">양파&middot;대파&middot;마늘&middot;배추</a></li>
+                <li><a href="/src/pages/products/">오이&middot;호박&middot;고추</a></li>
               </ul>
             </li>
             <li>
@@ -174,6 +158,7 @@
         </div>
         <a href="" class="menu__info"><em>샛별&middot;낮</em>배송안내</a>
       </nav>
+    
     </header>
     <main>
       <div class="banner swiper-container">
