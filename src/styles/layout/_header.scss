@@ -3,6 +3,8 @@
 
 .header {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
+  position: relative;
+  z-index: 10;
   background: white;
 
   &__wrapper {
@@ -10,14 +12,14 @@
     @include flex-container(column items-end);
     @include gap(32);
     @include py(0 20);
-    width: 1050px;
+    @include size(1050px);
   }
 
   &.fixed {
     @include size(100vw);
-
+    top: 0;
     position: fixed;
-    z-index: 50;
+    z-index: 10;
 
     & .header__wrapper {
       @include size(1050px, auto);
@@ -42,10 +44,6 @@
           @include size(16px, 16px);
           background-size: 40%;
 
-        }
-
-        & .search {
-          // transform: translateX(7px);
         }
       }
 
@@ -87,13 +85,12 @@
 
   & .icon_down {
     @include my(0 2);
+    @include show(inline-block);
+    @include size(8px, 5px);
     background-image: url('/icon_down.webp');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    display: inline-block;
-    width: 8px;
-    height: 5px;
 
   }
 }
@@ -115,12 +112,10 @@
 }
 
 .logo {
-  width: 82px;
-  height: 42px;
+  @include size(82px, 42px);
 
   & > img {
-    width: 100%;
-    height: 100%;
+    @include size(100%, 100%);
   }
 }
 
@@ -139,10 +134,9 @@
 
   &::after {
     @include mx(12 0);
+    @include show(inline-block);
+    @include size(1px, 16px);
     content: '';
-    display: inline-block;
-    width: 1px;
-    height: 16px;
     background-color: #d9d9d9;
   }
 }
@@ -153,10 +147,9 @@
 
   &::after {
     @include absolute(t 0 r -5);
+    @include size(7px, 7px);
     content: '';
     color: #fa622f;
-    width: 7px;
-    height: 7px;
     background-image: url('/src/assets/new.svg');
   }
 }
@@ -166,27 +159,24 @@
   @include justify-content(between);
   @include px(20);
   @include py(12);
-  width: 400px;
-  height: 60px;
+  @include size(400px, 60px);
   border: 1px solid $primary;
   border-radius: 4px;
 
   & .erase {
     @include absolute(r 60 t 19);
+    @include size(20px, 20px);
+    @include show(none);
     border: none;
     border-radius: 10px;
     background:  url('/images/search/cancel.svg') no-repeat 50% / 50% $gray400;
-    width: 20px;
-    height: 20px;
-    display: none;
 
   }
 
   & .search {
+    @include size(36px, 36px);
     border: none;
     background: url('/images/search/search.svg') transparent no-repeat 50%;
-    width: 36px;
-    height: 36px;
   }
 
   & input[type='text'] {
@@ -201,10 +191,9 @@
   @include gap(20);
 
   & > button {
+    @include size(36px, 36px);
     background: transparent;
     border: none;
-    width: 36px;
-    height: 36px;
     
     &:nth-child(1) {
       background: url('/images/menu/menulink-Icon.svg') no-repeat 0 50%;
@@ -221,8 +210,7 @@
   }
 
   & a {
-    width: 36px;
-    height: 36px;    
+    @include size(36px, 36px);
     background: url('/images/menu/menulink-Icon.svg') no-repeat 100% 50%;
     &:hover {
       background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 100% 50%;
@@ -234,7 +222,7 @@
   @include flex-container(row items-center);
   @include justify-content(between);
   @include mx(auto);
-  width: 1050px;
+  @include size(1050px);
 
   &__category {
     @include font(weight 600 lh 1.5);
@@ -245,39 +233,35 @@
       @include gap(12);
 
       & span {
+        @include show(block);
+        @include size(16px, 14px);
         background-image: url('/images/menu/burger.svg');
         background-size: cover;
-        display: block;
-        width: 16px;
-        height: 14px;
       }
     }
 
     &--list {
       @include absolute(t 48 z 1);
       @include flex-container(column items-start);
-
+      @include size(247px);
+      @include show(none);
       border: 1px solid $gray100;
-      width: 247px;
-
-      display: none;
 
       &.is--active {
-        display: block;
+        @include show(block);
       }
 
       & li {
         @include px(12 0);
         @include py(8);
-        width: 100%;
+        @include size(100%);
 
         &:hover {
           background-color: $gray50;
         }
 
         & img {
-          width: 24px;
-          height: 24px;
+          @include size(24px, 24px);
         }
 
         & a {
@@ -288,14 +272,13 @@
 
         & .sub-list {
           @include absolute(t 0 l 247);
-          width: 0px;
-          height: 80vh;
+          @include size(0px, 80vh);
           background-color: $gray50;
           transition: all .5s;
           
           &.is--active {
-            width: 266px;
-            display: block;
+            @include size(266px);
+            @include show(block);
 
             & li > a {
               opacity: 1;
@@ -326,8 +309,8 @@
     & li {
       @include py(8);
       @include font(weight 600 lh 1.5);
+      @include size(150px);
       text-align: center;
-      width: 150px;
     }
   }
 
