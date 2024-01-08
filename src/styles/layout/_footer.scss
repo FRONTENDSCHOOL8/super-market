@@ -3,21 +3,21 @@
 
 .footer {
   @include relative;
-  height: 629px;
-  width: 100%;
+  @include size(100%, 629px);
   
   &__wrapper {
     @include flex-container(column);
     @include absolute(b 0);
-    width: 100%;
+    @include size(100%);
+    border-top: 1px solid $gray100;
     
     &--info {
       @include mx(auto);
       @include py(32);
       @include flex-container(row items-start);
       @include justify-content(between);
+      @include size(1050px);
       border-bottom: 1px solid $gray100;
-      width: 1050px;
 
     }
 
@@ -26,7 +26,7 @@
       @include justify-content(between);
       @include mx(auto);
       @include py(24 32);
-      width: 1050px;
+      @include size(1050px);
 
       & .isms, & .privacy, & .toss-payments, & .wooribank {
         @include flex-container(row);
@@ -34,27 +34,26 @@
         @include font(size 10px weight 400 lh 1.6);
 
         & img {
-          width: 34px;
-          height: 34px;
+          @include size(34px, 34px);
         }
 
         & span {
-          display: block;
+          @include show(block);
         }
       }
 
       & .toss-payments {
         & img {
-          width: 102px;
+          @include size(102px);
         }
         & span {
-          width: 160px;
+          @include size(160px);
         }
       }
 
       & .wooribank { 
         & span {
-          width: 241px;
+          @include size(241px);
         }
       }
 
@@ -69,7 +68,7 @@
       
       & em {
         @include my(8 0);
-        display: inline-block;
+        @include show(inline-block);
       }
     }
   }
@@ -94,7 +93,7 @@
     }
     & span {
       @include font(weight 600 lh 1.5);
-      height: 100%;
+      @include size(auto, 100%)
     }
   }
 }
@@ -111,18 +110,17 @@
     & button {
       @include p(4);
       @include font(weight 400 lh 1.6);
+      @include size(140px, 40px);
 
       background: white;
       border: 1px solid $gray200;
-      width: 140px;
-      height: 40px;
     }
 
     & p {
       @include font(weight 400 lh 1.6);
 
       & span {
-        display: block;
+        @include show(block);
       }
     }
   }
@@ -134,7 +132,7 @@
 
   & a {
     @include px(4);
-    display: inline-block;
+    @include show(inline-block);
     color: $primary;
 
   }
@@ -147,7 +145,7 @@
   &__link {
     @include flex-container(row items-start);
     @include justify-content(between);
-    width: 486px;
+    @include size(486px);
   }
 
   &__area {
@@ -164,8 +162,7 @@
     @include gap(20);
 
     & img {
-      width: 30px;
-      height: 30px;
+      @include size(30px, 30px);
     }
   }
 }
