@@ -16,7 +16,6 @@
   <body>
     <header class="header">
       <div class="header__wrapper">
-
         <ul class="sign_menu">
           <li>
             <a href="/src/pages/register/" class="menu_join">회원가입</a>
@@ -42,22 +41,22 @@
               <button type="button" class="beauty-karly">뷰티칼리</button>
             </span>
           </div>
-    
+
           <div class="search_box">
             <form action="/src/pages/products/" method="POST">
-              <input type="text" placeholder="검색어를 입력해주세요"/>
+              <input type="text" placeholder="검색어를 입력해주세요" />
               <button type="button" class="erase"></button>
             </form>
             <button type="submit" class="search"></button>
           </div>
-    
+
           <div class="menu_link">
             <button type="button" aria-label="배송지"></button>
             <button type="button" aria-label="찜하기"></button>
             <a href="/src/pages/cart/" role="button" aria-label="장바구니"></a>
           </div>
         </div>
-      </div>      
+      </div>
 
       <nav class="menu">
         <div class="menu__category">
@@ -79,11 +78,31 @@
               </a>
               <ul class="sub-list">
                 <li><a href="/src/pages/products/">친환경</a></li>
-                <li><a href="/src/pages/products/">고구마&middot;감자&middot;당근</a></li>
-                <li><a href="/src/pages/products/">시금치&middot;쌈채소&middot;나물</a></li>
-                <li><a href="/src/pages/products/">브로콜리&middot;파프리카&middot;양배추</a></li>
-                <li><a href="/src/pages/products/">양파&middot;대파&middot;마늘&middot;배추</a></li>
-                <li><a href="/src/pages/products/">오이&middot;호박&middot;고추</a></li>
+                <li>
+                  <a href="/src/pages/products/"
+                    >고구마&middot;감자&middot;당근</a
+                  >
+                </li>
+                <li>
+                  <a href="/src/pages/products/"
+                    >시금치&middot;쌈채소&middot;나물</a
+                  >
+                </li>
+                <li>
+                  <a href="/src/pages/products/"
+                    >브로콜리&middot;파프리카&middot;양배추</a
+                  >
+                </li>
+                <li>
+                  <a href="/src/pages/products/"
+                    >양파&middot;대파&middot;마늘&middot;배추</a
+                  >
+                </li>
+                <li>
+                  <a href="/src/pages/products/"
+                    >오이&middot;호박&middot;고추</a
+                  >
+                </li>
               </ul>
             </li>
             <li>
@@ -158,7 +177,6 @@
         </div>
         <a href="" class="menu__info"><em>샛별&middot;낮</em>배송안내</a>
       </nav>
-    
     </header>
     <main>
       <div class="banner swiper-container">
@@ -182,16 +200,8 @@
             <figcaption>이번주 특가 한눈에 보기</figcaption>
           </figure>
         </div>
-        <img
-          src="./public/images/menu/banner-arrow.svg"
-          class="banner__button swiper-button-prev"
-          alt="이전 광고로 이동"
-        />
-        <img
-          src="./public/images/menu/banner-arrow.svg"
-          class="banner__button swiper-button-next"
-          alt="다음 광고로 이동"
-        />
+        <button class="banner__button swiper-button-prev"></button>
+        <button class="banner__button swiper-button-next"></button>
       </div>
       <!-- start: recommend-products -->
       <section class="recommend-products">
@@ -199,7 +209,7 @@
         <div class="product-list">
           <div class="product-list__wrapper">
             <!-- start: product1 -->
-            <div class="product">
+            <a href="/src/pages/detail/" class="product">
               <div class="product__images">
                 <img
                   src="./src/assets/main/product01.png"
@@ -216,9 +226,9 @@
               <p class="product__discount">
                 <span class="product__price">4,980원</span>
               </p>
-            </div>
+            </a>
             <!-- start: product2 -->
-            <div class="product">
+            <a href="/src/pages/detail/" class="product">
               <div class="product__images">
                 <img
                   src="./src/assets/main/product02.png"
@@ -249,9 +259,9 @@
                 <span class="product__keyword only">Karly Only</span>
                 <span class="product__keyword">한정수량</span>
               </p>
-            </div>
+            </a>
             <!-- start: product3 -->
-            <div class="product">
+            <a href="/src/pages/detail/" class="product">
               <div class="product__images">
                 <img
                   src="./src/assets/main/product03.png"
@@ -268,9 +278,9 @@
               <p class="product__discount">
                 <span class="product__price">25,000원</span>
               </p>
-            </div>
+            </a>
             <!-- start: product4 -->
-            <div class="product">
+            <a href="/src/pages/detail/" class="product">
               <div class="product__images">
                 <img
                   src="./src/assets/main/product04.png"
@@ -289,17 +299,9 @@
                 <span class="product__price">18,900원</span>
               </p>
               <span class="product__regular-price">24,000원</span>
-            </div>
-            <img
-              src="./public/images/menu/arrow.svg"
-              class="product__button left"
-              alt="이전 상품 리스트로 이동"
-            />
-            <img
-              src="./public/images/menu/arrow.svg"
-              class="product__button right"
-              alt="이후 상품 리스트로 이동"
-            />
+            </a>
+            <button class="product__button left"></button>
+            <button class="product__button right"></button>
           </div>
         </div>
       </section>
@@ -316,7 +318,7 @@
         <div class="product-list">
           <div class="product-list__wrapper">
             <!-- start: product1 -->
-            <div class="product">
+            <a href="/src/pages/detail/" class="product">
               <div class="product__images">
                 <img
                   src="./src/assets/main/product01.png"
@@ -333,9 +335,9 @@
               <p class="product__discount">
                 <span class="product__price">4,980원</span>
               </p>
-            </div>
+            </a>
             <!-- start: product2 -->
-            <div class="product">
+            <a href="/src/pages/detail/" class="product">
               <div class="product__images">
                 <img
                   src="./src/assets/main/product02.png"
@@ -348,15 +350,27 @@
                   class="cart"
                 />
               </div>
+              <span class="product__brand">
+                [온더바디] 죠르디 시카 자석 선쿠션
+              </span>
               <span class="product__title">
                 [온더바디] 죠르디 시카 자석 선쿠션
               </span>
               <p class="product__discount">
+                <span class="product__discount-rate">24%</span>
                 <span class="product__price">32,500원</span>
               </p>
-            </div>
+              <span class="product__regular-price">24,000원</span>
+              <span class="product__description">
+                CJ즉석밥 고소한 맛의 발아 현미밥
+              </span>
+              <p class="product__keyword-list">
+                <span class="product__keyword only">Karly Only</span>
+                <span class="product__keyword">한정수량</span>
+              </p>
+            </a>
             <!-- start: product3 -->
-            <div class="product">
+            <a href="/src/pages/detail/" class="product">
               <div class="product__images">
                 <img
                   src="./src/assets/main/product03.png"
@@ -373,9 +387,9 @@
               <p class="product__discount">
                 <span class="product__price">25,000원</span>
               </p>
-            </div>
+            </a>
             <!-- start: product4 -->
-            <div class="product">
+            <a href="/src/pages/detail/" class="product">
               <div class="product__images">
                 <img
                   src="./src/assets/main/product04.png"
@@ -394,17 +408,9 @@
                 <span class="product__price">18,900원</span>
               </p>
               <span class="product__regular-price">24,000원</span>
-            </div>
-            <img
-              src="./public/images/menu/arrow.svg"
-              class="product__button left"
-              alt="이전 상품 리스트로 이동"
-            />
-            <img
-              src="./public/images/menu/arrow.svg"
-              class="product__button right"
-              alt="이후 상품 리스트로 이동"
-            />
+            </a>
+            <button class="product__button left"></button>
+            <button class="product__button right"></button>
           </div>
         </div>
       </section>
