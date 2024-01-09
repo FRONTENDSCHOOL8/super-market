@@ -1,0 +1,418 @@
+@use '/src/styles/abstracts' as *;
+
+.sr-only {
+  @include sr-only();
+}
+
+.detail {
+  @include p(t 40);
+  // @include container-width(max, 1050px);
+  width: 1050px;
+  @include mx(auto);
+  min-height: calc(100vh - 629px);
+}
+
+.detail-main {
+  @include flex-container(row nowrap justify-between);
+  @include p(b 48);
+}
+
+.main-image {
+  // width: 400px;
+  width: 100%;
+}
+
+.main-description {
+  @include font(weight 600 lh 1.5);
+  width: 560px;
+
+  .delivery {
+    color: $gray500;
+    @include p(b 16);
+    @include font(size $headingLarge weight 700 lh 1.4);
+  }
+  .product-name {
+    color: $content;
+    @include font(size $labelxl);
+  }
+
+  .product-explanation {
+    color: $gray400;
+    @include font(size $paraGraphMedium weight 400 lh 1.6);
+    @include p(b 16);
+  }
+
+  .product-price {
+    color: $content;
+    @include p(b 16);
+    @include font(size $headingMedium weight 700 lh 1.4);
+    span {
+      @include font(size $labelxl);
+    }
+  }
+
+  .benefit {
+    display: block;
+    color: $primary;
+    @include font(size $labelMedium);
+    @include p(b 20);
+  }
+}
+
+.product-detail {
+  display: grid;
+  grid-template-columns: 128px 430px;
+  color: $gray500;
+  @include font(size $labelSmall);
+  @include p(x 4 y 16);
+
+  dt,
+  dd {
+    border-top: 1px solid $gray100;
+    &:last-of-type {
+      border-bottom: 1px solid $gray100;
+    }
+    @include py(16px);
+    white-space: normal;
+  }
+}
+
+.product-option {
+  &-wrapper {
+    @include p(x 16 y 12);
+    border: 1px solid $gray100;
+    position: relative;
+  }
+
+  &-name {
+    @include p(b 12);
+  }
+
+  &-price {
+    color: $content;
+    @include font(size $labelSmall);
+    @include absolute(r 16 b 16);
+  }
+}
+
+.product-option-count {
+  display: inline-block;
+  border: 1px solid $gray100;
+
+  input {
+    display: inline-block;
+    border: none;
+    background: none;
+    text-align: center;
+    @include size(30px, 30px);
+  }
+}
+
+.product-total-wrapper {
+  color: $content;
+  @include py(28);
+  text-align: right;
+  @include font(size $labelMedium);
+
+  .product-total-price {
+    @include font(size $labelxl);
+    @include m(l 18 r 10);
+  }
+
+  .reward {
+    @include m(t 8);
+
+    span {
+      display: inline-block;
+      height: 24px;
+      color: $white;
+      @include font(size 10px weight 400 lh 1.6);
+      background-color: $accentYellow;
+      border-radius: 12px;
+      @include p(x 8 y 4);
+    }
+  }
+}
+
+.shopping-button-wrapper {
+  @include flex-container(row nowrap);
+  gap: 8px;
+
+  button {
+    @include size(48px, 48px);
+    @include p(4px);
+    border: none;
+    background-color: transparent;
+    background-size: cover;
+  }
+  .zzim {
+    background-image: url('/images/product/Heart-disabled.svg');
+
+    &.is-active {
+      background-image: url('/images/product/Heart.svg');
+    }
+  }
+
+  .alarm {
+    background-image: url('/images/product/bell.svg');
+  }
+
+  .add-cart {
+    flex-grow: 1;
+    border-radius: 4px;
+    background-color: $primary;
+    color: $white;
+    @include font(size $labelMedium);
+  }
+}
+
+.detail-navigation {
+  @include sticky(t 0 z 10);
+
+  &-list {
+    @include flex-container(row space-around);
+  }
+
+  li {
+    @include p(1rem);
+    flex-grow: 1;
+    background-color: $gray50;
+    border: 1px solid $gray300;
+
+    a {
+      display: block;
+      text-align: center;
+      color: $black;
+      text-decoration: none;
+      @include font(size $labelMedium);
+    }
+
+    .is-active {
+      background-color: $white;
+      border-bottom: none;
+
+      a {
+        color: $primary;
+      }
+    }
+  }
+}
+
+.board {
+  @include relative();
+  @include m(b 72);
+
+  %board-icon {
+    display: inline-block;
+    @include font(size $labelSmall);
+    text-align: center;
+    @include px(8);
+    @include mx(2);
+  }
+  .notice {
+    @extend %board-icon;
+    background-color: $gray100;
+    color: $content;
+  }
+
+  .best {
+    @extend %board-icon;
+    background-color: $secondary;
+    color: $white;
+    border: 1px solid $secondary;
+  }
+
+  .purple {
+    @extend %board-icon;
+    border: 1px solid $primary;
+  }
+
+  .user-name {
+    display: inline;
+  }
+
+  h3 {
+    @include font(size $headingxl weight 700 lh 1.4);
+    @include p(b 24);
+    color: $black;
+  }
+
+  em {
+    color: $content;
+    @include font(size $labelMedium weight 600 lh 1.5);
+  }
+
+  &-top-wrapper {
+    @include flex-container(row justify-between);
+
+    p {
+      @include font(size $labelSmall weight 600 lh 1.5);
+    }
+
+    label {
+      color: $gray300;
+      @include font(size $labelMedium weight 600 lh 1.5);
+      @include px(8);
+
+      :active {
+        color: $content;
+      }
+    }
+
+    input {
+      display: none;
+    }
+  }
+
+  .post-guide {
+    color: $gray500;
+    @include font(size $labelSmall weight 600 jh 1.5);
+    list-style-type: disc;
+    @include p(x 16 y 4);
+    @include m(b 56);
+
+    li {
+      @include py(2);
+    }
+  }
+
+  .write {
+    border: none;
+    @include size(155px, 44px);
+    border-radius: 4px;
+    background-color: $primary;
+    color: $white;
+    @include font(size $labelMedium);
+    @include absolute(t 0 r 0);
+  }
+}
+
+.review-board {
+  border-top: 1px solid $gray300;
+  color: $content;
+  @include font(weight 600 lh 1.5);
+  @include my(16);
+
+  %board-row {
+    @include p(20);
+    border-bottom: 1px solid $gray100;
+  }
+
+  .notice-row {
+    @extend %board-row;
+    @include grid-container();
+    grid-template-columns: 6% 94%;
+
+    p {
+      @include font(size $labelMedium);
+    }
+  }
+
+  .review-row {
+    @extend %board-row;
+    @include grid-container();
+    grid-template-columns: 20% 80%;
+    @include font(size $labelSmall);
+
+    article {
+      @include flex-container(column nowrap);
+      row-gap: 20px;
+
+      .option,
+      .date {
+        color: $gray400;
+      }
+
+      .review-detail {
+        color: $content;
+      }
+    }
+  }
+
+  .subject {
+    @include my(auto);
+  }
+}
+
+.qna-board {
+  border-top: 1px solid $gray300;
+  color: $content;
+  @include font(weight 600 lh 1.5);
+  @include my(16);
+
+  .thead {
+    @include p(20);
+    @include grid-container();
+    grid-template-columns: 72% 9% 9% 9%;
+    border-top: 2px solid $black;
+    border-bottom: 1px solid $content;
+    @include font(size $labelMedium);
+    color: $black;
+    text-align: center;
+  }
+
+  .writer,
+  .written-date,
+  .is-answered {
+    text-align: center;
+    color: $gray400;
+  }
+
+  %qna-board-row {
+    @include p(20);
+    border-bottom: 1px solid $gray100;
+    @include grid-container();
+    grid-template-columns: 72% 9% 9% 9%;
+    @include font(size $labelMedium);
+  }
+
+  .notice-row {
+    @extend %qna-board-row;
+  }
+
+  .q-row {
+    @extend %qna-board-row;
+  }
+
+  .review-row {
+    @extend %board-row;
+    @include grid-container();
+    grid-template-columns: 20% 80%;
+    @include font(size $labelSmall);
+
+    article {
+      @include flex-container(column nowrap);
+      row-gap: 20px;
+
+      .option,
+      .date {
+        color: $gray400;
+      }
+
+      .review-detail {
+        color: $content;
+      }
+    }
+  }
+}
+
+.board-bottom-wrapper {
+  @include flex-container(row justify-center);
+  gap: 16px;
+
+  button {
+    @include size(56px, 56px);
+    @include rounded(sm);
+    border: 1px solid $gray100;
+    background-color: transparent;
+    background-size: cover;
+  }
+
+  .prev {
+    background-image: url(/images/product/prev.svg);
+  }
+
+  .next {
+    background-image: url(/images/product/next.svg);
+  }
+}
