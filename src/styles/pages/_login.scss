@@ -9,15 +9,15 @@
   @include gap(44);
 }
 
-.heading-title {
+.login-heading-title {
   @include font(size $headingLarge weight 600 lh 150%);
 }
 
-.input-wrapper {
+.login-input-wrapper {
   @include flex-container(column);
   @include gap(12);
   @include size(340px);
-  input {
+  .login-input {
     @include size(100%, 50px);
     @include p(y 12 x 20);
     @include rounded(sm);
@@ -25,40 +25,38 @@
   }
 }
 
-.forget-wrapper {
+.login-forget-wrapper {
   @include flex-container(row);
   @include justify-content(end);
   @include gap(4);
   @include m(t 12 b 28 x 0);
-  a {
+  .login-forget-link {
     text-decoration: none;
     color: $black;
     @include font(size $paraGraphSmall);
   }
+  .forget-bar {
+    @include size(1px, 10px);
+    background: $content;
+  }
 }
 
-.forget-bar {
-  @include size(1px, 10px);
-  background: $content;
-}
-
-.button-wrapper {
+.login-buttons-wrapper {
   @include flex-container(column);
   @include size(340px);
   @include gap(12);
-  button {
+  .login-button {
     @include size(100%, 54px);
     border: 1px solid $primary;
     @include rounded(sm);
   }
-}
+  #button-login {
+    background: $primary;
+    color: $white;
+  }
 
-.button-login {
-  background: $primary;
-  color: $white;
-}
-
-.button-register {
-  background: $white;
-  color: $primary;
+  #button-register {
+    background: $white;
+    color: $primary;
+  }
 }

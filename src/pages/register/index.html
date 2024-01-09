@@ -179,244 +179,252 @@
 
     <main class="main">
       <div class="register-container">
-        <div class="heading-wrapper">
-          <h1 class="heading-title">회원가입</h1>
+        <div class="register-heading-wrapper">
+          <h1 class="register-heading-title">회원가입</h1>
         </div>
 
-        <div class="form-wrapper">
-          <div class="requirement-wrapper">
-            <span>*</span>
-            <p>필수입력사항</p>
+        <div class="register-form-wrapper">
+          <div class="register-requirement-wrapper">
+            <span class="register-requirement-star">*</span>
+            <p class="register-requirement-paragraph">필수입력사항</p>
           </div>
           <form action="/src/pages/login/" method="post">
             <!-- 입력 양식 영역 -->
-            <section class="form-field">
+            <section class="register-form-field">
               <!-- 아이디 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label for="userId">아이디</label>
-                  <span>*</span>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label for="userId" class="register-label">아이디</label>
+                  <span class="register-label-star">*</span>
                 </div>
                 <input
                   type="text"
                   id="userId"
                   name="userId"
                   placeholder="아이디를 입력해주세요"
-                  class="input-group"
+                  class="register-input-group"
                   required
                 />
-                <button class="input-button">중복확인</button>
+                <button class="register-input-button">중복확인</button>
               </div>
 
               <!-- 비밀번호 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label for="userPw">비밀번호</label>
-                  <span>*</span>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label for="userPw" class="register-label">비밀번호</label>
+                  <span class="register-label-star">*</span>
                 </div>
                 <input
                   type="password"
                   id="userPw"
                   name="userPw"
                   placeholder="비밀번호를 입력해주세요"
-                  class="input-group"
+                  class="register-input-group"
                   required
                 />
               </div>
 
               <!-- 비밀번호 확인 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label for="userPwConfirm">비밀번호 확인</label>
-                  <span>*</span>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label for="userPwConfirm" class="register-label"
+                    >비밀번호 확인</label
+                  >
+                  <span class="register-label-star">*</span>
                 </div>
                 <input
                   type="password"
                   id="userPwConfirm"
                   name="userPwConfirm"
                   placeholder="비밀번호를 한번 더 입력해주세요"
-                  class="input-group"
+                  class="register-input-group"
                   required
                 />
               </div>
 
               <!-- 이름 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label for="userName">이름</label>
-                  <span>*</span>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label for="userName" class="register-label">이름</label>
+                  <span class="register-label-star">*</span>
                 </div>
                 <input
                   type="text"
                   id="userName"
                   name="userName"
                   placeholder="이름을 입력해주세요"
-                  class="input-group"
+                  class="register-input-group"
                   required
                 />
               </div>
 
               <!-- 이메일 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label for="userEmail">이메일</label>
-                  <span>*</span>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label for="userEmail" class="register-label">이메일</label>
+                  <span class="register-label-star">*</span>
                 </div>
                 <input
                   type="email"
                   id="userEmail"
                   name="userEmail"
                   placeholder="예) supermarket@super.com"
-                  class="input-group"
+                  class="register-input-group"
                   required
                 />
-                <button class="input-button">중복확인</button>
+                <button class="register-input-button">중복확인</button>
               </div>
 
               <!-- 휴대폰 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label for="userTel">휴대폰</label>
-                  <span>*</span>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label for="userTel" class="register-label">휴대폰</label>
+                  <span class="register-label-star">*</span>
                 </div>
                 <input
                   type="tel"
                   id="userTel"
                   name="userTel"
                   placeholder="숫자만 입력해주세요."
-                  class="input-group"
+                  class="register-input-group"
                   required
                 />
-                <button class="input-button">인증번호 받기</button>
+                <button class="register-input-button">인증번호 받기</button>
               </div>
 
               <!-- 주소 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label>주소</label>
-                  <span>*</span>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label class="register-label">주소</label>
+                  <span class="register-label-star">*</span>
                 </div>
                 <div class="search-address-wrapper">
                   <button class="search-address-button">주소 검색</button>
-                  <p>배송지에 따라 상품 정보가 달라질 수 있습니다.</p>
+                  <p class="search-address-paragraph">
+                    배송지에 따라 상품 정보가 달라질 수 있습니다.
+                  </p>
                 </div>
               </div>
 
               <!-- 성별 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label>성별</label>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label class="register-label">성별</label>
                 </div>
-                <div class="radio-select-wrapper">
-                  <div class="radio-wrapper">
+                <div class="register-radio-wrapper">
+                  <div class="register-radio-box">
                     <input
                       type="radio"
                       id="gender-male"
-                      class="radio-checkbox"
+                      class="register-radio-checkbox"
                       name="gender"
                       value="male"
                     />
-                    <label for="gender-male" class="radio-checkbox-label"
-                      ><span class="icon-radio-check"></span>남자</label
+                    <label for="gender-male" class="register-radio-label"
+                      ><span class="register-radio-icon"></span>남자</label
                     >
                   </div>
 
-                  <div class="radio-wrapper">
+                  <div class="register-radio-box">
                     <input
                       type="radio"
                       id="gender-female"
-                      class="radio-checkbox"
+                      class="register-radio-checkbox"
                       name="gender"
                       value="female"
                     />
-                    <label for="gender-female" class="radio-checkbox-label"
-                      ><span class="icon-radio-check"></span>여자</label
+                    <label for="gender-female" class="register-radio-label"
+                      ><span class="register-radio-icon"></span>여자</label
                     >
                   </div>
 
-                  <div class="radio-wrapper">
+                  <div class="register-radio-box">
                     <input
                       type="radio"
                       id="gender-none"
-                      class="radio-checkbox"
+                      class="register-radio-checkbox"
                       name="gender"
                       value="none"
                       checked
                     />
-                    <label for="gender-none" class="radio-checkbox-label"
-                      ><span class="icon-radio-check"></span>선택 안 함</label
+                    <label for="gender-none" class="register-radio-label"
+                      ><span class="register-radio-icon"></span>선택 안
+                      함</label
                     >
                   </div>
                 </div>
               </div>
 
               <!-- 생년월일 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label>생년월일</label>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label class="register-label">생년월일</label>
                 </div>
                 <div class="birthday-wrapper">
-                  <div class="birthday-wrapper-input">
+                  <div class="birthday-input-wrapper">
                     <input
                       type="text"
                       id="year"
                       placeholder="YYYY"
                       maxlength="4"
+                      class="birthday-input"
                     />
                   </div>
-                  <span class="slash">/</span>
+                  <span class="birthday-slash">/</span>
                   <div class="birthday-wrapper-input">
                     <input
                       type="text"
                       id="month"
                       placeholder="MM"
                       maxlength="2"
+                      class="birthday-input"
                     />
                   </div>
-                  <span class="slash">/</span>
+                  <span class="birthday-slash">/</span>
                   <div class="birthday-wrapper-input">
                     <input
                       type="text"
                       id="day"
                       placeholder="DD"
                       maxlength="2"
+                      class="birthday-input"
                     />
                   </div>
                 </div>
               </div>
 
               <!-- 추가입력 사항 -->
-              <div class="form-input-wrapper">
-                <div class="label-wrapper">
-                  <label>추가입력 사항</label>
+              <div class="register-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label class="register-label">추가입력 사항</label>
                 </div>
-                <div class="radio-select-wrapper">
-                  <div class="radio-wrapper">
+                <div class="register-radio-wrapper">
+                  <div class="register-radio-box">
                     <input
                       type="radio"
                       id="additional-recommender"
-                      class="radio-checkbox"
+                      class="register-radio-checkbox"
                       name="additional"
                       value="recommend"
                     />
                     <label
                       for="additional-recommender"
-                      class="radio-checkbox-label"
-                      ><span class="icon-radio-check"></span>친구초대 추천인
+                      class="register-radio-label"
+                      ><span class="register-radio-icon"></span>친구초대 추천인
                       아이디</label
                     >
                   </div>
 
-                  <div class="radio-wrapper">
+                  <div class="register-radio-box">
                     <input
                       type="radio"
                       id="additional-event"
-                      class="radio-checkbox"
+                      class="register-radio-checkbox"
                       name="additional"
                       value="event"
                     />
-                    <label for="additional-event" class="radio-checkbox-label"
-                      ><span class="icon-radio-check"></span>참여
+                    <label for="additional-event" class="register-radio-label"
+                      ><span class="register-radio-icon"></span>참여
                       이벤트명</label
                     >
                   </div>
@@ -426,9 +434,9 @@
 
             <!-- 동의 영역 -->
             <section class="aggrement-wrapper">
-              <div class="label-wrapper">
-                <label>이용약관동의</label>
-                <span>*</span>
+              <div class="register-label-wrapper">
+                <label class="register-label">이용약관동의</label>
+                <span class="register-label-star">*</span>
               </div>
               <div class="aggrement-field">
                 <!-- 전체 동의 -->
@@ -441,10 +449,10 @@
                       name="state"
                     />
                     <label for="allAgreeState" class="agree-label">
-                      <span class="icon-check"></span>전체 동의합니다.
+                      <span class="agree-check-icon"></span>전체 동의합니다.
                     </label>
                   </div>
-                  <p>
+                  <p class="all-agree-paragraph">
                     선택항목에 동의하지 않은 경우도 회원가입 및 일반적인
                     서비스를 이용할 수 있습니다.
                   </p>
@@ -460,12 +468,12 @@
                         class="agree-state-checkbox"
                       />
                       <label for="agree-terms" class="agree-label"
-                        ><span class="icon-check"></span>이용약관 동의
+                        ><span class="agree-check-icon"></span>이용약관 동의
                         (필수)</label
                       >
                     </div>
                     <div class="agree-link-wrapper">
-                      <a href="#" id="open-modal">약관보기</a>
+                      <a href="#" class="agree-link">약관보기</a>
                       <span class="arrow-unfill"></span>
                     </div>
                   </div>
@@ -481,12 +489,12 @@
                         class="agree-state-checkbox"
                       />
                       <label for="agree-personal" class="agree-label"
-                        ><span class="icon-check"></span>개인정보 수집 · 이용
-                        동의 (필수)</label
+                        ><span class="agree-check-icon"></span>개인정보 수집 ·
+                        이용 동의 (필수)</label
                       >
                     </div>
                     <div class="agree-link-wrapper">
-                      <a href="#">약관보기</a>
+                      <a href="#" class="agree-link">약관보기</a>
                       <span class="arrow-unfill"></span>
                     </div>
                   </div>
@@ -502,12 +510,12 @@
                         class="agree-state-checkbox"
                       />
                       <label for="agree-benefit" class="agree-label"
-                        ><span class="icon-check"></span>무료배송, 할인쿠폰 등
-                        혜택/정보 수신 동의 (선택)</label
+                        ><span class="agree-check-icon"></span>무료배송,
+                        할인쿠폰 등 혜택/정보 수신 동의 (선택)</label
                       >
                     </div>
                     <div class="agree-link-wrapper">
-                      <a href="#">약관보기</a>
+                      <a href="#" class="agree-link">약관보기</a>
                       <span class="arrow-unfill"></span>
                     </div>
                   </div>
@@ -523,12 +531,12 @@
                         class="agree-state-checkbox"
                       />
                       <label for="agree-14" class="agree-label"
-                        ><span class="icon-check"></span>본인은 만 14세
+                        ><span class="agree-check-icon"></span>본인은 만 14세
                         이상입니다. (필수)</label
                       >
                     </div>
                     <div class="agree-link-wrapper">
-                      <a href="#">약관보기</a>
+                      <a href="#" class="agree-link">약관보기</a>
                       <span class="arrow-unfill"></span>
                     </div>
                   </div>

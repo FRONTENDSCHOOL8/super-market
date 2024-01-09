@@ -179,16 +179,16 @@
 
     <main class="main">
       <div class="login-container">
-        <h1 class="heading-title">로그인</h1>
-        <div class="form-wrapper">
+        <h1 class="login-heading-title">로그인</h1>
+        <div class="login-form-wrapper">
           <form action="/src/pages/login/" method="post">
-            <div class="input-wrapper">
+            <div class="login-input-wrapper">
               <input
                 type="text"
                 id="userId"
                 name="userId"
                 placeholder="아이디를 입력해주세요"
-                class="input-id"
+                class="login-input"
                 required
               />
               <input
@@ -196,18 +196,22 @@
                 id="userPw"
                 name="userPw"
                 placeholder="비밀번호를 입력해주세요"
-                class="input-pw"
+                class="login-input"
                 required
               />
             </div>
-            <div class="forget-wrapper">
-              <a href="/" class="forget-id">아이디 찾기</a>
+            <div class="login-forget-wrapper">
+              <a href="/" class="login-forget-link">아이디 찾기</a>
               <span class="forget-bar"></span>
-              <a href="/" class="forget-pw">비밀번호 찾기</a>
+              <a href="/" class="login-forget-link">비밀번호 찾기</a>
             </div>
-            <div class="button-wrapper">
-              <button type="submit" class="button-login">로그인</button>
-              <button type="button" class="button-register">회원가입</button>
+            <div class="login-buttons-wrapper">
+              <button type="submit" class="login-button" id="button-login">
+                로그인
+              </button>
+              <button type="button" class="login-button" pw="button-register">
+                회원가입
+              </button>
             </div>
           </form>
         </div>
