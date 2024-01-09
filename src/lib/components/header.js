@@ -21,9 +21,23 @@ const handleScrollHeader = e => {
   }
 }
 
+const handleSetAddress = () => {
+  window.open('/src/pages/address/', '_blank', 'width=502,height=547');
+}
+
+const promiseInsertLast = (target, template) => {
+
+  return new Promise((resolve, reject) => {
+    resolve(insertLast(target, template))
+  });
+}
+
+const setSearchAddressEvent = (target) => {
+  target.addEventListener('click', handleSetAddress)
+}
+
 const handleAddressBox = () => {
 
-  
   const template = /* html */`
     <div class="menu_link__address-box">
       <p><strong>배송지를 등록</strong>하고</p>
@@ -36,11 +50,13 @@ const handleAddressBox = () => {
   `
   if(!isShowAddressBox) {
     isShowAddressBox = !isShowAddressBox;
-    insertLast(menuLink, template);
+    promiseInsertLast(menuLink, template)
+    .then(setSearchAddressEvent(getNode('.address-box-search')));
   } else {
     isShowAddressBox = !isShowAddressBox;
     menuLink.removeChild(getNode('.menu_link__address-box'));
   }
+
 
 }
 

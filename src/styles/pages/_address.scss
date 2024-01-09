@@ -1,0 +1,101 @@
+@use '/src/styles/base' as *;
+@use '/src/styles/abstracts' as *;
+
+
+.address-header {
+  @include py(50);
+  @include mx(auto);
+  @include size(100vw);
+  text-align: center;
+
+  & h1 {
+    @include font(size 1.7rem weight 500);
+    
+    & strong {
+      color: $primary;
+    }
+  }
+
+  & h3 {
+    @include font(weight 500 lh 1.6);
+    color: $gray500;
+
+  }
+}
+
+.address-main {
+  @include size(100vw);
+  @include px(30);
+  @include mx(auto);
+
+  & .address-result {
+    @include flex-container(row items-center);
+    @include justify-content(between);
+    @include py(0 10);
+    @include gap(10);
+
+    & input[type="text"] {
+      @include size(70%, 44px);
+      @include px(10);
+      @include rounded(sm);
+
+      outline: none;
+      border: 1px solid $gray200;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    & .address-research {
+      @include size(30%, 44px);
+      @include font(weight 600);
+      @include rounded(sm);
+      background-color: white;
+      border: 1px solid $primary;
+      color: $primary;
+    }
+  }
+
+  & .address-detail {
+    @include size(100%, 44px);
+    @include px(10);
+    @include rounded(sm);
+    @include my(0 15);
+    border: 1px solid $gray200;
+  }
+
+  & .delete-address-info {
+    @include font(size 0.9rem weight 500);
+    @include my(0 20);
+    color: $gray400;
+  }
+
+  & .address-save {
+    @include size(100%, 44px);
+    @include px(10);
+    @include rounded(sm);
+    @include my(0 35);
+    @include font(size 1.1rem weight 500);
+    border: none;
+    background-color: $primary;
+    color: white;
+  }
+}
+
+.address-footer {
+  @include size(100vw);
+  @include px(30);
+  @include mx(auto);
+  @include font(size 14px weight 400 lh 15px);
+
+  & .address-information {
+    color: rgb(240, 63, 64);
+  }
+}
+
+.post_wrapper {
+  @include absolute(t 0 l 0);
+  @include size(100vw, 100% !important);
+  z-index: 10;
+  background: white;
+
+}
