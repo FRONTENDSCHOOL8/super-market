@@ -144,15 +144,19 @@
     background-size: cover;
   }
   .zzim {
-    background-image: url('/images/product/Heart-disabled.svg');
+    background-image: url('/images/product/Heart-grey.svg');
 
     &.is-active {
-      background-image: url('/images/product/Heart.svg');
+      background-image: url('/images/product/Heart-purple.svg');
     }
   }
 
-  .alarm {
-    background-image: url('/images/product/bell.svg');
+  .notify {
+    background-image: url('/images/product/bell-grey.svg');
+
+    &.is-active {
+      background-image: url('/images/product/bell-purple.svg');
+    }
   }
 
   .add-cart {
