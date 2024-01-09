@@ -3,9 +3,9 @@ body {
   width: 100vw;
 }
 .cart__wrapper {
-  max-width: 1200px;
-  width: 100%;
-  margin: 80px auto;
+  @include container-width(max, 1050px);
+  @include size(100%);
+  @include m(x auto y 80);
   h2 {
     text-align: center;
     font-size: $labelLarge;
@@ -218,7 +218,9 @@ body {
   &__result {
     @include size(100%);
     @include flex-container(row items-center);
-    @include justify-content(space-between);
+
+    @include justify-content(between);
+    // justify-content: space-between;
     &__description {
       @include font(size $paraGraphMedium);
       color: $content;
