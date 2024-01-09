@@ -189,33 +189,87 @@
 .menu_link {
   @include flex-container(row items-center);
   @include gap(20);
+  @include relative();
 
-  & > button {
+  %menu_link-icon {
     @include size(36px, 36px);
-    background: transparent;
+    background-color: white;
     border: none;
+  }
     
-    &:nth-child(1) {
-      background: url('/images/menu/menulink-Icon.svg') no-repeat 0 50%;
-      &:hover {
-        background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 0 50%;
-      }
-    }
-    &:nth-child(2) {
-      background: url('/images/menu/menulink-Icon.svg') no-repeat 50% 50%;
-      &:hover {
-        background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 50% 50%;
-      }
+  &__address {
+    @extend %menu_link-icon;
+    background: url('/images/menu/menulink-Icon.svg') no-repeat 0 50%;
+    &:hover {
+      background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 0 50%;
     }
   }
-
-  & a {
-    @include size(36px, 36px);
+  &__like {
+    @extend %menu_link-icon;
+    background: url('/images/menu/menulink-Icon.svg') no-repeat 50% 50%;
+    &:hover {
+      background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 50% 50%;
+    }
+  }
+  
+  &__cart {
+    @extend %menu_link-icon;
     background: url('/images/menu/menulink-Icon.svg') no-repeat 100% 50%;
     &:hover {
       background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 100% 50%;
     }
   }
+
+
+  &__address-box {
+    @include absolute(t 55 r 0);
+    @include px(17px);
+    @include py(18px 17px);
+    @include size(267px);
+
+    border: 1px solid $gray100;
+    background-color: white;
+
+    & p {
+      @include font(size 1.17rem weight 300 lh 1.6);
+
+      & strong {
+        color: $primary;
+      }
+    }
+
+    &--container {
+      @include flex-container(row items-center);
+      @include justify-content(between);
+      @include my(10px 0);
+
+      & a {
+        @include flex-container(row items-center);
+        @include justify-content(center);
+        @include size(80px, 36px);
+        @include rounded(sm);
+        @include font(weight 600);
+        @include px(10);
+        
+        border: 1px solid $primary;
+        color: $primary
+        
+      }
+
+      & .address-box-search {
+        @include size(135px, 36px);
+        @include rounded(sm);
+        @include font(weight 400);
+
+        background-color: $primary;
+        color: white;
+        border: none;
+
+      }
+    }
+
+    
+  }  
 }
 
 .menu {
