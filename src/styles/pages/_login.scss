@@ -2,62 +2,54 @@
 @use '/src/styles/abstracts' as *;
 
 .login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 1050px;
-  margin: 80px 0px;
-  gap: 44px;
+  @include flex-container(column items-center);
+  @include container-width(min, 1050px);
+  min-height: calc(100vh - 629px);
+  @include my(80);
+  @include gap(44);
 }
 
 .heading-title {
-  font-size: $headingLarge;
-  font-weight: 600;
-  line-height: 150%;
+  @include font(size $headingLarge weight 600 lh 150%);
 }
 
 .input-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 340px;
+  @include flex-container(column);
+  @include gap(12);
+  @include size(340px);
   input {
-    display: flex;
-    width: 100%;
-    height: 50px;
-    padding: 12px 20px;
-    border-radius: 4px;
+    @include size(100%, 50px);
+    @include p(y 12 x 20);
+    @include rounded(sm);
     border: 1px solid $gray300;
   }
 }
 
 .forget-wrapper {
-  display: flex;
-  justify-content: end;
-  gap: 4px;
-  margin: 12px 0px 28px 0px;
+  @include flex-container(row);
+  @include justify-content(end);
+  @include gap(4);
+  @include m(t 12 b 28 x 0);
   a {
     text-decoration: none;
     color: $black;
-    font-size: $paraGraphSmall;
+    @include font(size $paraGraphSmall);
   }
 }
 
 .forget-bar {
-  width: 1px;
-  height: 10px;
+  @include size(1px, 10px);
   background: $content;
 }
 
 .button-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 340px;
-  gap: 12px;
+  @include flex-container(column);
+  @include size(340px);
+  @include gap(12);
   button {
-    height: 54px;
+    @include size(100%, 54px);
     border: 1px solid $primary;
-    border-radius: 4px;
+    @include rounded(sm);
   }
 }
 
@@ -70,4 +62,3 @@
   background: $white;
   color: $primary;
 }
-
