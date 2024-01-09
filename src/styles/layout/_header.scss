@@ -236,6 +236,11 @@
       & strong {
         color: $primary;
       }
+
+      &.deliver_type {
+        @include font(size 1.1rem weight 400);
+        color: $primary;
+      }
     }
 
     &--container {
@@ -265,6 +270,15 @@
         color: white;
         border: none;
 
+        &.research {
+          @include size(100%, 36px);
+          @include rounded(sm);
+          @include font(size 0.9rem weight 600);
+  
+          background-color: white;
+          color: $primary;
+          border: 1px solid $primary;
+        }
       }
     }
 

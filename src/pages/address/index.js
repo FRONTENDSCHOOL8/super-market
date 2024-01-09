@@ -1,3 +1,4 @@
+import { setStorage } from '/src/lib';
 import '/src/styles/style.scss';
 
 const element_wrap = document.querySelector('.post_wrapper');
@@ -5,6 +6,8 @@ const zip_code = document.querySelector('#selected-zipcode')
 const address = document.querySelector('#selected-address');
 const detailAddress = document.querySelector('#address-detail');
 
+const saveButton = document.querySelector('.address-save');
+const researchButton = document.querySelector('.address-research');
 
 const openSearchAddress = () => {
   new daum.Postcode({
@@ -47,7 +50,7 @@ const openSearchAddress = () => {
 
           // 우편번호와 주소 정보를 해당 필드에 넣는다.
           zip_code.value = data.zonecode;
-          address.value = addr;
+          address.value = `${addr} (${data.buildingName})`;
           // 커서를 상세주소 필드로 이동한다.
           detailAddress.focus();
 
@@ -68,6 +71,16 @@ const openSearchAddress = () => {
   element_wrap.style.display = 'block';
 }
 
+
+const handleSaveAddress = () => {
+
+  setStorage('address', `{"zip_code":"${zip_code.value}","address":"${address.value}","detail-address":"${detailAddress.value}"}`)
+  .then(
+    self.close()
+  );
+}
+
 openSearchAddress();
 
-// savebutton.addEventListener('click', setAddressToLocalStorage)
+saveButton.addEventListener('click', handleSaveAddress)
+researchButton.addEventListener('click', openSearchAddress);
