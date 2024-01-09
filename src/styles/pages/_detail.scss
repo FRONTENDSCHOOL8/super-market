@@ -6,7 +6,6 @@
 
 .detail {
   @include p(t 40);
-  // @include container-width(max, 1050px);
   width: 1050px;
   @include mx(auto);
   min-height: calc(100vh - 629px);
@@ -18,7 +17,6 @@
 }
 
 .main-image {
-  // width: 400px;
   width: 100%;
 }
 
