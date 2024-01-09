@@ -1,12 +1,5 @@
 import './src/styles/style.scss';
-import {
-  fixHeader,
-  getNode,
-  getStorage,
-  setStorage,
-  addClass,
-  removeClass,
-} from '/src/lib';
+import { fixHeader, getNode, addClass, removeClass } from '/src/lib';
 
 fixHeader();
 
