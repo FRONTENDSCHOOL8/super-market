@@ -226,10 +226,12 @@
 
   &__category {
     @include font(weight 600 lh 1.5);
+    @include size(auto, 72px);
     @include relative();
 
     &--button {
       @include flex-container(row items-center);
+      @include size(auto, 100%);
       @include gap(12);
 
       & span {
@@ -240,25 +242,22 @@
       }
     }
 
+    &:hover .menu__category--list {
+      @include show(block);
+    }
+
     &--list {
-      @include absolute(t 48 z 1);
+      @include absolute(t 72 z 1);
       @include flex-container(column items-start);
       @include size(247px);
       @include show(none);
+      background-color: white;
       border: 1px solid $gray100;
-
-      &.is--active {
-        @include show(block);
-      }
 
       & li {
         @include px(12 0);
         @include py(8);
         @include size(100%);
-
-        &:hover {
-          background-color: $gray50;
-        }
 
         & img {
           @include size(24px, 24px);
@@ -267,36 +266,11 @@
         & a {
           @include flex-container(row);
           @include gap(8);
-
         }
 
-        & .sub-list {
-          @include absolute(t 0 l 247);
-          @include size(0px, 80vh);
+        &:hover {
           background-color: $gray50;
-          transition: all .5s;
-          
-          &.is--active {
-            @include size(266px);
-            @include show(block);
-
-            & li > a {
-              opacity: 1;
-              transition: all 1.5s;
-            }
-            
-          }
-
-          & li > a {
-            overflow: hidden;
-            text-overflow: clip;
-            white-space: nowrap;
-            opacity: 0;
-
-          }
-
-
-        }
+        }        
       }
     }
   }
