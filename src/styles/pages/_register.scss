@@ -3,16 +3,16 @@
 
 .register-container {
   @include flex-container(column items-center);
-  @include gap(44px);
-  min-width: 1050px;
+  @include gap(44);
+  @include m(t 80 b 40);
+  @include container-width(min, 1050px);
   min-height: calc(100vh - 629px);
-  margin: 80px 0px 40px 0px;
 }
 
 .register-heading-wrapper {
   @include flex-container(column items-center);
   .register-heading-title {
-    font-size: $headingLarge;
+    @include font(size $headingLarge);
   }
 }
 
@@ -23,26 +23,23 @@
 .register-requirement-wrapper {
   @include flex-container(row);
   @include justify-content(end);
-  padding-bottom: 10px;
-  font-size: 12px;
-  line-height: 150%;
-  width: 100%;
+  @include p(b 10);
+  @include font(size 12px);
+  @include size(100%);
   .register-requirement-star {
-    font-size: $paraGraphMedium;
+    @include font(size $paraGraphMedium weight 600);
     color: $infoError;
-    font-weight: 600;
   }
   .register-requirement-paragraph {
     @include p(4);
+    @include font(weight 600 lh 150%);
     color: $content;
-    font-weight: 600;
-    line-height: 150%;
   }
 }
 
 .register-form-field {
   @include flex-container(column items-start);
-  width: 640px;
+  @include size(640px);
   border-top: 2px solid $content;
   border-bottom: 1px solid $content;
 }
@@ -55,90 +52,79 @@
 
 .register-label-wrapper {
   @include flex-container(row);
-  width: 139px;
-  height: 44px;
+  @include size(139px, 44px);
   @include p(4);
   @include gap(4);
   .register-label {
     @include p(4);
+    @include font(weight 600 lh 150%);
     color: $content;
-    font-weight: 600;
-    line-height: 150%;
   }
   .register-label-star {
-    font-size: $paraGraphMedium;
+    @include font(size $paraGraphMedium weight 600);
     color: $infoError;
-    font-weight: 600;
   }
 }
 
 .register-input-group {
-  width: 333px;
-  height: 44px;
+  @include size(333px, 44px);
   @include px(20);
-  border-radius: 4px;
+  @include rounded(sm);
   border: 1px solid $gray300;
 }
 
 .register-input-button {
-  width: 143px;
-  height: 44px;
-  border-radius: 4px;
+  @include size(143px, 44px);
+  @include rounded(sm);
   border: 1px solid $primary;
   background-color: $white;
   color: $primary;
 }
 
 .search-address-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
+  @include flex-container(column);
   @include gap(4);
   .search-address-button {
     background: $white;
-    width: 333px;
-    height: 44px;
-    border-radius: 4px;
+    @include size(333px, 44px);
+    @include rounded(sm);
+    @include font(weight 600);
     border: 1px solid $primary;
     color: $primary;
-    font-weight: 600;
-    line-height: 150%;
   }
   .search-address-paragraph {
-    font-size: $paraGraphSmall;
-    font-weight: 400;
-    line-height: 160%;
+    @include font(size $paraGraphSmall weight 400 lh 160%);
     color: $black;
   }
 }
 
 .register-radio-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 333px;
+  @include flex-container(row);
+  @include justify-content(between);
+  @include size(333px);
   .register-radio-box {
-    display: flex;
-    align-items: center;
-    .register-radio-checkbox {
-      @include hide;
-    }
+    @include flex-container(row items-center);
     .register-radio-label {
-      display: flex;
+      @include flex-container(row);
       @include gap(8);
+      @include font(weight 600 lh 150%);
       color: $content;
-      font-weight: 600;
-      line-height: 150%;
+    }
+    .register-radio-checkbox {
+      @include position(absolute);
+      opacity: 0;
+    }
+    &:focus-within .register-radio-label .register-radio-icon {
+      @include rounded(sm);
+      outline: 2px solid $black;
     }
   }
 }
 
 .register-radio-label .register-radio-icon {
+  @include size(24px, 24px);
   background: url(/images/checkbox/radiouncheck.png) no-repeat 0 0 /100%;
   display: block;
-  width: 24px;
-  height: 24px;
 }
 
 .register-radio-checkbox:checked + .register-radio-label .register-radio-icon {
@@ -146,73 +132,59 @@
 }
 
 .birthday-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 333px;
-  height: 44px;
-  border-radius: 4px;
+  @include flex-container(row items-center);
+  @include justify-content(center);
+  @include size(333px, 44px);
+  @include rounded(sm);
   border: 1px solid $gray300;
 
   .birthday-input {
+    @include px(10);
+    @include size(60px, 40px);
     text-align: center;
     border: none;
     outline: none;
-    padding: 0px 10px;
-    height: 40px;
-    width: 60px;
   }
   .birthday-slash {
     color: $gray400;
   }
 }
 
-.aggrement-wrapper {
-  display: flex;
-  align-items: flex-start;
-  width: 640px;
-  padding: 20px 0px;
+.agreement-wrapper {
+  @include flex-container(row);
+  @include size(640px);
+  @include py(20);
   @include gap(8);
   border-bottom: 1px solid $gray200;
 }
 
-.aggrement-field {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 .all-agree-wrapper {
-  display: flex;
-  padding-bottom: 20px;
-  flex-direction: column;
-  .all-agree-box {
-    @include flex-container(row items-center);
-    .agree-label {
-      display: flex;
-      @include gap(8);
-      color: $content;
-      font-size: $labelLarge;
-      font-weight: 600;
-    }
-    .agree-state-checkbox {
-      @include hide;
-    }
+  @include p(b 20px);
+  .agree-label {
+    @include flex-container(row);
+    @include gap(8);
+    @include font(size $labelLarge weight 600);
+    color: $content;
+  }
+  .agree-state-checkbox {
+    @include position(absolute);
+    opacity: 0;
+  }
+  &:focus-within .agree-label .agree-check-icon {
+    @include rounded(sm);
+    outline: 2px solid $black;
   }
   .all-agree-paragraph {
-    padding-top: 4px;
-    padding-left: 32px;
+    @include p(t 4px l 32px);
+    @include font(size $paraGraphSmall lh 160%);
     color: $gray400;
-    font-size: $paraGraphSmall;
-    line-height: 160%;
   }
 }
 
 .agree-label .agree-check-icon {
+  @include size(24px, 24px);
   background: url(/images/checkbox/rounduncheck.png) no-repeat 0 0 /100%;
   display: block;
-  width: 24px;
-  height: 24px;
 }
 
 .agree-state-checkbox:checked + .agree-label .agree-check-icon {
@@ -220,53 +192,47 @@
 }
 
 .agree-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 429px;
-  padding: 12px 0px;
+  @include flex-container(column);
+  @include size(429px);
+  @include py(12px);
 }
 
 .agree-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
+  @include flex-container(row);
+  @include justify-content(between);
 }
 
 .agree-text-wrapper {
-  display: flex;
-  align-items: center;
+  @include flex-container(row items-center);
   @include gap(8);
   .agree-label {
-    display: flex;
+    @include flex-container(row);
     @include gap(8);
+    @include font(lh 160%);
     color: $content;
-    font-size: $paraGraphMedium;
-    font-weight: 400;
-    line-height: 160%;
   }
   .agree-state-checkbox {
-    @include hide;
+    @include position(absolute);
+    opacity: 0;
+  }
+  &:focus-within .agree-label .agree-check-icon {
+    @include rounded(sm);
+    outline: 2px solid $black;
   }
 }
 
 .agree-link-wrapper {
   @include flex-container(row items-center);
-  padding: 4px;
+  @include p(4px);
   @include gap(4);
   .agree-link {
+    @include font(size $paraGraphSmall lh 160%);
     color: $primary;
-    font-size: $paraGraphSmall;
-    font-weight: 400;
-    line-height: 160%;
   }
   .arrow-unfill {
+    @include size(6px, 11px);
     background: url(/images/menu/arrow_unfill.svg) no-repeat 0 0 /100%;
     display: block;
-    width: 6px;
-    height: 11px;
   }
 }
 
@@ -274,13 +240,11 @@
   @include flex-container(column items-center);
   @include py(40);
   .register-button {
-    width: 340px;
-    height: 54px;
+    @include size(340px, 54px);
+    @include rounded(sm);
+    @include font(weight 600);
     background: $primary;
     border: 1px solid $primary;
-    border-radius: 4px;
     color: $white;
-    font-size: $labelMedium;
-    font-weight: 600;
   }
 }
