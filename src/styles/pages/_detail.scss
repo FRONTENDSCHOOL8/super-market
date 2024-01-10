@@ -146,7 +146,7 @@
   .zzim {
     background-image: url('/images/product/Heart-grey.svg');
 
-    &.is-active {
+    &.is--active {
       background-image: url('/images/product/Heart-purple.svg');
     }
   }
@@ -154,7 +154,7 @@
   .notify {
     background-image: url('/images/product/bell-grey.svg');
 
-    &.is-active {
+    &.is--active {
       background-image: url('/images/product/bell-purple.svg');
     }
   }
@@ -189,7 +189,7 @@
       @include font(size $labelMedium);
     }
 
-    .is-active {
+    .is--active {
       background-color: $white;
       border-bottom: none;
 
