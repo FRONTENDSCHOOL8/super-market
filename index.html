@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko-KR">
   <head>
-    <title>Vite Scss</title>
+    <title>슈퍼마켙</title>
     <meta charset="UTF-8" />
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script type="module" src="./main.js"></script>
@@ -11,7 +11,6 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <script type="module" src="/main.js"></script>
   </head>
   <body>
     <header class="header">
@@ -453,15 +452,16 @@
         />
       </div>
     </aside>
-    <div class="modal">
-      <div class="modal__wrapper">
+    <div class="popup">
+      <div class="popup__wrapper">
         <img
           src="./src/assets/main/popup.png"
           alt="마켓컬리 뷰티 플랫폼으로 이동하기"
-          class="modal__image"
+          class="popup__image"
         />
-        <div class="modal__button__wrapper">
-          <button>오늘 하루 안 보기</button><button>닫기</button>
+        <div class="popup__button__wrapper">
+          <button class="watch-today" tabindex="1">오늘 하루 안 보기</button>
+          <button class="close" tabindex="2">닫기</button>
         </div>
       </div>
     </div>
