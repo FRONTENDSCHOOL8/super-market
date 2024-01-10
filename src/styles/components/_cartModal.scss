@@ -55,8 +55,10 @@
   @include flex-container(items-center justify-center);
   display: flex;
   z-index: 10;
-  top: 0;
-  left: 0;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.2);
   &__wrapper {
     @include size(400px, 300px);
