@@ -103,6 +103,12 @@
     background: none;
     text-align: center;
     @include size(30px, 30px);
+
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+    }
   }
 }
 
