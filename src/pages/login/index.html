@@ -8,7 +8,7 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <script type="module" src="/src/pages/login/login.js"></script>
+    <script type="module" src="/src/pages/login/index.js"></script>
     <title>로그인 - super-market</title>
   </head>
   <body>
@@ -49,9 +49,22 @@
           </div>
 
           <div class="menu_link">
-            <button type="button" aria-label="배송지"></button>
-            <button type="button" aria-label="찜하기"></button>
-            <a href="/src/pages/cart/" role="button" aria-label="장바구니"></a>
+            <button
+              type="button"
+              aria-label="배송지"
+              class="menu_link__address"
+            ></button>
+            <button
+              type="button"
+              aria-label="찜하기"
+              class="menu_link__like"
+            ></button>
+            <a
+              href="/src/pages/cart/"
+              role="button"
+              aria-label="장바구니"
+              class="menu_link__cart"
+            ></a>
           </div>
         </div>
       </div>
@@ -74,34 +87,6 @@
                 <img src="/images/menu/Vegetable.svg" alt="" />
                 <span>채소</span>
               </a>
-              <ul class="sub-list">
-                <li><a href="/src/pages/products/">친환경</a></li>
-                <li>
-                  <a href="/src/pages/products/"
-                    >고구마&middot;감자&middot;당근</a
-                  >
-                </li>
-                <li>
-                  <a href="/src/pages/products/"
-                    >시금치&middot;쌈채소&middot;나물</a
-                  >
-                </li>
-                <li>
-                  <a href="/src/pages/products/"
-                    >브로콜리&middot;파프리카&middot;양배추</a
-                  >
-                </li>
-                <li>
-                  <a href="/src/pages/products/"
-                    >양파&middot;대파&middot;마늘&middot;배추</a
-                  >
-                </li>
-                <li>
-                  <a href="/src/pages/products/"
-                    >오이&middot;호박&middot;고추</a
-                  >
-                </li>
-              </ul>
             </li>
             <li>
               <a href="/src/pages/products/">
