@@ -214,7 +214,7 @@
   @include size(783px);
 
   & .list-info {
-    @include flex-container(row items-center);
+    @include flex-container(row wrap items-center);
     @include justify-content(between);
     @include py(0 20);
     @include size(100%);
@@ -257,6 +257,28 @@
       }
     }
 
+    & .checked-item-list {
+      @include size(100%);
+      @include py(16 18);
+      @include px(20);
+      @include my(20 16);
+      @include flex-container(row wrap items-center);
+      @include gap(16);
+      // @include show(none);
+      
+      border: 1px solid $gray200;
+
+      & .checked-item {
+        @include font(weight 400 lh 18px);
+        @include flex-container(row items-center);
+        color: $primary;
+
+        & a {
+          @include flex-container(row items-center);
+        }
+      }
+
+    }
   }
 
   & .product-wrapper {
