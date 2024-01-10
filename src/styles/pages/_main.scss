@@ -9,15 +9,20 @@ body {
   overflow-x: hidden;
 }
 .banner {
-  @include size(1920);
-  @include relative();
+  @include size(100%, 370px);
+  @include flex-container(justify-center);
+  &__cover {
+    @include size(100%);
+    @include container-width(min, 1920px);
+    @include relative();
+    overflow: hidden;
+  }
   &__wrapper {
     white-space: nowrap;
     figure {
       display: inline-block;
       img {
-        display: block;
-        margin: 0 auto;
+        @include m(x auto y 0);
       }
       figcaption {
         @include sr-only();
@@ -29,12 +34,12 @@ body {
     background: url(/public/images/menu/banner-arrow.svg) 50%;
     width: 50px;
     height: 50px;
-    top: 40%;
-    right: 15%;
+    top: 160px;
+    right: 17%;
     border: none;
   }
   .swiper-button-prev {
-    left: 15%;
+    left: 17%;
   }
   .swiper-button-next {
     transform: rotate(180deg);
@@ -93,17 +98,19 @@ body {
   }
 }
 
-.modal {
+.popup {
   @include size(100vw, 100vh);
   @include hide();
-  background-color: rgba(0, 0, 0, 0.4);
   @include absolute();
+  z-index: 10;
   top: 0;
   left: 0;
   &__wrapper {
     @include size(100%);
-    max-width: 440px;
-    border-radius: 16px;
+    @include container-width(max, 440px);
+    @include rounded(16px);
+    box-shadow: 0px 8px 36px 0px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
   }
   &__image {
     border-radius: 16px 16px 0px 0px;
@@ -111,22 +118,27 @@ body {
   &__button__wrapper {
     @include size(100%);
     @include flex-container(row);
-    background-color: $gray100;
-    border-radius: 0px 0px 16px 16px;
+    background-color: $white;
     color: $content;
     button {
       @include size(calc(100% / 2));
       @include py(30);
-      border: 0;
       background-color: transparent;
+      border: 1px solid $content;
     }
-    button:first-child {
-      border-right: 1px solid $content;
+    :hover {
+      background-color: $gray100;
+    }
+    .watch-today {
+      border-end-start-radius: 16px;
+    }
+    .close {
+      border-end-end-radius: 16px;
     }
   }
 }
 
-.modal.is--active {
+.popup.is--active {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko-KR">
   <head>
-    <title>Vite Scss</title>
+    <title>슈퍼마켙</title>
     <meta charset="UTF-8" />
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script type="module" src="./main.js"></script>
@@ -11,7 +11,6 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <script type="module" src="/main.js"></script>
   </head>
   <body>
     <header class="header">
@@ -179,29 +178,31 @@
       </nav>
     </header>
     <main>
-      <div class="banner swiper-container">
-        <div class="banner__wrapper swiper-wrapper">
-          <figure class="swiper-slide">
-            <img src="./src/assets/main/banner01.png" />
-            <figcaption>
-              부드러운 달콤한 컬리 과일 광고, 멜론 9,900원
-            </figcaption>
-          </figure>
-          <figure class="swiper-slide">
-            <img src="./src/assets/main/banner02.png" />
-            <figcaption>카드 혜택 광고, 최대 10% 카드 쿠폰</figcaption>
-          </figure>
-          <figure class="swiper-slide">
-            <img src="./src/assets/main/banner03.png" />
-            <figcaption>퍼플 위크 광고, 더 높은 적립과 3종 쿠폰팩</figcaption>
-          </figure>
-          <figure class="swiper-slide">
-            <img src="./src/assets/main/banner04.png" />
-            <figcaption>이번주 특가 한눈에 보기</figcaption>
-          </figure>
+      <div class="banner">
+        <div class="banner__cover swiper-container">
+          <div class="banner__wrapper swiper-wrapper">
+            <figure class="swiper-slide">
+              <img src="./src/assets/main/banner01.png" />
+              <figcaption>
+                부드러운 달콤한 컬리 과일 광고, 멜론 9,900원
+              </figcaption>
+            </figure>
+            <figure class="swiper-slide">
+              <img src="./src/assets/main/banner02.png" />
+              <figcaption>카드 혜택 광고, 최대 10% 카드 쿠폰</figcaption>
+            </figure>
+            <figure class="swiper-slide">
+              <img src="./src/assets/main/banner03.png" />
+              <figcaption>퍼플 위크 광고, 더 높은 적립과 3종 쿠폰팩</figcaption>
+            </figure>
+            <figure class="swiper-slide">
+              <img src="./src/assets/main/banner04.png" />
+              <figcaption>이번주 특가 한눈에 보기</figcaption>
+            </figure>
+          </div>
+          <button class="banner__button swiper-button-prev"></button>
+          <button class="banner__button swiper-button-next"></button>
         </div>
-        <button class="banner__button swiper-button-prev"></button>
-        <button class="banner__button swiper-button-next"></button>
       </div>
       <!-- start: recommend-products -->
       <section class="recommend-products">
@@ -453,15 +454,16 @@
         />
       </div>
     </aside>
-    <div class="modal">
-      <div class="modal__wrapper">
+    <div class="popup">
+      <div class="popup__wrapper">
         <img
           src="./src/assets/main/popup.png"
           alt="마켓컬리 뷰티 플랫폼으로 이동하기"
-          class="modal__image"
+          class="popup__image"
         />
-        <div class="modal__button__wrapper">
-          <button>오늘 하루 안 보기</button><button>닫기</button>
+        <div class="popup__button__wrapper">
+          <button class="watch-today" tabindex="1">오늘 하루 안 보기</button>
+          <button class="close" tabindex="2">닫기</button>
         </div>
       </div>
     </div>
