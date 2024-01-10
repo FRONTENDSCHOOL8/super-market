@@ -1,15 +1,12 @@
-import { initHeader, setStorage, getStorage } from '/src/lib';
+import { initHeader, insertLast, setStorage, getStorage } from '/src/lib';
 import '/src/styles/style.scss';
 
 initHeader();
 
 const navExpandButton = document.querySelectorAll('div[class^="nav-"] > button');
 const navCheckBox = document.querySelectorAll('div[class^="nav-"] input');
-const navCheckCount = {};
-const selectedItemList = {};
-
 const resetButton = document.querySelector('.products-navigation__header button');
-
+const selectedItemList = {};
 
 
 const handleExpandNavigation = (e) => {
@@ -38,19 +35,14 @@ const handleReset = (e) => {
 }
 
 const handleCheckboxCount = (e) => {
-  const group = e.target.closest('div[class^="nav-"]');
-  const checkBoxGroup = group.classList[0];
-  const checkCount = group.querySelectorAll('input:checked').length;
 
-  const categoryCount = e.target.closest(`.${checkBoxGroup}`).querySelector('.category-count');
-
-  navCheckCount[checkBoxGroup] = checkCount;
-  if(navCheckCount[checkBoxGroup] == 0) {
-    categoryCount.textContent = '';
-  } else {
-    categoryCount.textContent = navCheckCount[checkBoxGroup];
-  }
+  window.location.search.split('filters=')[1].split('|').forEach(item => {
+    const [group, checkedItem] = item.split(':');
+    const categoryCount = document.querySelector(`.nav-${group}`)
+    categoryCount.querySelector('.category-count').textContent = checkedItem.split(',').length;
+  });
 }
+
 
 const handleCheckboxSelect = (e) => {
 
@@ -79,7 +71,7 @@ const handleCheckboxSelect = (e) => {
     }
     
   }
-  setCurrentUrl(selectedItemList)
+  location.href = setCurrentUrl(selectedItemList);
 }
 
 const setCurrentUrl = (itemList) => {
@@ -95,29 +87,54 @@ const setCurrentUrl = (itemList) => {
   }  
   filters = filters.slice(0, -1);
 
-  location.href = `${target.split('?pages=1')[0]}?pages=1&${filters}`;
+  return `${target.split('?pages=1')[0]}?pages=1&${filters}`;
+  
 }
 
 const handleSetCheckItem = (e) => {
   const filters = window.location.search.split('filters=')[1];
+  const checkedItemList = document.querySelector('.checked-item-list')
+
+  let swallowItemList;
   let needCheckNode;
+  let deleteUrl;
+
+  if(!filters) return;
   
   filters.split('|').map(item => {
     selectedItemList[item.split(':')[0]] = item.split(':')[1];
   });
-  
-  console.log(selectedItemList);
 
   for(let key in selectedItemList) {
     selectedItemList[key].split(',').forEach(item => {
+      swallowItemList = JSON.parse(JSON.stringify(selectedItemList));
       needCheckNode = document.querySelector(`input[id=${item}]`)
       needCheckNode.checked = true;
+
+      const needCheckNodeText = document.querySelector(`label[for="${item}"]`).innerHTML.split('<span')[0];
+
+      swallowItemList[key] = selectedItemList[key].split(',').filter(deleteTarget => deleteTarget != item);
+      deleteUrl = setCurrentUrl(swallowItemList);
+
+      insertLast(checkedItemList, /*html */ `
+        <div class="checked-item">
+          <span>${needCheckNodeText}</span>
+          <a href="${deleteUrl}"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.55566 5.55566L14.4446 14.4446" stroke="#ccc"></path><path d="M14.4443 5.55566L5.55545 14.4446" stroke="#ccc"></path></svg></a>
+        </div>
+      `)
+
+      checkedItemList.style.display = 'flex';
       
     })
-    needCheckNode.closest('ul').classList.add('is--open')
-    needCheckNode.closest('ul').closest('div[class^="nav-"]').querySelector('button img').style.transform = 'rotate(180deg)';
-  }
 
+    changeImgStyle(needCheckNode.closest('ul'));
+  }
+  
+}
+
+const changeImgStyle = node => {
+  node.classList.add('is--open')
+  node.closest('div[class^="nav-"]').querySelector('button img').style.transform = 'rotate(180deg)';
 
 }
 
@@ -131,6 +148,7 @@ Array.from(navCheckBox).forEach(checkbox => {
 
 resetButton.addEventListener('click', handleReset);
 document.addEventListener('DOMContentLoaded', handleSetCheckItem);
+document.addEventListener('DOMContentLoaded', handleCheckboxCount);
 
 
 

@@ -264,7 +264,7 @@
       @include my(20 16);
       @include flex-container(row wrap items-center);
       @include gap(16);
-      // @include show(none);
+      @include show(none);
       
       border: 1px solid $gray200;
 
