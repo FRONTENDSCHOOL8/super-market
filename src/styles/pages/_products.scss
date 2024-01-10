@@ -31,9 +31,11 @@
 
     & button {
       @include font(size 10px lh 1.6);
+      @include size(auto, 100%);
       border: none;
-      background-color: transparent;
+      background-color: white;
       color: $gray300;
+
     }
   }
 
@@ -46,7 +48,7 @@
       @include font(weight 600 lh 1.5);
       @include size(220px, 52px);
       border: none;
-      border-bottom: 1px solid $gray100;
+      
       background-color: white;
 
       & span {
@@ -57,6 +59,14 @@
           @include mx(8 0);
           color: $gray300;
         }
+      }
+    }
+
+    & > [class ^= "nav"] {
+      border-bottom: 1px solid $gray100;
+
+      & button img {
+        transition: transform .5s;
       }
     }
 
@@ -101,6 +111,31 @@
 
           }
         }
+
+        & input[type="radio"] {
+          display: none;
+
+          & + label {
+            @include flex-container(row items-center);
+            @include px(32 0);
+            @include size(100%, 24px);
+            cursor: pointer;
+            background: url('/images/checkbox/radiouncheck.png') no-repeat;
+            background-size: 24px;
+            
+            & .sub-count {
+              @include font(size $paraGraphSmall weight 400 lh 1.6);
+              @include mx(4 0);
+              color: $gray300;
+            }
+
+          }
+          
+          &:checked + label {
+            background-image: url('/images/checkbox/radiochecked.png');
+
+          }
+        }        
       }
     }
 

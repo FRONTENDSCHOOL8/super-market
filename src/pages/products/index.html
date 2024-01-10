@@ -164,7 +164,7 @@
             <div class="products-navigation__set">
               <div class="nav-category">
                 <button type="button">
-                  <span>카테고리<em class="category-count">1</em></span>
+                  <span>카테고리<em class="category-count"></em></span>
                   <img src="/images/menu/downarrow.svg" alt="펼치기" />
                 </button>
                 <ul>
@@ -219,7 +219,7 @@
                   <span>브랜드<em class="category-count"></em></span>
                   <img src="/images/menu/downarrow.svg" alt="펼치기" />
                 </button>
-                <div class="brand-sort">
+                <!-- <div class="brand-sort">
                   <ul>
                     <li><button type="button" class="alphabetical is--selected">가나다순</button></li>
                     <li><div class="brand-divider"></div></li>
@@ -245,7 +245,7 @@
                       <li><button type="button" class="a-z">A-Z</button></li>
                     </ul>
                   </div>
-                </div>
+                </div> -->
                 <ul>
                   <li class="category-list">
                     <input type="checkbox" name="goraesa" id="goraesa" />
@@ -332,19 +332,19 @@
                 </button>
                 <ul>
                   <li class="category-list">
-                    <input type="checkbox" name="level-one" id="level-one" />
+                    <input type="radio" name="price" id="level-one" value="1" />
                     <label for="level-one">7,700원 미만<span class="sub-count">20</span></label>
                   </li>
                   <li class="category-list">
-                    <input type="checkbox" name="level-two" id="level-two" />
+                    <input type="radio" name="price" id="level-two" value="2" />
                     <label for="level-two">7,700원 ~ 10,965원<span class="sub-count">32</span></label>
                   </li>
                   <li class="category-list">
-                    <input type="checkbox" name="level-three" id="level-three" />
+                    <input type="radio" name="price" id="level-three" value="3" />
                     <label for="level-three">10,965원 ~ 15,000원<span class="sub-count">16</span></label>
                   </li>
                   <li class="category-list">
-                    <input type="checkbox" name="level-four" id="level-four" />
+                    <input type="radio" name="price" id="level-four" value="4" />
                     <label for="level-four">15,000원 이상<span class="sub-count">41</span></label>
                   </li>
                 </ul>
