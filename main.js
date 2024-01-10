@@ -46,15 +46,13 @@ const isHidePopup = () => {
   else openPopup();
 };
 
-const handleClosePopupButton = () => closePopup();
-
 const handleWatchTodayButton = () => {
   const today = getToday();
   setStoragePopup(today);
   isHidePopup();
 };
 
-getNode('.popup .close').addEventListener('click', handleClosePopupButton);
+getNode('.popup .close').addEventListener('click', closePopup);
 getNode('.popup .watch-today').addEventListener(
   'click',
   handleWatchTodayButton
