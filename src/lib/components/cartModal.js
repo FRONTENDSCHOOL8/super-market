@@ -1,5 +1,6 @@
 import { getNode, insertLast } from '/src/lib';
 
+const body = getNode('body');
 const findDataObj = {
   thumbnail: {
     dom: '.product__images__thumbnail',
@@ -115,7 +116,8 @@ const generateTemplate = (
 
 export const closeCartModal = () => {
   const cartProduct = getNode('.cart-product');
-  getNode('body').removeChild(cartProduct);
+  body.style.overflow = 'auto';
+  body.removeChild(cartProduct);
 };
 
 const handleProductCount = (countElement, target) => {
@@ -150,6 +152,7 @@ export const openCartModal = (e) => {
   const countElement = getNode('.cart-product__count__result');
   const updateCount = handleProductCount(countElement, product);
 
+  body.style.overflow = 'hidden';
   getNode('.cart-product__count__change.minus').addEventListener('click', () =>
     updateCount('decrement')
   );
