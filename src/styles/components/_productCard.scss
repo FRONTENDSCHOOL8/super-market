@@ -1,22 +1,19 @@
 @use '/src/styles/abstracts/' as *;
 
 .product {
-  max-width: 250px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include container-width(max, 250px);
+  @include size(100%);
+  @include flex-container(column);
+  @include gap(8);
   margin-bottom: 20px;
-
   &__images {
-    position: relative;
-    width: 250px;
+    @include relative();
+    @include size(250px);
     display: block;
     .cart {
-      position: absolute;
+      @include absolute();
       bottom: 3%;
       right: 3%;
-      cursor: pointer;
     }
   }
   &__brand {
@@ -30,11 +27,10 @@
   &__discount-rate {
     color: $accentYellow;
     font-size: $labelLarge;
+    margin-right: 8px;
   }
   &__price {
-    font-size: $labelLarge;
-    margin-left: 8px;
-    font-weight: bold;
+    @include font(size $labelLarge weight bold);
   }
   &__regular-price {
     color: $content;
