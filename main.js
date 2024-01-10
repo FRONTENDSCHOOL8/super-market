@@ -1,7 +1,7 @@
 import './src/styles/style.scss';
-import { fixHeader, getNode, addClass, removeClass } from '/src/lib';
+import { initHeader, getNode, addClass, removeClass } from '/src/lib';
 
-fixHeader();
+initHeader();
 
 const bannerSwiper = new Swiper('.banner__cover.swiper-container', {
   loop: true,
