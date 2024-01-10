@@ -88,3 +88,4 @@ getNode('.popup .watch-today').addEventListener(
 isHidePopup();
 
 getNode('.recommend-products').addEventListener('click', openCartModal);
+getNode('.discount-products').addEventListener('click', openCartModal);
