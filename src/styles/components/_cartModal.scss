@@ -1,0 +1,157 @@
+@use '/src/styles/abstracts/' as *;
+
+.cart-popup {
+  @include hide();
+  display: flex;
+  @include absolute();
+  &__triangle {
+    top: -10px;
+    right: 8px;
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+    border-color: transparent transparent $primary transparent;
+  }
+
+  &__wrapper {
+    @include size(250px, 100px);
+    @include relative();
+    @include p(10px);
+    @include flex-container(row justify-between items-center);
+    @include gap(20px);
+    top: 80px;
+    right: 100px;
+    background-color: $white;
+    border: 1px solid $primary;
+  }
+
+  &__thumbnail {
+    width: 45px;
+    height: 60px;
+  }
+  &__description {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+  }
+  &__name {
+    @include font(size $labelSmall weight 600);
+    color: $gray300;
+    padding-bottom: 8px;
+    white-space: nowrap;
+  }
+  &__add-cart {
+    @include font(size $labelSmall weight 400);
+    color: $content;
+  }
+}
+
+.cart-product {
+  @include size(100vw, 100vh);
+  @include absolute();
+  @include flex-container(items-center justify-center);
+  display: flex;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  &__wrapper {
+    @include size(400px, 300px);
+    @include p(x 20px y 24px);
+    @include flex-container(column);
+    @include justify-content(between);
+    border-radius: 16px;
+    background-color: $white;
+    box-shadow: 0px 8px 36px 0px rgba(0, 0, 0, 0.2);
+  }
+  &__title {
+    @include font(size $labelMedium weight 600);
+    color: $content;
+  }
+  &__price {
+    @include size(100%);
+    @include flex-container(row, items-center);
+    @include justify-content(between);
+    @include gap(8px);
+    margin-top: 12px;
+    &__discount {
+      @include font(size $labelMedium weight 600);
+    }
+    &__regular {
+      flex: 1;
+      font-size: $labelSmall;
+      color: $content;
+      text-decoration: line-through;
+    }
+  }
+  &__count {
+    @include size(90px, 30px);
+    border: 1px solid $gray200;
+    @include flex-container(row items-center);
+    @include justify-content(space-between);
+    text-align: center;
+    &__change {
+      border: none;
+      background-color: transparent;
+      color: $gray300;
+    }
+    &__change.is--active {
+      color: $content;
+    }
+    &__change,
+    &__result {
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+  &__total {
+    @include size(100%);
+    @include flex-container(row wrap items-baseline justify-between);
+    &__description {
+      font-size: $labelMedium;
+      font-weight: 600;
+    }
+    &__price {
+      @include font(size $headingxl weight 700);
+    }
+  }
+  &__grade {
+    display: block;
+    width: 100%;
+    text-align: right;
+    margin-top: 4px;
+    &__type {
+      background-color: $accentYellow;
+      color: $white;
+      font-size: $labelSmall;
+      @include p(x 8px y 2px);
+      margin-right: 12px;
+    }
+    &__description {
+      font-weight: 600;
+      line-height: 1.5;
+    }
+  }
+  &__button__wrapper {
+    @include size(100%);
+    @include flex-container(row justify-between);
+    button {
+      width: 174px;
+      height: 54px;
+      border: 1px solid $content;
+      border-radius: 4px;
+    }
+    .close {
+      background-color: white;
+    }
+    .add {
+      color: $white;
+      border: $primary;
+      background-color: $primary;
+    }
+  }
+}
