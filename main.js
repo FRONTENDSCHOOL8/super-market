@@ -3,7 +3,7 @@ import { fixHeader, getNode, addClass, removeClass } from '/src/lib';
 
 fixHeader();
 
-const bannerSwiper = new Swiper('.banner.swiper-container', {
+const bannerSwiper = new Swiper('.banner__cover.swiper-container', {
   loop: true,
   autoplay: {
     delay: 3000,

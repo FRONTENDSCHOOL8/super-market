@@ -9,15 +9,20 @@ body {
   overflow-x: hidden;
 }
 .banner {
-  @include size(1920);
-  @include relative();
+  @include size(100%, 370px);
+  @include flex-container(justify-center);
+  &__cover {
+    @include size(100%);
+    @include container-width(min, 1920px);
+    @include relative();
+    overflow: hidden;
+  }
   &__wrapper {
     white-space: nowrap;
     figure {
       display: inline-block;
       img {
-        display: block;
-        margin: 0 auto;
+        @include m(x auto y 0);
       }
       figcaption {
         @include sr-only();
@@ -29,12 +34,12 @@ body {
     background: url(/public/images/menu/banner-arrow.svg) 50%;
     width: 50px;
     height: 50px;
-    top: 40%;
-    right: 15%;
+    top: 160px;
+    right: 17%;
     border: none;
   }
   .swiper-button-prev {
-    left: 15%;
+    left: 17%;
   }
   .swiper-button-next {
     transform: rotate(180deg);
