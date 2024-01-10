@@ -1,19 +1,25 @@
 import '/src/styles/style.scss';
-import { getNode } from '/src/lib';
+import { getNode, initHeader } from '/src/lib';
+
+initHeader();
 
 const zzimButton = getNode('.zzim');
 const notifyButton = getNode('.notify');
+let isClick;
+
+const handleButton = (target) => {
+  isClick = !target.classList.contains('is--active');
+  target.classList.toggle('is--active');
+};
 
 const handleLike = () => {
-  let isLiked = !zzimButton.classList.contains('is-active');
-  zzimButton.classList.toggle('is-active');
-  console.log(`찜: ${isLiked}`);
+  handleButton(zzimButton);
+  console.log(`찜 : ${isClick}`);
 };
 
 const handleNotify = () => {
-  let isNotified = !notifyButton.classList.contains('is-active');
-  notifyButton.classList.toggle('is-active');
-  console.log(`알림: ${isNotified}`);
+  handleButton(notifyButton);
+  console.log(`알림 : ${isClick}`);
 };
 
 zzimButton.addEventListener('click', handleLike);
