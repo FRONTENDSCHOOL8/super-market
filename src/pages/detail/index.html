@@ -219,9 +219,19 @@
               <div class="product-option-wrapper">
                 <p class="product-option-name">[풀무원] 탱탱쫄면 (4개입)</p>
                 <div class="product-option-count">
-                  <input value="-" class="decrease" type="button" />
-                  <input value="1" class="count" />
-                  <input value="+" class="increase" type="button" />
+                  <input
+                    value="-"
+                    class="decrease"
+                    type="button"
+                    aria-label="수량 빼기"
+                  />
+                  <input type="number" min="1" value="1" class="count" />
+                  <input
+                    value="+"
+                    class="increase"
+                    type="button"
+                    aria-label="수량 증가"
+                  />
                 </div>
                 <p class="product-option-price">4,980원</p>
               </div>
