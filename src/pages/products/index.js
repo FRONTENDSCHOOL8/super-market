@@ -1,4 +1,4 @@
-import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist } from '/src/lib';
+import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist, createCardTemplate } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
 
@@ -197,10 +197,29 @@ Array.from(navExpandButton).forEach(button => {
 })
 
 
+const displayProductCard = async () => {
+  const productArea = document.querySelector('.product-wrapper');
+  const productData = await pb
+    .collection('products')
+    .getFullList({
+
+    });
+
+  productData.forEach(product => {
+    const template = createCardTemplate(product);
+    insertLast(productArea, template);
+  })
+
+  
+}
+
+
+
 
 resetButton.addEventListener('click', handleReset);
 
 document.addEventListener('DOMContentLoaded', handleSetCategoryMenu);
+document.addEventListener('DOMContentLoaded', displayProductCard);
 
 
 
