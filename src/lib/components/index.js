@@ -3,3 +3,5 @@
 export * from './header.js';
 export * from './cartModal.js';
 export * from './recentBar.js';
+export * from './validationInput.js';
+export * from './clickBtnMoveToSite.js';

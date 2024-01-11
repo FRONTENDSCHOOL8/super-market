@@ -28,7 +28,7 @@
     clip-path: polygon(0 0, 0 0, 0 0);
     border: 0;
   }
-  .login-input {
+  .login-input-group {
     @include size(100%, 50px);
     @include p(y 12 x 20);
     @include rounded(sm);
@@ -66,17 +66,22 @@
   @include flex-container(column);
   @include size(340px);
   @include gap(12);
-  .login-button {
+  .login-button-group {
     @include size(100%, 54px);
     border: 1px solid $primary;
     @include rounded(sm);
   }
-  #button-login {
+  #login-submit-button {
     background: $primary;
     color: $white;
+    &:disabled {
+      background: $gray200;
+      border: 1px solid $gray300;
+      color: $white;
+    }
   }
 
-  #button-register {
+  #login-register-button {
     background: $white;
     color: $primary;
   }
