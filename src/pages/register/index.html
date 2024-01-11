@@ -193,6 +193,9 @@
                   required
                 />
                 <button class="register-input-button">중복확인</button>
+                <span class="register-error-message" id="useridError"
+                  >6자 이상 16자 이하의 영문 혹은 영문과 숫자를 조합</span
+                >
               </div>
 
               <!-- 비밀번호 -->
@@ -211,6 +214,10 @@
                   minlength="6"
                   required
                 />
+                <span class="register-error-message" id="userPwError"
+                  >6자 이상 16자 이하의 영문/숫자/특수문자(공백 제외)만
+                  허용하며, 2개 이상 조합</span
+                >
               </div>
 
               <!-- 비밀번호 확인 -->
@@ -229,6 +236,9 @@
                   class="register-input-group"
                   required
                 />
+                <span class="register-error-message" id="userPwConfirmError"
+                  >동일한 비밀번호를 한 번 더 입력해 주세요.</span
+                >
               </div>
 
               <!-- 이름 -->
@@ -245,6 +255,9 @@
                   class="register-input-group"
                   required
                 />
+                <span class="register-error-message" id="userNameError"
+                  >이름을 입력해 주세요.</span
+                >
               </div>
 
               <!-- 이메일 -->
@@ -262,6 +275,9 @@
                   required
                 />
                 <button class="register-input-button">중복확인</button>
+                <span class="register-error-message" id="userEmailError"
+                  >이메일 형식으로 입력해주세요.</span
+                >
               </div>
 
               <!-- 휴대폰 -->
@@ -271,14 +287,20 @@
                   <span class="register-label-star">*</span>
                 </div>
                 <input
-                  type="tel"
+                  type="number"
                   id="userTel"
                   name="userTel"
                   placeholder="숫자만 입력해주세요."
                   class="register-input-group"
+                  maxlength="12"
                   required
                 />
-                <button class="register-input-button">인증번호 받기</button>
+                <button disabled class="register-input-button">
+                  인증번호 받기
+                </button>
+                <span class="register-error-message" id="userTelError"
+                  >휴대폰 번호를 입력해 주세요.</span
+                >
               </div>
 
               <!-- 주소 -->
@@ -352,8 +374,8 @@
                 <div class="birthday-wrapper">
                   <div class="birthday-input-wrapper">
                     <input
-                      type="text"
-                      id="year"
+                      type="number"
+                      id="birthYear"
                       placeholder="YYYY"
                       maxlength="4"
                       class="birthday-input"
@@ -362,8 +384,8 @@
                   <span class="birthday-slash">/</span>
                   <div class="birthday-wrapper-input">
                     <input
-                      type="text"
-                      id="month"
+                      type="number"
+                      id="birthMonth"
                       placeholder="MM"
                       maxlength="2"
                       class="birthday-input"
@@ -372,8 +394,8 @@
                   <span class="birthday-slash">/</span>
                   <div class="birthday-wrapper-input">
                     <input
-                      type="text"
-                      id="day"
+                      type="number"
+                      id="birthDay"
                       placeholder="DD"
                       maxlength="2"
                       class="birthday-input"
@@ -455,6 +477,7 @@
                         type="checkbox"
                         id="agree-terms"
                         class="agree-state-checkbox"
+                        required
                       />
                       <label for="agree-terms" class="agree-label"
                         ><span class="agree-check-icon"></span>이용약관 동의
@@ -476,6 +499,7 @@
                         type="checkbox"
                         id="agree-personal"
                         class="agree-state-checkbox"
+                        required
                       />
                       <label for="agree-personal" class="agree-label"
                         ><span class="agree-check-icon"></span>개인정보 수집 ·
@@ -518,6 +542,7 @@
                         type="checkbox"
                         id="agree-14"
                         class="agree-state-checkbox"
+                        required
                       />
                       <label for="agree-14" class="agree-label"
                         ><span class="agree-check-icon"></span>본인은 만 14세
