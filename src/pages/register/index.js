@@ -51,3 +51,41 @@ const handleValidationNameInput = () => {
 };
 
 userNameInput.addEventListener('input', handleValidationNameInput);
+
+// 가입하기 버튼 활성화
+
+const registerBtn = document.querySelector('.register-button');
+const requiredInputs = document.querySelectorAll(
+  '.register-input-group[required]'
+);
+const requiredCheckboxes = document.querySelectorAll(
+  '.agree-state-checkbox[required]'
+);
+
+const verifyElements = (elements, checkCondition) => {
+  return Array.from(elements).every(checkCondition);
+};
+
+export const toggleRegisterBtn = () => {
+  const verifyInputsValid = verifyElements(
+    requiredInputs,
+    (input) => input.value !== '' && !input.classList.contains('is--invalid')
+  );
+  const verifyCheckboxesChecked = verifyElements(
+    requiredCheckboxes,
+    (checkbox) => checkbox.checked
+  );
+
+  if (verifyInputsValid && verifyCheckboxesChecked) {
+    registerBtn.removeAttribute('disabled');
+  } else {
+    registerBtn.setAttribute('disabled', '');
+  }
+};
+
+requiredInputs.forEach((input) =>
+  input.addEventListener('input', toggleRegisterBtn)
+);
+requiredCheckboxes.forEach((checkbox) =>
+  checkbox.addEventListener('change', toggleRegisterBtn)
+);

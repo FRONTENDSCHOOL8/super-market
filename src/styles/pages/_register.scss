@@ -272,5 +272,9 @@
     background: $primary;
     border: 1px solid $primary;
     color: $white;
+    &:disabled {
+      background: $gray200;
+      border: 1px solid $gray300;
+    }
   }
 }
