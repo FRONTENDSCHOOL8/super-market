@@ -14,7 +14,6 @@
   <body>
     <header class="header">
       <div class="header__wrapper">
-
         <ul class="sign_menu">
           <li>
             <a href="/src/pages/register/" class="menu_join">회원가입</a>
@@ -40,24 +39,35 @@
               <button type="button" class="beauty-karly">뷰티칼리</button>
             </span>
           </div>
-    
+
           <div class="search_box">
             <form action="/src/pages/products/" method="POST">
-              <input type="text" placeholder="검색어를 입력해주세요"/>
+              <input type="text" placeholder="검색어를 입력해주세요" />
               <button type="button" class="erase"></button>
             </form>
             <button type="submit" class="search"></button>
           </div>
-    
-          <div class="menu_link">
-            <button type="button" aria-label="배송지" class="menu_link__address"></button>
-            <button type="button" aria-label="찜하기" class="menu_link__like"></button>
-            <a href="/src/pages/cart/" role="button" aria-label="장바구니" class="menu_link__cart"></a>
 
+          <div class="menu_link">
+            <button
+              type="button"
+              aria-label="배송지"
+              class="menu_link__address"
+            ></button>
+            <button
+              type="button"
+              aria-label="찜하기"
+              class="menu_link__like"
+            ></button>
+            <a
+              href="/src/pages/cart/"
+              role="button"
+              aria-label="장바구니"
+              class="menu_link__cart"
+            ></a>
           </div>
-          
         </div>
-      </div>      
+      </div>
 
       <nav class="menu">
         <div class="menu__category">
@@ -150,7 +160,6 @@
         </div>
         <a href="" class="menu__info"><em>샛별&middot;낮</em>배송안내</a>
       </nav>
-    
     </header>
     <main>
       <section class="cart__wrapper">
@@ -161,7 +170,8 @@
             <div class="select__all">
               <input type="checkbox" name="check-all" id="check-all" />
               <label for="check-all">전체선택(0/5)</label>
-              <span>선택삭제</span>
+              <div class="divider"></div>
+              <button class="select-delete">선택삭제</button>
             </div>
             <!-- start: cart-product-list -->
             <div class="cart-product-list">
@@ -189,9 +199,6 @@
                   <p class="cart-product__content">
                     <span class="cart-product__content__title">
                       [풀무원] 탱탱쫄면 (4개입)
-                    </span>
-                    <span class="cart-product__content__description">
-                      [압구정주꾸미] 인기 볶음 6종 (택1)
                     </span>
                   </p>
                   <div class="cart-product__count">
@@ -242,6 +249,7 @@
             <div class="select__all">
               <input type="checkbox" name="check-all" id="check-all" />
               <label for="check-all">전체선택(0/5)</label>
+              <div class="divider"></div>
               <span>선택삭제</span>
             </div>
           </div>

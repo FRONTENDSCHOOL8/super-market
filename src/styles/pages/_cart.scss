@@ -1,14 +1,16 @@
 @use '/src/styles/abstracts' as *;
 body {
-  width: 100vw;
+  @include size(100vw);
 }
 .cart__wrapper {
   @include container-width(max, 1050px);
-  @include size(100%);
+  @include size(100%, 100%);
+  min-height: 710px;
   @include m(x auto y 80);
   h2 {
     text-align: center;
     font-size: $labelLarge;
+    margin-bottom: 44px;
   }
   input[type='checkbox'] {
     @include hide;
@@ -31,28 +33,33 @@ body {
   @include size(100%);
   @include flex-container(column item-center);
   @include gap(16);
-  margin-top: 60px;
   .select__all {
-    @include size(100%);
+    @include size(100%, 20px);
+    @include gap(10px);
+    display: flex;
     align-items: center;
     color: $content;
+    input[type='checkbox'] {
+      @include hide;
+    }
     input[type='checkbox'] + label {
+      @include relative();
       padding-left: 30px;
-      padding-top: 7px;
+      padding-top: 6px;
     }
-    label {
-      border-right: 1px solid $gray100;
-      padding-right: 8px;
+    .divider {
+      @include size(1px, 100%);
+      display: block;
+      background-color: $gray100;
     }
-    span {
-      padding-left: 8px;
-      padding-top: 4px;
-      cursor: pointer;
+    .select-delete {
+      padding-top: 6px;
+      border: 0;
+      background-color: transparent;
     }
   }
 }
 .cart-product-list {
-  background-color: white;
   .cart-product__wrapper {
     &__bar {
       @include size(100%);
@@ -119,9 +126,8 @@ body {
       }
       &__change,
       &__result {
-        width: 100%;
+        @include size(100%, 30px);
         max-width: 30px;
-        height: 30px;
         line-height: 30px;
       }
     }
@@ -155,7 +161,6 @@ body {
   }
 }
 .information__wrapper {
-  background-color: $white;
   @include size(100%);
   max-width: 280px;
   margin-left: 20px;
@@ -220,7 +225,6 @@ body {
     @include flex-container(row items-center);
 
     @include justify-content(between);
-    // justify-content: space-between;
     &__description {
       @include font(size $paraGraphMedium);
       color: $content;
@@ -257,8 +261,12 @@ body {
   border: none;
   border-radius: 4px;
 }
+.order-button:disabled {
+  background-color: $gray300;
+}
 .detail {
   @include font(size $labelSmall);
+  max-width: 280px;
   color: $gray400;
   li {
     line-height: 1.5;
