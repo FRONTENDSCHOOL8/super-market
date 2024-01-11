@@ -76,3 +76,39 @@ export const createCardTemplate = (product) => {
 
   return template;
 }
+
+export const createSkeletonCardTemplate = () => {
+
+  let template = /* html */ `
+    <div class="product skeleton_card">
+      <div class="product__images">
+        <div class="skeleton_loading">
+          <div class="skeleton_img"></div>
+        </div>
+        <img src="#" class="product__images__thumbnail" alt="#" />
+        <img src="/images/menu/cart.svg" alt="장바구니에 담기" class="cart" />
+      </div>
+      <div class="product__desc">
+        <div class="skeleton_loading">
+          <div class="skeleton_text"></div>
+          <div class="skeleton_text"></div>
+          <div class="skeleton_text"></div>
+          <div class="skeleton_text"></div>
+          <div class="skeleton_text"></div>
+          <div class="skeleton_text"></div>
+        </div>      
+        <span class="product__brand">xxx</span>
+        <span class="product__title">xxx</span>
+        <p class="product__discount">
+          <span class="product__discount-rate">xxx%</span>
+          <span class="product__price">xxx원</span>
+        </p>
+        <span class="product__regular-price">xxx원</span>
+        <span class="product__description">xxx</span>
+        <p class="product__keyword-list"></p>
+      </div>
+    </div>
+  `
+
+  return template;
+}

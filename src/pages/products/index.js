@@ -1,4 +1,4 @@
-import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist, createCardTemplate } from '/src/lib';
+import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist, createCardTemplate, createSkeletonCardTemplate } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
 
@@ -8,7 +8,6 @@ hideElementNoExist();
 const navExpandButton = document.querySelectorAll('div[class^="nav-"] > button');
 const resetButton = document.querySelector('.products-navigation__header button');
 const selectedItemList = {};
-
 
 const handleExpandNavigation = (e) => {
   let menu = e.target.closest('button').nextElementSibling;
@@ -199,22 +198,26 @@ Array.from(navExpandButton).forEach(button => {
 
 const displayProductCard = async () => {
   const productArea = document.querySelector('.product-wrapper');
+  const skeletonCardTemplate = createSkeletonCardTemplate();
+
+  for(let i=0; i<15; i++) {
+    insertLast(productArea, skeletonCardTemplate);
+  }
+
   const productData = await pb
     .collection('products')
-    .getFullList({
+    .getFullList({});
 
-    });
+  const skeletonCard = document.querySelectorAll('.skeleton_card');
 
-  productData.forEach(product => {
-    const template = createCardTemplate(product);
-    insertLast(productArea, template);
+  new Promise((resolve, reject) => {
+    resolve(productData.forEach(product => {
+      const template = createCardTemplate(product);
+      insertLast(productArea, template);
+    }));
   })
-
-  
+  .then(skeletonCard.forEach(node => node.remove()))
 }
-
-
-
 
 resetButton.addEventListener('click', handleReset);
 
