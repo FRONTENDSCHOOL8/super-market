@@ -1,5 +1,15 @@
 import './src/styles/style.scss';
-import { initHeader, getNode, addClass, removeClass, isString } from '/src/lib';
+import {
+  initHeader,
+  getNode,
+  addClass,
+  removeClass,
+  isString,
+  insertLast,
+  insertAfter,
+  insertBefore,
+  openCartModal,
+} from '/src/lib';
 
 initHeader();
 
@@ -76,3 +86,6 @@ getNode('.popup .watch-today').addEventListener(
 );
 
 isHidePopup();
+
+getNode('.recommend-products').addEventListener('click', openCartModal);
+getNode('.discount-products').addEventListener('click', openCartModal);
