@@ -147,6 +147,9 @@ const changeImgStyle = (node) => {
 
 const handleSetCategoryMenu = async (e) => {
   const categoryNav = document.querySelector('.nav-category > ul')
+  
+  // netlify에서 포켓베이스 호출 되는지 확인하기 위한 콘솔 로그
+  console.log(`dddd----->${import.meta.env.VITE_PB_API}`);
 
   if(!(await getStorage('categoryData'))) {
     const categoryData = await pb
