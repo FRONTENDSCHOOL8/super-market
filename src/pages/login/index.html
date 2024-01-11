@@ -168,22 +168,36 @@
         <div class="login-form-wrapper">
           <form action="/src/pages/login/" method="post">
             <div class="login-input-wrapper">
+              <label for="loginUserId" class="login-input-label"
+                >로그인 입력란</label
+              >
               <input
                 type="text"
-                id="userId"
-                name="userId"
+                id="loginUserId"
+                name="loginUserId"
                 placeholder="아이디를 입력해주세요"
                 class="login-input"
                 required
               />
+              <span class="login-error-message" id="loginUseridError"
+                >6자 이상 16자 이하의 영문 혹은 영문과 숫자를 조합</span
+              >
+              <label for="loginUserPw" class="login-input-label"
+                >비밀번호 입력란</label
+              >
               <input
                 type="password"
-                id="userPw"
-                name="userPw"
+                id="loginUserPw"
+                name="loginUserPw"
                 placeholder="비밀번호를 입력해주세요"
                 class="login-input"
                 required
               />
+              <span class="login-error-message" id="loginUserPwError"
+                >6자 이상 16자 이하의 영문/숫자/특수문자(공백 제외)만
+                허용하며,<br />
+                2개 이상 조합</span
+              >
             </div>
             <div class="login-forget-wrapper">
               <a href="/" class="login-forget-link">아이디 찾기</a>

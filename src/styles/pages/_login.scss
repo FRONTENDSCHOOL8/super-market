@@ -17,12 +17,33 @@
   @include flex-container(column);
   @include gap(12);
   @include size(340px);
+  .login-input-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: polygon(0 0, 0 0, 0 0);
+    border: 0;
+  }
   .login-input {
     @include size(100%, 50px);
     @include p(y 12 x 20);
     @include rounded(sm);
     border: 1px solid $gray300;
   }
+}
+
+.login-error-message {
+  @include font(size $paraGraphSmall);
+  color: $infoError;
+  display: none;
+}
+
+.is--invalid + .login-error-message {
+  display: block;
 }
 
 .login-forget-wrapper {
