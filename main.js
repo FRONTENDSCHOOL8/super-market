@@ -9,6 +9,8 @@ import {
   insertAfter,
   insertBefore,
   openCartModal,
+  handleProduct,
+  hideRecentlyProductList,
 } from '/src/lib';
 
 initHeader();
@@ -16,6 +18,7 @@ initHeader();
 const createSwiper = (target, optionList) => {
   if (isString(target)) getNode(target);
   return new Swiper(target, {
+    direction: optionList.direction || 'horizontal',
     speed: optionList.speed || 500,
     loop: optionList.loop || false,
     autoplay: optionList.autoplay || false,
@@ -28,7 +31,6 @@ const createSwiper = (target, optionList) => {
     },
   });
 };
-
 const bannerSwiper = createSwiper('.banner__cover.swiper-container', {
   loop: true,
   autoplay: {
@@ -40,6 +42,12 @@ const productSwiper = createSwiper('.product-list.swiper-container', {
   slidesPerView: 4,
   spaceBetween: '18px',
   slidesPerGroup: 4,
+});
+
+const recentBarSwiper = createSwiper('.recently__cover.swiper-container', {
+  direction: 'vertical',
+  slidesPerView: 'auto',
+  spaceBetween: '4px',
 });
 
 const getToday = () => {
@@ -79,13 +87,14 @@ const handleWatchTodayButton = () => {
   isHidePopup();
 };
 
+isHidePopup();
+hideRecentlyProductList();
 getNode('.popup .close').addEventListener('click', closePopup);
 getNode('.popup .watch-today').addEventListener(
   'click',
   handleWatchTodayButton
 );
 
-isHidePopup();
-
 getNode('.recommend-products').addEventListener('click', openCartModal);
 getNode('.discount-products').addEventListener('click', openCartModal);
+getNode('.recommend-products').addEventListener('click', handleProduct);

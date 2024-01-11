@@ -438,41 +438,17 @@
       </section>
     </main>
     <aside class="recently">
-      <div class="recently__wrapper">
-        <span class="recently__title">최근 본 상품</span>
-        <ul class="recently__product-list">
-          <li class="recently__product">
-            <img
-              src="./src/assets/main/product01.png"
-              alt="탱탱쫄면 봉지 4개입"
-              class="recently__product__image"
-            />
-          </li>
-          <li class="recently__product">
-            <img
-              src="./src/assets/main/product02.png"
-              alt="탱탱쫄면 봉지 4개입"
-              class="recently__product__image"
-            />
-          </li>
-          <li class="recently__product">
-            <img
-              src="./src/assets/main/product03.png"
-              alt="탱탱쫄면 봉지 4개입"
-              class="recently__product__image"
-            />
-          </li>
-        </ul>
-        <img
-          src="./public/images/menu/arrow.svg"
-          alt="최근 본 상품 위로 가기"
-          class="recently__button up"
-        />
-        <img
-          src="./public/images/menu/arrow.svg"
-          alt="최근 본 상품 아래로 가기"
-          class="recently__button down"
-        />
+      <span class="recently__title">최근 본 상품</span>
+      <div class="recently__cover swiper-container">
+        <ul class="recently__product-list swiper-wrapper"></ul>
+        <button
+          class="recently__button up swiper-button-prev"
+          value="up"
+        ></button>
+        <button
+          class="recently__button down swiper-button-next"
+          value="down"
+        ></button>
       </div>
     </aside>
     <div class="popup">
