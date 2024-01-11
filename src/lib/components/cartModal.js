@@ -142,7 +142,10 @@ const handleProductCount = (countElement, target) => {
 export const openCartModal = (e) => {
   const currentTarget = e ? e.target.closest('.cart') : null;
   if (currentTarget) e.preventDefault();
-  else return;
+  else {
+    handleProduct(e);
+    return;
+  }
 
   const product = e.target.closest('.product');
   const cartData = extractCartData(product);

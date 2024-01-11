@@ -9,7 +9,6 @@ import {
   insertAfter,
   insertBefore,
   openCartModal,
-  handleProduct,
   hideElementNoExist,
   updateRecentlyViewedProducts,
 } from '/src/lib';
@@ -100,4 +99,3 @@ popupNotToday.addEventListener('click', handleWatchTodayButton);
 
 recommendProductList.addEventListener('click', openCartModal);
 discountProductList.addEventListener('click', openCartModal);
-recommendProductList.addEventListener('click', handleProduct);

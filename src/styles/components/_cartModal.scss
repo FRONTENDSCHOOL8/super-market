@@ -48,8 +48,8 @@
     color: $content;
   }
 }
-
-.cart-product {
+// shopping basket
+.basket-product {
   @include size(100vw, 100vh);
   @include absolute();
   @include flex-container(items-center justify-center);
