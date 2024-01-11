@@ -10,10 +10,14 @@ import {
   insertBefore,
   openCartModal,
   handleProduct,
-  hideRecentlyProductList,
+  hideElementNoExist,
+  updateRecentlyViewedProducts,
 } from '/src/lib';
 
-initHeader();
+const popupCloseButton = getNode('.popup .close');
+const popupNotToday = getNode('.popup .watch-today');
+const recommendProductList = getNode('.recommend-products');
+const discountProductList = getNode('.discount-products');
 
 const createSwiper = (target, optionList) => {
   if (isString(target)) getNode(target);
@@ -87,14 +91,13 @@ const handleWatchTodayButton = () => {
   isHidePopup();
 };
 
+initHeader();
 isHidePopup();
-hideRecentlyProductList();
-getNode('.popup .close').addEventListener('click', closePopup);
-getNode('.popup .watch-today').addEventListener(
-  'click',
-  handleWatchTodayButton
-);
+hideElementNoExist();
 
-getNode('.recommend-products').addEventListener('click', openCartModal);
-getNode('.discount-products').addEventListener('click', openCartModal);
-getNode('.recommend-products').addEventListener('click', handleProduct);
+popupCloseButton.addEventListener('click', closePopup);
+popupNotToday.addEventListener('click', handleWatchTodayButton);
+
+recommendProductList.addEventListener('click', openCartModal);
+discountProductList.addEventListener('click', openCartModal);
+recommendProductList.addEventListener('click', handleProduct);
