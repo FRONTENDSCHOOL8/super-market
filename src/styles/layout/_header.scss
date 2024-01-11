@@ -311,7 +311,7 @@
     }
 
     &:hover .menu__category--list {
-      @include show(block);
+      @include show(block !important);
     }
 
     &--list {
