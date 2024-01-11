@@ -1,5 +1,5 @@
 import '/src/styles/style.scss';
-import { getNode, initHeader, comma } from '/src/lib';
+import { getNode, getNodes, initHeader, comma } from '/src/lib';
 
 initHeader();
 
@@ -10,6 +10,8 @@ const countIncrease = getNode('.increase');
 const productCount = getNode('.count');
 const optionPrice = getNode('.product-option-price');
 const totalPrice = getNode('.product-total-price');
+const detailNavMenu = getNodes('.detail-navigation-list li');
+const navItem = getNodes('.nav-item');
 
 let isClick;
 
@@ -51,7 +53,33 @@ const showTotalPrice = () => {
   return (totalPrice.innerText = comma(productPrice * productCount.value));
 };
 
+const handleDetailNav = () => {
+  if (!navItem) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        let currentItemId = entry.target.id;
+
+        const setLinkById = (element) => {
+          element.classList.toggle(
+            'is--active',
+            element.firstElementChild.getAttribute('href') ===
+              `#${currentItemId}`
+          );
+        };
+        detailNavMenu.forEach(setLinkById);
+      }
+    });
+  });
+
+  navItem.forEach((section) => {
+    observer.observe(section);
+  });
+};
+
 zzimButton.addEventListener('click', handleLike);
 notifyButton.addEventListener('click', handleNotify);
 countDecrease.addEventListener('click', handleCount);
 countIncrease.addEventListener('click', handleCount);
+window.addEventListener('scroll', handleDetailNav);

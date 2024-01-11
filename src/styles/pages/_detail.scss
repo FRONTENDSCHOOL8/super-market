@@ -175,7 +175,7 @@
 }
 
 .detail-navigation {
-  @include sticky(t 0 z 10);
+  @include sticky(t 72 z 2);
 
   &-list {
     @include flex-container(row space-around);
@@ -195,7 +195,7 @@
       @include font(size $labelMedium);
     }
 
-    .is--active {
+    &.is--active {
       background-color: $white;
       border-bottom: none;
 
