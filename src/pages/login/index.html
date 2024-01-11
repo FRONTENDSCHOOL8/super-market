@@ -176,7 +176,7 @@
                 id="loginUserId"
                 name="loginUserId"
                 placeholder="아이디를 입력해주세요"
-                class="login-input"
+                class="login-input-group"
                 required
               />
               <span class="login-error-message" id="loginUseridError"
@@ -190,7 +190,7 @@
                 id="loginUserPw"
                 name="loginUserPw"
                 placeholder="비밀번호를 입력해주세요"
-                class="login-input"
+                class="login-input-group"
                 required
               />
               <span class="login-error-message" id="loginUserPwError"
@@ -205,10 +205,19 @@
               <a href="/" class="login-forget-link">비밀번호 찾기</a>
             </div>
             <div class="login-buttons-wrapper">
-              <button type="submit" class="login-button" id="button-login">
+              <button
+                type="submit"
+                class="login-button-group"
+                id="login-submit-button"
+                disabled
+              >
                 로그인
               </button>
-              <button type="button" class="login-button" pw="button-register">
+              <button
+                type="button"
+                class="login-button-group"
+                id="login-register-button"
+              >
                 회원가입
               </button>
             </div>
