@@ -4,7 +4,7 @@ import '/src/styles/style.scss';
 initHeader();
 
 const navExpandButton = document.querySelectorAll('div[class^="nav-"] > button');
-const navCheckBox = document.querySelectorAll('div[class^="nav-"] input');
+
 const resetButton = document.querySelector('.products-navigation__header button');
 const selectedItemList = {};
 
@@ -36,11 +36,15 @@ const handleReset = (e) => {
 
 const handleCheckboxCount = (e) => {
 
-  window.location.search.split('filters=')[1].split('|').forEach(item => {
-    const [group, checkedItem] = item.split(':');
-    const categoryCount = document.querySelector(`.nav-${group}`)
-    categoryCount.querySelector('.category-count').textContent = checkedItem.split(',').length;
-  });
+  const filter = window.location.search.split('filters=')[1];
+
+  if(filter) {
+    filter.split('|').forEach(item => {
+      const [group, checkedItem] = item.split(':');
+      const categoryCount = document.querySelector(`.nav-${group}`)
+      categoryCount.querySelector('.category-count').textContent = checkedItem.split(',').length;
+    });
+  }
 }
 
 
@@ -86,6 +90,8 @@ const setCurrentUrl = (itemList) => {
     filters += `${key}:${filter[key]}|`;
   }  
   filters = filters.slice(0, -1);
+  
+  if(filters === 'filters') filters = 'filters=';
 
   return `${target.split('?pages=1')[0]}?pages=1&${filters}`;
   
@@ -109,6 +115,8 @@ const handleSetCheckItem = (e) => {
     selectedItemList[key].split(',').forEach(item => {
       swallowItemList = JSON.parse(JSON.stringify(selectedItemList));
       needCheckNode = document.querySelector(`input[id=${item}]`)
+
+      console.log(item);
       needCheckNode.checked = true;
 
       const needCheckNodeText = document.querySelector(`label[for="${item}"]`).innerHTML.split('<span')[0];
@@ -132,25 +140,49 @@ const handleSetCheckItem = (e) => {
   
 }
 
-const changeImgStyle = node => {
+const changeImgStyle = (node) => {
   node.classList.add('is--open')
   node.closest('div[class^="nav-"]').querySelector('button img').style.transform = 'rotate(180deg)';
 
+}
+
+const handleSetCategoryMenu = (e) => {
+  const categoryNav = document.querySelector('.nav-category > ul')
+  const template = /* html */ `
+    <li class="category-list">
+      <input type="checkbox" name="vegetable" id="vegetable" />
+      <label for="vegetable">채소<span class="sub-count">6</span></label>
+    </li>
+  `
+  
+  new Promise ((resolve, reject) => {
+    resolve(insertLast(categoryNav, template))
+  }).then(
+    setCheckBoxEvent()
+  )
+
+
+}
+
+const setCheckBoxEvent = () => {
+  const navCheckBox = document.querySelectorAll('div[class^="nav-"] input');
+
+  Array.from(navCheckBox).forEach(checkbox => {
+    checkbox.addEventListener('change', handleCheckboxSelect);
+  })  
+  handleSetCheckItem();
+  handleCheckboxCount();
 }
 
 Array.from(navExpandButton).forEach(button => {
   button.addEventListener('click', handleExpandNavigation);
 })
 
-Array.from(navCheckBox).forEach(checkbox => {
-  checkbox.addEventListener('change', handleCheckboxSelect);
-})
+
 
 resetButton.addEventListener('click', handleReset);
-document.addEventListener('DOMContentLoaded', handleSetCheckItem);
-document.addEventListener('DOMContentLoaded', handleCheckboxCount);
 
-
+document.addEventListener('DOMContentLoaded', handleSetCategoryMenu);
 
 
 
