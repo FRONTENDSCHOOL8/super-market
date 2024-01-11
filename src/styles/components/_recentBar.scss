@@ -1,53 +1,52 @@
 @use '/src/styles/abstracts/' as *;
 
 .recently {
+  @include size(80px, 230px);
+  @include fixed();
+  @include flex-container(column);
+  @include gap(12px);
   background-color: $white;
-  position: fixed;
+  border: 1px solid $gray200;
   top: 50%;
   right: 20px;
   transform: translate(0, -50%);
-  border: 1px solid $gray200;
-  width: 80px;
-  height: 230px;
-  text-align: center;
-  &__wrapper {
-    height: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
   &__title {
+    margin: 34px auto 0 auto;
     color: $black;
     font-size: $labelSmall;
-    margin-top: 34px;
   }
-  &__product-list {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 4px;
-    height: 130px;
+  &__cover {
+    min-height: 50px;
+    height: 100%;
+    max-height: 130px;
     overflow: hidden;
   }
+  &__product-list {
+    @include size(100%, 100%);
+    @include flex-container(column);
+  }
   &__product {
+    @include size(40px, 130px);
+    white-space: nowrap;
+    margin: 0 auto;
     &__image {
-      width: 40px;
-      height: 50px;
+      @include size(40px, 50px);
     }
   }
   &__button {
-    position: absolute;
-    width: 18px;
+    @include size(18px, 18px);
+    @include absolute();
+    border: 0;
+    background: url(/public/images/menu/arrow.svg);
+    background-position: 50%;
+    opacity: 0.2;
     left: 40%;
-    cursor: pointer;
-  }
-  &__button.up {
     transform: rotate(90deg);
+  }
+  &__button.swiper-button-prev {
     top: 8px;
   }
-  &__button.down {
+  &__button.swiper-button-next {
     transform: rotate(270deg);
     bottom: 8px;
   }
