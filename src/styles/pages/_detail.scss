@@ -4,7 +4,7 @@
   @include sr-only();
 }
 
-.detail {
+.product-detail-main {
   @include p(t 40);
   width: 1050px;
   @include mx(auto);
