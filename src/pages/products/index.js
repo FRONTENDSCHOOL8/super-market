@@ -1,10 +1,11 @@
-import { initHeader, insertLast, setStorage, getStorage } from '/src/lib';
+import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist } from '/src/lib';
+import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
 
 initHeader();
+hideElementNoExist();
 
 const navExpandButton = document.querySelectorAll('div[class^="nav-"] > button');
-
 const resetButton = document.querySelector('.products-navigation__header button');
 const selectedItemList = {};
 
@@ -114,9 +115,8 @@ const handleSetCheckItem = (e) => {
   for(let key in selectedItemList) {
     selectedItemList[key].split(',').forEach(item => {
       swallowItemList = JSON.parse(JSON.stringify(selectedItemList));
-      needCheckNode = document.querySelector(`input[id=${item}]`)
+      needCheckNode = document.querySelector(`input[id="${item}"]`)
 
-      console.log(item);
       needCheckNode.checked = true;
 
       const needCheckNodeText = document.querySelector(`label[for="${item}"]`).innerHTML.split('<span')[0];
@@ -146,14 +146,32 @@ const changeImgStyle = (node) => {
 
 }
 
-const handleSetCategoryMenu = (e) => {
+const handleSetCategoryMenu = async (e) => {
   const categoryNav = document.querySelector('.nav-category > ul')
-  const template = /* html */ `
-    <li class="category-list">
-      <input type="checkbox" name="vegetable" id="vegetable" />
-      <label for="vegetable">채소<span class="sub-count">6</span></label>
-    </li>
-  `
+
+  if(!(await getStorage('categoryData'))) {
+    const categoryData = await pb
+      .collection('category')
+      .getFullList({
+        sort: '-created'
+      });
+      setStorage('categoryData', categoryData);
+  }
+
+  const category = Array.from(await getStorage('categoryData'));
+
+  let template='';
+
+  category.forEach(item => {
+    template += /* html */ `
+      <li class="category-list">
+        <input type="checkbox" name="${item.id}" id="${item.id}" />
+        <label for="${item.id}">${item.category_name}<span class="sub-count">6</span></label>
+      </li>
+    `;
+  
+  })
+
   
   new Promise ((resolve, reject) => {
     resolve(insertLast(categoryNav, template))
