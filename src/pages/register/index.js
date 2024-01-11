@@ -1,8 +1,7 @@
-import { initHeader, changeAllCheck, getNode, getNodes } from '/src/lib';
+import { initHeader, getNode, getNodes } from '/src/lib';
 import '/src/styles/style.scss';
 
 initHeader();
-changeAllCheck('#allAgreeState', '.agree-state-checkbox');
 
 // 공통 유효성 검사 함수
 
@@ -89,3 +88,21 @@ requiredInputs.forEach((input) =>
 requiredCheckboxes.forEach((checkbox) =>
   checkbox.addEventListener('change', toggleRegisterBtn)
 );
+
+// 전체 동의
+
+const changeRegisterAllCheck = (mainCheckboxSelector, checkboxesSelector) => {
+  const mainCheckbox = document.querySelector(mainCheckboxSelector);
+  const checkboxes = document.querySelectorAll(checkboxesSelector);
+
+  const handleChangeCheckbox = () => {
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = mainCheckbox.checked;
+    });
+    toggleRegisterBtn();
+  };
+
+  mainCheckbox.addEventListener('change', handleChangeCheckbox);
+};
+
+changeRegisterAllCheck('#allAgreeState', '.agree-state-checkbox');
