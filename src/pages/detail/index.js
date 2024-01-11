@@ -61,13 +61,14 @@ const handleDetailNav = () => {
       if (entry.isIntersecting) {
         let currentItemId = entry.target.id;
 
-        detailNavMenu.forEach((element) => {
+        const setLinkById = (element) => {
           element.classList.toggle(
             'is--active',
             element.firstElementChild.getAttribute('href') ===
               `#${currentItemId}`
           );
-        });
+        };
+        detailNavMenu.forEach(setLinkById);
       }
     });
   });
