@@ -1,3 +1,4 @@
+import pb from '/src/lib/api/pocketbase';
 import './src/styles/style.scss';
 import {
   initHeader,
@@ -11,6 +12,7 @@ import {
   openCartModal,
   hideElementNoExist,
   updateRecentlyViewedProducts,
+  createCardTemplate,
 } from '/src/lib';
 
 const popupCloseButton = getNode('.popup .close');
@@ -90,12 +92,30 @@ const handleWatchTodayButton = () => {
   isHidePopup();
 };
 
+const showProductCard = async (target) => {
+  const productData = await pb.collection('products').getFullList({});
+  const promises = productData.slice(0, 16).map((product) => {
+    const template = createCardTemplate(product);
+    return insertLast(target, template);
+  });
+};
+
+const handleShowProductList = async () => {
+  const recommendProduct = getNode(
+    '.recommend-products .product-list__wrapper'
+  );
+  const discountProduct = getNode('.discount-products .product-list__wrapper');
+
+  await showProductCard(recommendProduct);
+  await showProductCard(discountProduct);
+  recommendProductList.addEventListener('click', openCartModal);
+  discountProductList.addEventListener('click', openCartModal);
+};
+
 initHeader();
 isHidePopup();
 hideElementNoExist();
 
 popupCloseButton.addEventListener('click', closePopup);
 popupNotToday.addEventListener('click', handleWatchTodayButton);
-
-recommendProductList.addEventListener('click', openCartModal);
-discountProductList.addEventListener('click', openCartModal);
+document.addEventListener('DOMContentLoaded', handleShowProductList());

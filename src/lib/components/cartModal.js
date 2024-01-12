@@ -1,42 +1,59 @@
-import { getNode, insertLast } from '/src/lib';
+import pb from '/src/lib/api/pocketbase';
+import {
+  getNode,
+  insertLast,
+  handleProduct,
+  updateRecentlyViewedProducts,
+  getStorage,
+} from '/src/lib';
 
 const body = getNode('body');
 const findDataObj = {
   thumbnail: {
     dom: '.product__images__thumbnail',
-    findTarget: 'src',
+    find: 'src',
     result: '',
   },
   description: {
     dom: '.product__images__thumbnail',
-    findTarget: 'alt',
+    find: 'alt',
     result: '',
   },
   title: {
     dom: '.product__title',
-    findTarget: 'textContent',
+    find: 'textContent',
     result: '',
   },
   price: {
     dom: '.product__price',
-    findTarget: 'textContent',
+    find: 'textContent',
+    result: '',
+  },
+  id: {
+    dom: '.product',
+    find: 'href',
     result: '',
   },
 };
 
 const getPriceNumber = (string) => Number(string.replace(/[원,]/g, ''));
 const getPriceString = (number) => `${number.toLocaleString()}원`;
-const switchPrice = (string) => getPriceString(getPriceNumber(string));
+const switchPrice = (string, point) => {
+  if (!point) return getPriceString(getPriceNumber(string));
+  else {
+    const addCount = Math.round(getPriceNumber(string) * point);
+    return getPriceString(addCount);
+  }
+};
 
 const fillDataObj = (target) => {
   for (const key in findDataObj) {
-    const domElement = target.querySelector(findDataObj[key].dom);
-    if (domElement) {
-      const findTargetElement = domElement[findDataObj[key].findTarget];
-      findDataObj[key].result =
-        findTargetElement !== null ? findTargetElement.trim() : '';
-    } else {
-      findDataObj[key].result = '';
+    const domTarget = target.querySelector(findDataObj[key].dom);
+    const findTarget = domTarget ? domTarget[findDataObj[key].find] : null;
+    findDataObj[key].result = findTarget !== null ? findTarget.trim() : '';
+    if (key === 'id') {
+      console.log('key.id', key.id);
+      findDataObj.id.result = target.href.split('#')[1] || '';
     }
   }
   return { findDataObj };
@@ -46,19 +63,19 @@ const extractCartData = (product) => {
   fillDataObj(product);
 
   return {
+    id: findDataObj.id.result,
     title: findDataObj.title.result,
     price: switchPrice(findDataObj.price.result),
     thumbnail: findDataObj.thumbnail.result,
     description: findDataObj.description.result,
     count: 1,
     sum: switchPrice(findDataObj.price.result),
-    point: Math.round(getPriceNumber(findDataObj.price.result) * 0.01),
+    point: switchPrice(findDataObj.price.result, 0.01),
   };
 };
-
 const generateTemplate = (
   target,
-  { title, price, thumbnail, description, count, sum, point }
+  { id, title, price, thumbnail, description, count, sum, point }
 ) => {
   const headerPopupTemplate = /* HTML */ `
     <div class="cart-popup is--active">
@@ -80,32 +97,32 @@ const generateTemplate = (
   `;
 
   const cartModalTemplate = /* HTML */ `
-    <div class="cart-product">
-      <div class="cart-product__wrapper">
-        <span class="cart-product__title">${title}</span>
-        <div class="cart-product__price">
-          <span class="cart-product__price__discount">${price}</span>
-          <div class="cart-product__count">
-            <button class="cart-product__count__change minus">-</button>
-            <span class="cart-product__count__result">${count}</span>
-            <button class="cart-product__count__change plus is--active">
+    <div class="basket-product">
+      <div class="basket-product__wrapper">
+        <span class="basket-product__title">${title}</span>
+        <div class="basket-product__price">
+          <span class="basket-product__price__discount">${price}</span>
+          <div class="basket-product__count">
+            <button class="basket-product__count__change minus">-</button>
+            <span class="basket-product__count__result">${count}</span>
+            <button class="basket-product__count__change plus is--active">
               +
             </button>
           </div>
         </div>
-        <div class="cart-product__total">
-          <span class="cart-product__total__description">합계</span>
-          <span class="cart-product__total__price">${sum}</span>
-          <p class="cart-product__grade">
-            <span class="cart-product__grade__type">적립</span>
-            <span class="cart-product__grade__description"
-              >구매 시 ${point}원 적립</span
+        <div class="basket-product__total">
+          <span class="basket-product__total__description">합계</span>
+          <span class="basket-product__total__price">${sum}</span>
+          <p class="basket-product__grade">
+            <span class="basket-product__grade__type">적립</span>
+            <span class="basket-product__grade__description"
+              >구매 시 <b>${point}</b> 적립</span
             >
           </p>
         </div>
-        <div class="cart-product__button__wrapper">
-          <button class="cart-product__button close">취소</button>
-          <button class="cart-product__button add">장바구니 담기</button>
+        <div class="basket-product__button__wrapper">
+          <button class="basket-product__button close">취소</button>
+          <button class="basket-product__button add">장바구니 담기</button>
         </div>
       </div>
     </div>
@@ -114,18 +131,30 @@ const generateTemplate = (
   return target === 'cartModal' ? cartModalTemplate : headerPopupTemplate;
 };
 
+const updatePrice = (element, count) => {
+  const target = element.closest('.basket-product__wrapper');
+  const regularPrice = target.querySelector(
+    '.basket-product__price__discount'
+  ).textContent;
+  const totalPrice = target.querySelector('.basket-product__total__price');
+  const totalPoint = target.querySelector(
+    '.basket-product__grade__description b'
+  );
+  const price = getPriceNumber(regularPrice) * count;
+  totalPrice.innerText = getPriceString(price);
+  totalPoint.innerText = getPriceString(price * 0.01);
+};
+
 export const closeCartModal = () => {
-  const cartProduct = getNode('.cart-product');
+  const cartProduct = getNode('.basket-product');
   body.style.overflow = 'auto';
   body.removeChild(cartProduct);
 };
-
 const handleProductCount = (countElement, target) => {
   let count = parseInt(countElement.innerText);
-
   const updateCount = (operation) => {
     if (operation === 'increment') count += 1;
-    else if (operation === 'decrement') count -= 1;
+    else count -= 1;
 
     if (count <= 0) {
       alert('물건은 1개 이상 담아주세요.');
@@ -133,52 +162,55 @@ const handleProductCount = (countElement, target) => {
     }
 
     countElement.innerText = count;
+    updatePrice(countElement, count);
     return true;
   };
 
   return updateCount;
 };
 
-export const openCartModal = (e) => {
-  const currentTarget = e ? e.target.closest('.cart') : null;
-  if (currentTarget) e.preventDefault();
-  else {
-    handleProduct(e);
-    return;
-  }
-
+export const openCartModal = async (e) => {
+  e.preventDefault();
+  const cartIcon = e.target.closest('.cart');
   const product = e.target.closest('.product');
   const cartData = extractCartData(product);
   const template = generateTemplate('cartModal', cartData);
-  insertLast('body', template);
+  if (cartIcon) insertLast('body', template);
+  else if (product) {
+    handleProduct(product);
+    updateRecentlyViewedProducts();
+    return;
+  } else return;
 
-  const countElement = getNode('.cart-product__count__result');
+  const countElement = getNode('.basket-product__count__result');
   const updateCount = handleProductCount(countElement, product);
 
+  console.log('product', product);
   body.style.overflow = 'hidden';
-  getNode('.cart-product__count__change.minus').addEventListener('click', () =>
-    updateCount('decrement')
+
+  getNode('.basket-product__count__change.minus').addEventListener(
+    'click',
+    () => updateCount('decrement')
   );
-  getNode('.cart-product__count__change.plus').addEventListener('click', () =>
+  getNode('.basket-product__count__change.plus').addEventListener('click', () =>
     updateCount('increment')
   );
 
-  getNode('.cart-product .close').addEventListener('click', closeCartModal);
-  getNode('.cart-product .add').addEventListener('click', () =>
+  getNode('.basket-product .close').addEventListener('click', closeCartModal);
+  getNode('.basket-product .add').addEventListener('click', () =>
     handleAddCart(e, product, countElement)
   );
 };
 
 export const handleAddCart = (e, target, countElement) => {
   const menuLink = getNode('.menu_link');
-  console.log('click');
-  closeCartModal();
   const cartData = extractCartData(target);
   cartData.count = parseInt(countElement.innerText);
+  // setProductCount();
 
+  closeCartModal();
   const template = generateTemplate('cartPopup', cartData);
   insertLast(menuLink, template);
-
   setTimeout(() => {
     const cartPopup = getNode('.cart-popup');
     if (cartPopup) cartPopup.remove();
