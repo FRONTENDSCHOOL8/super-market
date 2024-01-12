@@ -48,6 +48,13 @@
     span {
       @include font(size $labelxl);
     }
+
+    .original-price {
+      display: block;
+      color: $gray300;
+      text-decoration: line-through;
+      @include font(size $labelLarge);
+    }
   }
 
   .benefit {
