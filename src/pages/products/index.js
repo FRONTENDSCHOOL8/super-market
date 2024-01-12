@@ -147,9 +147,6 @@ const changeImgStyle = (node) => {
 
 const handleSetCategoryMenu = async (e) => {
   const categoryNav = document.querySelector('.nav-category > ul')
-  
-  // netlify에서 포켓베이스 호출 되는지 확인하기 위한 콘솔 로그
-  console.log(`dddd----->${import.meta.env.VITE_PB_API}`);
 
   if(!(await getStorage('categoryData'))) {
     const categoryData = await pb
@@ -202,24 +199,54 @@ Array.from(navExpandButton).forEach(button => {
 const displayProductCard = async () => {
   const productArea = document.querySelector('.product-wrapper');
   const skeletonCardTemplate = createSkeletonCardTemplate();
+  const totalCount = document.querySelector('.products-total-count');
 
   for(let i=0; i<15; i++) {
     insertLast(productArea, skeletonCardTemplate);
   }
 
-  const productData = await pb
-    .collection('products')
-    .getFullList({});
-
+  const productData = await getProductData();
   const skeletonCard = document.querySelectorAll('.skeleton_card');
 
   new Promise((resolve, reject) => {
-    resolve(productData.forEach(product => {
+    resolve(productData.items.forEach(product => {
       const template = createCardTemplate(product);
       insertLast(productArea, template);
     }));
   })
   .then(skeletonCard.forEach(node => node.remove()))
+  .then(totalCount.textContent = `총 ${productData.totalItems}건`);
+}
+
+const getProductData = () => {
+
+  const filter = new URLSearchParams(window.location.search);
+  let filters = '';
+  
+  const page = filter.get('pages');
+  const selectData = findSelectedFilter(filter.get('filters'));
+  const {category} = selectData;
+
+  if(category) {
+    filters += category.split(',').map(item => `category_id.id ?="${item}"`).join(' || ');
+  }
+
+  return pb
+    .collection('products')
+    .getList(page, 30, {
+      filter: filters
+    });
+}
+
+const findSelectedFilter = (string) => {
+  const data = {};
+
+  const split = string.split('|').forEach(item => {
+    const [key, value] = item.split(':');
+    data[key] = value;
+  })
+
+  return data
 }
 
 resetButton.addEventListener('click', handleReset);
