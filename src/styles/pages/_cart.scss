@@ -16,11 +16,11 @@ body {
     @include hide;
   }
   input[type='checkbox'] + label {
-    background-image: url('/images/checkbox/roundcheck.png');
+    background-image: url('/images/checkbox/rounduncheck.png');
     background-repeat: no-repeat;
   }
   input[type='checkbox']:checked + label {
-    background-image: url('/images/checkbox/rounduncheck.png');
+    background-image: url('/images/checkbox/roundcheck.png');
     background-repeat: no-repeat;
   }
 }
@@ -60,7 +60,18 @@ body {
   }
 }
 .cart-product-list {
-  .cart-product__wrapper {
+
+  & .product__list {
+    @include size(auto, 62px);
+    transition: height .5s;
+    overflow-y: hidden;
+
+    &.is--active {
+      @include size(auto, auto);
+    }
+  }
+
+  & .cart-product__wrapper {
     &__bar {
       @include size(100%);
       @include flex-container(column items-center);
@@ -160,13 +171,7 @@ body {
       cursor: pointer;
     }
   }
-  .refrigeration.is--active,
-  .cold-and-warm.is--active,
-  .room-temperature.is--active {
-    .cart-product {
-      display: flex;
-    }
-  }
+
 }
 .information__wrapper {
   @include size(100%);
