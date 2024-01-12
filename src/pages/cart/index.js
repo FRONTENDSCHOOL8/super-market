@@ -13,9 +13,8 @@ const handleSetCartItem = async () => {
 
   const {isAuth, user} = await getStorage('auth');
   const cartItem = await getCartItem(user.cart_id);
-  console.log(cartItem);
   const productObject = cartItem.product;
-  
+
   for(let key in productObject) {
     const product = await getProductItem(key);
     const template = createProductCart(product, productObject[key]);
@@ -32,14 +31,19 @@ const handleSetCartItem = async () => {
   }
 }
 
+const temperatureArea = (node) => {
+  return node.closest('.cart-product__wrapper__bar');
+
+}
+
 const insertFridgeProductList = (template) => {
-  insertLast(getNode('.fridge').closest('.cart-product__wrapper__bar'), template);
+  insertLast(temperatureArea(getNode('.fridge')), template);
 }
 const insertFreezerProductList = (template) => {
-  insertLast(getNode('.freezer').closest('.cart-product__wrapper__bar'), template);
+  insertLast(temperatureArea(getNode('.freezer')), template);
 }
 const insertAmbientProductList = (template) => {
-  insertLast(getNode('.ambient').closest('.cart-product__wrapper__bar'), template);
+  insertLast(temperatureArea(getNode('.ambient')), template);
 }
 
 const createProductCart = (product, number) => {
