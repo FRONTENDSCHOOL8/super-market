@@ -22,6 +22,7 @@ const renderDetailData = async () => {
     product_name,
     packaging_type,
     price,
+    discount,
     product_description,
     etc,
   } = detailData;
@@ -38,6 +39,10 @@ const renderDetailData = async () => {
       break;
   }
 
+  const realPrice = comma(
+    Math.floor((price * (1 - 0.01 * discount)) / 10) * 10
+  );
+
   const template = {
     mainImage: /*html*/ `
   <figure>
@@ -52,7 +57,9 @@ const renderDetailData = async () => {
   <p class="delivery">${delivery_type}</p>
   <h1 class="product-name">${product_name}</h1>
   <h2 class="product-explanation">${product_description}</h2>
-  <p class="product-price"><span>${comma(price)}</span>원</p>
+  <p class="product-price"><span class="product__discount-rate">${discount}%</span>
+  <span class="product__price">${realPrice}원</span>
+  <span class="original-price">${comma(price)}원</span>
   `,
     detailDescription: /*html*/ `
   <dt>배송</dt>
@@ -93,12 +100,10 @@ const renderDetailData = async () => {
                     aria-label="수량 증가"
                   />
                 </div>
-                <span class="product-option-price">${comma(price)} 원</span>
+                <span class="product-option-price">${realPrice}원</span>
             `,
     total: /*html*/ `
-    <p>총 상품금액: <span class="product-total-price">${comma(
-      price
-    )}</span>원</p>
+    <p>총 상품금액: <span class="product-total-price">${realPrice}</span>원</p>
     `,
   };
 
