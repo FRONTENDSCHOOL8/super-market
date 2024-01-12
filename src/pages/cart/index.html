@@ -173,77 +173,166 @@
               <div class="divider"></div>
               <button class="select-delete">선택삭제</button>
             </div>
+
             <!-- start: cart-product-list -->
             <div class="cart-product-list">
               <!-- TODO: arrow 이미지 클릭 시 cart-product__wrapper에 is--active 클래스 추가해서 아래 상품 리스트 볼 수 있게 -->
               <!-- start: 냉장 식품 -->
               <div class="cart-product__wrapper refrigeration is--active">
                 <div class="cart-product__wrapper__bar">
-                  <img src="/public/images/menu/type-refrigerated.svg" />
-                  <span>냉장 식품</span>
-                  <img
-                    class="arrow"
-                    src="/public/images/menu/arrow.svg"
-                    alt="상품 자세히 보기"
-                  />
-                </div>
-                <!-- start: cart-product1 -->
-                <div class="cart-product">
-                  <input type="checkbox" name="check-one" id="check-one" />
-                  <label for="check-one"></label>
-                  <img
-                    src="../../assets/main/product01.png"
-                    alt="탱탱쫄면 봉지라면 4개입"
-                    class="thumbnail"
-                  />
-                  <p class="cart-product__content">
-                    <span class="cart-product__content__title">
-                      [풀무원] 탱탱쫄면 (4개입)
-                    </span>
-                  </p>
-                  <div class="cart-product__count">
-                    <button class="cart-product__count__change minus">-</button>
-                    <span class="cart-product__count__result">1</span>
-                    <button class="cart-product__count__change plus is--active">
-                      +
-                    </button>
+
+                  <section class="fridge">
+                    <img src="/public/images/menu/type-refrigerated.svg" />
+                    <span>냉장 식품</span>
+                    <img class="arrow" src="/public/images/menu/arrow.svg" alt="상품 자세히 보기" />
+                  </section>
+                  <!-- start: cart-product1 -->
+                  <div class="cart-product">
+                    <input type="checkbox" name="check-one" id="check-one" />
+                    <label for="check-one"></label>
+                    <img
+                      src="../../assets/main/product01.png"
+                      alt="탱탱쫄면 봉지라면 4개입"
+                      class="thumbnail"
+                    />
+                    <p class="cart-product__content">
+                      <span class="cart-product__content__title">
+                        [풀무원] 탱탱쫄면 (4개입)
+                      </span>
+                    </p>
+                    <div class="cart-product__count">
+                      <button class="cart-product__count__change minus">-</button>
+                      <span class="cart-product__count__result">1</span>
+                      <button class="cart-product__count__change plus is--active">
+                        +
+                      </button>
+                    </div>
+                    <p class="cart-product__price">
+                      <span class="cart-product__price__discount">3,735원</span>
+                      <span class="cart-product__price__regular">4,980원</span>
+                    </p>
+                    <img
+                      src="/public/images/menu/close.svg"
+                      alt="삭제하기"
+                      class="cart-product__delete"
+                    />
                   </div>
-                  <p class="cart-product__price">
-                    <span class="cart-product__price__discount">3,735원</span>
-                    <span class="cart-product__price__regular">4,980원</span>
-                  </p>
-                  <img
-                    src="/public/images/menu/close.svg"
-                    alt="삭제하기"
-                    class="cart-product__delete"
-                  />
+                  <div class="cart-product">
+                    <input type="checkbox" name="check-one" id="check-one" />
+                    <label for="check-one"></label>
+                    <img
+                      src="../../assets/main/product01.png"
+                      alt="탱탱쫄면 봉지라면 4개입"
+                      class="thumbnail"
+                    />
+                    <p class="cart-product__content">
+                      <span class="cart-product__content__title">
+                        [풀무원] 탱탱쫄면 (4개입)
+                      </span>
+                    </p>
+                    <div class="cart-product__count">
+                      <button class="cart-product__count__change minus">-</button>
+                      <span class="cart-product__count__result">1</span>
+                      <button class="cart-product__count__change plus is--active">
+                        +
+                      </button>
+                    </div>
+                    <p class="cart-product__price">
+                      <span class="cart-product__price__discount">3,735원</span>
+                      <span class="cart-product__price__regular">4,980원</span>
+                    </p>
+                    <img
+                      src="/public/images/menu/close.svg"
+                      alt="삭제하기"
+                      class="cart-product__delete"
+                    />
+                  </div>
+                  <!-- end: cart-product1 -->           
+
                 </div>
-                <!-- end: cart-product1 -->
               </div>
               <!-- start: 냉동 식품 -->
               <div class="product__list cold-and-warm">
                 <div class="cart-product__wrapper__bar">
-                  <img src="/public/images/menu/type-frozen.svg" />
-                  <span>냉동 식품</span>
-                  <img
-                    class="arrow"
-                    src="/public/images/menu/arrow.svg"
-                    alt="상품 자세히 보기"
-                  />
+
+                  <section class="freezer">
+                    <img src="/public/images/menu/type-frozen.svg" />
+                    <span>냉동 식품</span>
+                    <img class="arrow" src="/public/images/menu/arrow.svg" alt="상품 자세히 보기" />
+                  </section>
+                  <div class="cart-product">
+                    <input type="checkbox" name="check-one" id="check-one" />
+                    <label for="check-one"></label>
+                    <img
+                      src="../../assets/main/product01.png"
+                      alt="탱탱쫄면 봉지라면 4개입"
+                      class="thumbnail"
+                    />
+                    <p class="cart-product__content">
+                      <span class="cart-product__content__title">
+                        [풀무원] 탱탱쫄면 (4개입)
+                      </span>
+                    </p>
+                    <div class="cart-product__count">
+                      <button class="cart-product__count__change minus">-</button>
+                      <span class="cart-product__count__result">1</span>
+                      <button class="cart-product__count__change plus is--active">
+                        +
+                      </button>
+                    </div>
+                    <p class="cart-product__price">
+                      <span class="cart-product__price__discount">3,735원</span>
+                      <span class="cart-product__price__regular">4,980원</span>
+                    </p>
+                    <img
+                      src="/public/images/menu/close.svg"
+                      alt="삭제하기"
+                      class="cart-product__delete"
+                    />
+                  </div>
+
                 </div>
               </div>
               <!-- start: 상온 식품 -->
               <div class="product__list room-temperature">
                 <div class="cart-product__wrapper__bar">
-                  <img src="/public/images/menu/type-normal.svg" />
-                  <span>상온 식품</span>
-                  <img
-                    class="arrow"
-                    src="/public/images/menu/arrow.svg"
-                    alt="상품 자세히 보기"
-                  />
+                  <section class="freezer">
+                    <img src="/public/images/menu/type-normal.svg" />
+                    <span>상온 식품</span>
+                    <img class="arrow" src="/public/images/menu/arrow.svg" alt="상품 자세히 보기" />
+                  </section>
+                  <!-- start: cart-product -->
+                  <div class="cart-product">
+                    <input type="checkbox" name="check-one" id="check-one" />
+                    <label for="check-one"></label>
+                    <img
+                      src="../../assets/main/product01.png"
+                      alt="탱탱쫄면 봉지라면 4개입"
+                      class="thumbnail"
+                    />
+                    <p class="cart-product__content">
+                      <span class="cart-product__content__title">
+                        [풀무원] 탱탱쫄면 (4개입)
+                      </span>
+                    </p>
+                    <div class="cart-product__count">
+                      <button class="cart-product__count__change minus">-</button>
+                      <span class="cart-product__count__result">1</span>
+                      <button class="cart-product__count__change plus is--active">
+                        +
+                      </button>
+                    </div>
+                    <p class="cart-product__price">
+                      <span class="cart-product__price__discount">3,735원</span>
+                      <span class="cart-product__price__regular">4,980원</span>
+                    </p>
+                    <img
+                      src="/public/images/menu/close.svg"
+                      alt="삭제하기"
+                      class="cart-product__delete"
+                    />
+                  </div>
                 </div>
-                <!-- start: cart-product -->
               </div>
             </div>
             <div class="select__all">
