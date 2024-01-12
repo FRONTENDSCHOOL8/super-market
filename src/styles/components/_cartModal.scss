@@ -38,17 +38,20 @@
     padding: 8px 0;
   }
   &__name {
+    @include size(144px);
     @include font(size $labelSmall weight 600);
     color: $gray300;
     padding-bottom: 8px;
+    overflow: hidden;
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
   &__add-cart {
     @include font(size $labelSmall weight 400);
     color: $content;
   }
 }
-// shopping basket
+
 .basket-product {
   @include size(100vw, 100vh);
   @include absolute();
