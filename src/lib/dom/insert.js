@@ -28,3 +28,10 @@ export function insertAfter(node,text){
 
   node.insertAdjacentHTML('afterend',text)
 }
+
+export const promiseInsertLast = (target, template) => {
+
+  return new Promise((resolve, reject) => {
+    resolve(insertLast(target, template))
+  });
+}

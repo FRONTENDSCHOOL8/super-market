@@ -7,3 +7,4 @@ export * from './recentBar.js';
 export * from './validationInput.js';
 export * from './clickBtnMoveToSite.js';
 export * from './productCard.js';
+export * from './address.js';
