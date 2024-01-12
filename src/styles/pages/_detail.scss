@@ -17,10 +17,11 @@
 }
 
 .main-image {
-  width: 100%;
+  max-width: 450px;
 }
 
 .main-description {
+  text-size-adjust: auto;
   @include font(weight 600 lh 1.5);
   width: 560px;
 
