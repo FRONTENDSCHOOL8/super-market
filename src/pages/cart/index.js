@@ -1,12 +1,11 @@
-import { initHeader, getStorage, comma, getPbImageURL, getNode, insertLast } from '/src/lib';
+import { initHeader, getStorage, comma, getPbImageURL, getNode, getNodes, insertLast } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
 
 initHeader();
 
 const expandArrow = document.querySelectorAll('.arrow');
-
-
+const wholeSelectCheckBox = document.querySelectorAll('input[id^="check-all-"]');
 
 
 const handleSetCartItem = async () => {
@@ -15,23 +14,69 @@ const handleSetCartItem = async () => {
   const cartItem = await getCartItem(user.cart_id);
   const productObject = cartItem.product;
 
-  for(let key in productObject) {
-    const product = await getProductItem(key);
-    const template = createProductCart(product, productObject[key]);
-
-    if(product.packaging_type == "1") {
-      insertAmbientProductList(template);
-      setActive('.ambient');
+  const insertItem = async (productObject) => {
+    for(let key in productObject) {
+      const product = await getProductItem(key);
+      const template = createProductCart(product, productObject[key]);
+  
+      if(product.packaging_type == "1") {
+        insertAmbientProductList(template);
+        setActive('.ambient');
+      }
+      else if (product.packaging_type == "2") {
+        insertFridgeProductList(template);
+        setActive('.fridge');
+      }
+      else {
+        insertFreezerProductList(template);
+        setActive('.freezer');
+      }
     }
-    else if (product.packaging_type == "2") {
-      insertFridgeProductList(template);
-      setActive('.fridge');
-    }
-    else {
-      insertFreezerProductList(template);
-      setActive('.freezer');
-    }
+    
   }
+
+  new Promise ((resolve, reject) => {
+    resolve(insertItem(productObject));
+  }).then(
+    Array.from(getNodes('label[for^="check-all-"'))
+      .forEach(node => node.textContent = `전체선택(0/${Object.keys(productObject).length})`)
+  ).then(() => {
+    const checkBox = getNodes('.cart-product-list input[type="checkbox"]')
+    Array.from(checkBox).forEach(item => item.addEventListener('change', handleCheckboxOperate));
+  }).then(() => {
+    if(Object.keys(productObject).length == 0) {
+      Array.from(wholeSelectCheckBox).forEach(item => item.disabled = true);
+    }
+  })
+
+}
+
+const handleCheckboxOperate = (e) => {
+  setSelectedCount();
+  setWholeCheckbox();
+
+}
+
+const setWholeCheckbox = () => {
+  const wholeCount = +(getNode('label[for^="check-all-"').textContent.split('/')[1].split(')')[0]);
+  const count = getNodes('.cart-product-list input[type="checkbox"]:checked').length;
+
+  if(count === wholeCount) {
+    getNode('#check-all-top').checked = true;
+    getNode('#check-all-under').checked = true;
+  } else {
+    getNode('#check-all-top').checked = false;
+    getNode('#check-all-under').checked = false;
+  }
+}
+
+const setSelectedCount = () => {
+  const currentText = getNode('label[for^="check-all-"').textContent;
+  const count = getNodes('.cart-product-list input[type="checkbox"]:checked').length;
+  let countText = `전체선택(${count}${currentText.slice(currentText.indexOf('/'))}`;
+
+  Array.from(getNodes('label[for^="check-all-"'))
+  .forEach(node => node.textContent = countText);
 }
 
 const setActive = (node) => {
@@ -103,9 +148,25 @@ const handleExpandArea = (e) => {
   }
 }
 
+const handleWholeCheck = (e) => {
+  const checkbox = document.querySelectorAll('input[type="checkbox"]')
+
+  if(e.target.checked) {
+    Array.from(checkbox).forEach(item => item.checked = true);
+  } else {
+    Array.from(checkbox).forEach(item => item.checked = false);
+  }
+  setSelectedCount();
+}
+
 
 Array.from(expandArrow).forEach(node => {
   node.addEventListener('click', handleExpandArea);
 })
 
-document.addEventListener('DOMContentLoaded', handleSetCartItem);
+Array.from(wholeSelectCheckBox).forEach(node => {
+  node.addEventListener('change', handleWholeCheck);
+})
+
+handleSetCartItem();
+
