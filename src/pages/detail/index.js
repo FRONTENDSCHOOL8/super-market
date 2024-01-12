@@ -174,8 +174,6 @@ const showTotalPrice = () => {
   return (totalPrice.innerText = comma(productPrice * productCount.value));
 };
 
-console.log(optionPrice);
-
 const handleDetailNav = () => {
   if (!navItem) return;
 
