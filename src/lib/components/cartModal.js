@@ -35,6 +35,7 @@ const findDataObj = {
     result: '',
   },
 };
+
 const getPriceNumber = (string) => Number(string.replace(/[원,]/g, ''));
 const getPriceString = (number) => `${number.toLocaleString()}원`;
 const switchPrice = (string, point) => {
@@ -115,7 +116,7 @@ const generateTemplate = (
           <p class="basket-product__grade">
             <span class="basket-product__grade__type">적립</span>
             <span class="basket-product__grade__description"
-              >구매 시 ${point} 적립</span
+              >구매 시 <b>${point}</b> 적립</span
             >
           </p>
         </div>
@@ -128,6 +129,20 @@ const generateTemplate = (
   `;
 
   return target === 'cartModal' ? cartModalTemplate : headerPopupTemplate;
+};
+
+const updatePrice = (element, count) => {
+  const target = element.closest('.basket-product__wrapper');
+  const regularPrice = target.querySelector(
+    '.basket-product__price__discount'
+  ).textContent;
+  const totalPrice = target.querySelector('.basket-product__total__price');
+  const totalPoint = target.querySelector(
+    '.basket-product__grade__description b'
+  );
+  const price = getPriceNumber(regularPrice) * count;
+  totalPrice.innerText = getPriceString(price);
+  totalPoint.innerText = getPriceString(price * 0.01);
 };
 
 export const closeCartModal = () => {
@@ -147,8 +162,10 @@ const handleProductCount = (countElement, target) => {
     }
 
     countElement.innerText = count;
+    updatePrice(countElement, count);
     return true;
   };
+
   return updateCount;
 };
 
