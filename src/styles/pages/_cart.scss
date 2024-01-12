@@ -16,11 +16,11 @@ body {
     @include hide;
   }
   input[type='checkbox'] + label {
-    background-image: url('/public/images/checkbox/roundcheck.png');
+    background-image: url('/images/checkbox/roundcheck.png');
     background-repeat: no-repeat;
   }
   input[type='checkbox']:checked + label {
-    background-image: url('/public/images/checkbox/rounduncheck.png');
+    background-image: url('/images/checkbox/rounduncheck.png');
     background-repeat: no-repeat;
   }
 }
@@ -63,16 +63,24 @@ body {
   .cart-product__wrapper {
     &__bar {
       @include size(100%);
-      @include flex-container(row items-center);
+      @include flex-container(column items-center);
       @include gap(4);
+      @include py(0 10);
       border-top: 1px solid $black;
-      span {
-        flex: 1;
-        @include font(size $labelMedium);
-      }
-      .arrow {
-        transform: rotate(-90deg);
-        cursor: pointer;
+
+      & .fridge, & .freezer, & .ambient {
+        @include flex-container(row items-center);
+        @include justify-content(around);
+        @include size(100%);
+        & span {
+          flex: 1;
+          @include font(size $labelMedium);
+        }
+        & .arrow {
+          transform: rotate(-90deg);
+          cursor: pointer;
+        }
+
       }
     }
   }
