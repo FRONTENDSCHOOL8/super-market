@@ -6,9 +6,11 @@
   @include flex-container(column);
   @include gap(8);
   margin-bottom: 20px;
+
   &__images {
     @include relative();
     @include size(250px);
+    min-height: 320px;
     display: block;
     .cart {
       @include absolute();
@@ -16,38 +18,106 @@
       right: 3%;
     }
   }
+
+  &__desc {
+    @include relative();
+    @include container-width(max, 250px);
+    @include size(100%);
+    @include flex-container(column);
+    @include gap(8);
+    
+  }
+
   &__brand {
     color: $gray400;
     font-size: $labelSmall;
   }
+  
   &__title {
     color: $content;
     font-size: $paraGraphMedium;
   }
+
   &__discount-rate {
     color: $accentYellow;
     font-size: $labelLarge;
     margin-right: 8px;
   }
+
   &__price {
     @include font(size $labelLarge weight bold);
   }
+
   &__regular-price {
     color: $content;
     text-decoration: line-through;
   }
+
   &__description {
     color: $content;
     font-size: $paraGraphSmall;
   }
+
   &__keyword {
     background-color: $gray100;
     padding: 4px;
     border-radius: 4px;
     font-size: $labelSmall;
   }
+
   &__keyword.only {
     color: $primary;
     font-weight: bold;
+  }
+}
+
+.product .skeleton_loading {
+  @include absolute();
+  @include size(100%, 100%);
+  box-sizing: border-box;
+  background: white;
+  z-index: 1;
+
+}
+
+.skeleton_img {
+  @include size(100%, 100%);
+}
+
+.skeleton_text {
+  @include my(0 0.5rem);
+  @include size(auto 1rem);
+
+  &:nth-child(1) {
+    @include size(80%, 0.8rem);
+  }
+  &:nth-child(2) {
+    @include size(65%, 1.2rem);
+  }
+  &:nth-child(3) {
+    @include size(50%, 1.5rem);
+  }
+  &:nth-child(4) {
+    @include size(30%, 1.4rem);
+  }
+  &:nth-child(5) {
+    @include size(40%, 0.5rem);
+  }
+  &:nth-child(6) {
+    @include size(40%, 2rem);
+  }
+}
+
+.skeleton_loading * {
+  background: linear-gradient(120deg, #e5e5e5 30%, #f0f0f0 38%, #f0f0f0 40%, #e5e5e5 48%);
+  border-radius: 1rem;
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  animation: load 1s infinite;
+}
+
+@keyframes load {
+  100% {
+      background-position: -100% 0;
   }
 }

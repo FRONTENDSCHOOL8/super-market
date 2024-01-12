@@ -1,4 +1,4 @@
-import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist } from '/src/lib';
+import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist, createCardTemplate, createSkeletonCardTemplate } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
 
@@ -8,7 +8,6 @@ hideElementNoExist();
 const navExpandButton = document.querySelectorAll('div[class^="nav-"] > button');
 const resetButton = document.querySelector('.products-navigation__header button');
 const selectedItemList = {};
-
 
 const handleExpandNavigation = (e) => {
   let menu = e.target.closest('button').nextElementSibling;
@@ -148,6 +147,9 @@ const changeImgStyle = (node) => {
 
 const handleSetCategoryMenu = async (e) => {
   const categoryNav = document.querySelector('.nav-category > ul')
+  
+  // netlify에서 포켓베이스 호출 되는지 확인하기 위한 콘솔 로그
+  console.log(`dddd----->${import.meta.env.VITE_PB_API}`);
 
   if(!(await getStorage('categoryData'))) {
     const categoryData = await pb
@@ -197,10 +199,33 @@ Array.from(navExpandButton).forEach(button => {
 })
 
 
+const displayProductCard = async () => {
+  const productArea = document.querySelector('.product-wrapper');
+  const skeletonCardTemplate = createSkeletonCardTemplate();
+
+  for(let i=0; i<15; i++) {
+    insertLast(productArea, skeletonCardTemplate);
+  }
+
+  const productData = await pb
+    .collection('products')
+    .getFullList({});
+
+  const skeletonCard = document.querySelectorAll('.skeleton_card');
+
+  new Promise((resolve, reject) => {
+    resolve(productData.forEach(product => {
+      const template = createCardTemplate(product);
+      insertLast(productArea, template);
+    }));
+  })
+  .then(skeletonCard.forEach(node => node.remove()))
+}
 
 resetButton.addEventListener('click', handleReset);
 
 document.addEventListener('DOMContentLoaded', handleSetCategoryMenu);
+document.addEventListener('DOMContentLoaded', displayProductCard);
 
 
 

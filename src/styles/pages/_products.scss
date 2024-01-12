@@ -283,8 +283,9 @@
 
   & .product-wrapper {
     @include flex-container(row wrap items-start);
-    @include justify-content(between);
-    @include gap(24 0);
+    @include justify-content(start);
+    @include gap(24 1.126rem);
+    @include size(100%);
 
     & .product {
       @include size(249px);
