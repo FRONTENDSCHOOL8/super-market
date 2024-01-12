@@ -40,7 +40,6 @@ const createProductTemplate = (url, thumbnailSrc, thumbnailAlt) => {
   `;
 };
 
-// TODO: imgSrc -> productId & href +productId
 const renderProduct = (target, product) => {
   const existingProduct = target.querySelector(
     `.recently__product__image[src="${product.thumbnailSrc}"]`
@@ -66,15 +65,12 @@ export const updateRecentlyViewedProducts = () => {
   });
 };
 
-export const handleProduct = (e) => {
-  e.preventDefault();
-
-  const current = e.target.closest('.product');
+export const handleProduct = (product, address) => {
+  const current = product;
   if (!current) return;
 
   const [url, thumbnail] = [current.href, current.querySelector('img')];
   if (!url) return;
-
   const existImage = document.querySelectorAll('.recently__product img');
   const existIndex = Array.from(existImage).findIndex(
     (isExist) => isExist.src === thumbnail.src
@@ -101,5 +97,5 @@ export const handleProduct = (e) => {
     thumbnailAlt: thumbnail.alt,
   });
   saveProductList('recentlyViewedProducts', storedData);
-  window.location.href = `/src/pages/detail/index.html`;
+  window.location.href = url;
 };
