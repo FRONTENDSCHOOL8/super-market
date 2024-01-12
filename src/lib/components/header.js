@@ -1,4 +1,4 @@
-import { insertLast, getNode, getStorage } from '/src/lib';
+import { setSearchAddressEvent, getNode, getStorage, promiseInsertLast } from '/src/lib';
 
 const header = document.querySelector('.header');
 const headerMenubar = document.querySelector('.menu');
@@ -21,26 +21,9 @@ const handleScrollHeader = e => {
   }
 }
 
-const handleSetAddress = () => {
-  const width = 502;
-  const height = 547;
-  const popupX = (screen.width / 2) - (width / 2);
-  const popupY = (screen.height / 2) - (height / 2);
-  window.open('/src/pages/address/', '_blank', `width=${width},height=${height},left=${popupX},top=${popupY}`);
-  isShowAddressBox = !isShowAddressBox;
-  menuLink.removeChild(getNode('.menu_link__address-box'))
-}
 
-const promiseInsertLast = (target, template) => {
 
-  return new Promise((resolve, reject) => {
-    resolve(insertLast(target, template))
-  });
-}
 
-const setSearchAddressEvent = (target) => {
-  target.addEventListener('click', handleSetAddress)
-}
 
 const handleAddressBox = async () => {
   let template;
@@ -71,9 +54,15 @@ const handleAddressBox = async () => {
   }
 
   if(!isShowAddressBox) {
+    const closeAddressBox = () => {
+      isShowAddressBox = !isShowAddressBox;
+      menuLink.removeChild(getNode('.menu_link__address-box'))
+    }
+
     isShowAddressBox = !isShowAddressBox;
     promiseInsertLast(menuLink, template)
-    .then(setSearchAddressEvent(getNode('.address-box-search')))
+    .then(setSearchAddressEvent(getNode('.address-box-search'), closeAddressBox));
+    
   } else {
     isShowAddressBox = !isShowAddressBox;
     menuLink.removeChild(getNode('.menu_link__address-box'));
