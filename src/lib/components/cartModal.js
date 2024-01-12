@@ -47,12 +47,12 @@ const switchPrice = (string, point) => {
 };
 
 const fillDataObj = (target) => {
+  if (!target) return;
   for (const key in findDataObj) {
     const domTarget = target.querySelector(findDataObj[key].dom);
     const findTarget = domTarget ? domTarget[findDataObj[key].find] : null;
     findDataObj[key].result = findTarget !== null ? findTarget.trim() : '';
     if (key === 'id') {
-      console.log('key.id', key.id);
       findDataObj.id.result = target.href.split('#')[1] || '';
     }
   }
@@ -185,7 +185,6 @@ export const openCartModal = async (e) => {
   const countElement = getNode('.basket-product__count__result');
   const updateCount = handleProductCount(countElement, product);
 
-  console.log('product', product);
   body.style.overflow = 'hidden';
 
   getNode('.basket-product__count__change.minus').addEventListener(
@@ -202,11 +201,26 @@ export const openCartModal = async (e) => {
   );
 };
 
+const setProductCount = async (productId, productCount) => {
+  const { isAuth, user } = await getStorage('auth');
+  const object = await pb.collection('cart').getOne(user.cart_id);
+  const { product } = object;
+  if (product[productId]) {
+    product[productId] += productCount;
+  } else {
+    product[productId] = productCount;
+  }
+  const data = {
+    product: JSON.stringify(product),
+  };
+  pb.collection('cart').update(user.cart_id, data);
+};
+
 export const handleAddCart = (e, target, countElement) => {
   const menuLink = getNode('.menu_link');
   const cartData = extractCartData(target);
   cartData.count = parseInt(countElement.innerText);
-  // setProductCount();
+  setProductCount(cartData.id, cartData.count);
 
   closeCartModal();
   const template = generateTemplate('cartPopup', cartData);
