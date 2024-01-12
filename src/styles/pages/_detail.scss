@@ -51,7 +51,7 @@
 
     .original-price {
       display: block;
-      color: $gray500;
+      color: $gray300;
       text-decoration: line-through;
       @include font(size $labelLarge);
     }
