@@ -1,4 +1,5 @@
-import { setSearchAddressEvent, getNode, getStorage, promiseInsertLast } from '/src/lib';
+import { setSearchAddressEvent, getNode, getStorage, setStorage, promiseInsertLast } from '/src/lib';
+import defaultAuthData from '/src/lib/api/defaultAuthData';
 
 const header = document.querySelector('.header');
 const headerMenubar = document.querySelector('.menu');
@@ -71,6 +72,10 @@ const handleAddressBox = async () => {
 
 }
 
+const setDefaultAuth = async () => {
+  if(!(await getStorage('auth')))
+    setStorage('auth', defaultAuthData);
+}
 
 
 
@@ -81,4 +86,5 @@ const showAddressBox = () => addressButton.addEventListener('click', handleAddre
 export const initHeader = () => {
   fixHeader();
   showAddressBox();
+  setDefaultAuth();
 }

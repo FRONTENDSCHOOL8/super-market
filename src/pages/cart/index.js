@@ -1,50 +1,62 @@
-import { initHeader, getStorage, comma, getPbImageURL, getNode, getNodes, insertLast } from '/src/lib';
+import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast  } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
+
 import '/src/styles/style.scss';
 
 initHeader();
 
 const expandArrow = document.querySelectorAll('.arrow');
 const wholeSelectCheckBox = document.querySelectorAll('input[id^="check-all-"]');
+const selectDeleteButton = document.querySelectorAll('.select-delete')
 
+const {isAuth, user} = await getStorage('auth');
+if(!isAuth) {
 
-const handleSetCartItem = async () => {
+  alert('로그인 후 이용해 주세요.')
+  location.href = '/src/pages/login/';
+}
 
-  const {isAuth, user} = await getStorage('auth');
+const setCartItem = async () => {
+
   const cartItem = await getCartItem(user.cart_id);
-  const productObject = cartItem.product;
+  let ambientTemplate = ''
+  let fridgeTemplate = ''
+  let freezerTemplate = ''
 
-  const insertItem = async (productObject) => {
-    for(let key in productObject) {
+  const insertItem = async (cartItem) => {
+    for(let key in cartItem) {
       const product = await getProductItem(key);
-      const template = createProductCart(product, productObject[key]);
+      const template = createProductCart(product, cartItem[key]);
+
   
       if(product.packaging_type == "1") {
-        insertAmbientProductList(template);
-        setActive('.ambient');
+        ambientTemplate += template;
       }
       else if (product.packaging_type == "2") {
-        insertFridgeProductList(template);
-        setActive('.fridge');
+        fridgeTemplate += template;
       }
       else {
-        insertFreezerProductList(template);
-        setActive('.freezer');
+        freezerTemplate += template;
       }
     }
+    insertAmbientProductList(ambientTemplate);
+    insertFridgeProductList(fridgeTemplate);
+    insertFreezerProductList(freezerTemplate);
+    
     
   }
 
+
   new Promise ((resolve, reject) => {
-    resolve(insertItem(productObject));
+    resolve(insertItem(cartItem));
   }).then(
     Array.from(getNodes('label[for^="check-all-"'))
-      .forEach(node => node.textContent = `전체선택(0/${Object.keys(productObject).length})`)
+      .forEach(node => node.textContent = `전체선택(0/${Object.keys(cartItem).length})`)
   ).then(() => {
     const checkBox = getNodes('.cart-product-list input[type="checkbox"]')
     Array.from(checkBox).forEach(item => item.addEventListener('change', handleCheckboxOperate));
   }).then(() => {
-    if(Object.keys(productObject).length == 0) {
+    if(Object.keys(cartItem).length == 0) {
       Array.from(wholeSelectCheckBox).forEach(item => item.disabled = true);
     }
   })
@@ -91,12 +103,15 @@ const temperatureArea = (node) => {
 
 const insertFridgeProductList = (template) => {
   insertLast(temperatureArea(getNode('.fridge')), template);
+  if(template.length) setActive('.fridge');
 }
 const insertFreezerProductList = (template) => {
   insertLast(temperatureArea(getNode('.freezer')), template);
+  if(template.length) setActive('.freezer');
 }
 const insertAmbientProductList = (template) => {
   insertLast(temperatureArea(getNode('.ambient')), template);
+  if(template.length) setActive('.ambient');
 }
 
 const createProductCart = (product, number) => {
@@ -112,9 +127,9 @@ const createProductCart = (product, number) => {
       <span class="cart-product__content__title">${product_name}</span>
     </p>
     <div class="cart-product__count">
-      <button class="cart-product__count__change minus ${id}">-</button>
-      <span class="cart-product__count__result ${id}">${number}</span>
-      <button class="cart-product__count__change plus ${id} is--active">+</button>
+      <button class="cart-product__count__change minus id_${id}">-</button>
+      <span class="cart-product__count__result id_${id}">${number}</span>
+      <button class="cart-product__count__change plus id_${id} is--active">+</button>
     </div>
     <p class="cart-product__price">
       <span class="cart-product__price__discount">${comma(realPrice*number)}원</span>
@@ -127,8 +142,10 @@ const createProductCart = (product, number) => {
   return template
 }
 
-const getCartItem = (cart_id) => {
-  return pb.collection('cart').getOne(cart_id);
+const getCartItem = async (cart_id) => {
+  
+    const cartItem = (await pb.collection('cart').getOne(cart_id)).product;
+  return cartItem
 }
 
 const getProductItem = (product_id) => {
@@ -159,6 +176,30 @@ const handleWholeCheck = (e) => {
   setSelectedCount();
 }
 
+const handleDeleteSelectedItem = (e) => {
+  const uncheckedItem = getNodes('.cart-product-list input[type="checkbox"]:not(:checked)');
+  const checkedItem = getNodes('.cart-product-list input[type="checkbox"]:checked');
+  const updateCartItem = {};
+
+  if(!checkedItem.length) {
+
+    alert('선택한 상품이 없습니다.')
+    return;
+  }
+
+  Array.from(uncheckedItem).forEach(item => {
+    updateCartItem[item.id] = getNode(`.cart-product__count__result.id_${item.id}`).textContent;
+  })
+
+  const data = {
+    product: JSON.stringify(updateCartItem)
+  }
+
+  pb.collection('cart').update(user.cart_id, data)
+  .then(Array.from(checkedItem).forEach(node => node.closest('.cart-product').remove()));
+  
+  
+}
 
 Array.from(expandArrow).forEach(node => {
   node.addEventListener('click', handleExpandArea);
@@ -168,5 +209,10 @@ Array.from(wholeSelectCheckBox).forEach(node => {
   node.addEventListener('change', handleWholeCheck);
 })
 
-handleSetCartItem();
+Array.from(selectDeleteButton).forEach(node => {
+  node.addEventListener('click', handleDeleteSelectedItem);
+})
+
+setCartItem();
+
 
