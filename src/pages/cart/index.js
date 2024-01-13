@@ -62,6 +62,7 @@ const setCartItem = async () => {
     if(Object.keys(cartItem).length == 0) {
       Array.from(wholeSelectCheckBox).forEach(item => item.disabled = true);
     }
+    setPurchaseButtonActivate();
   })
 
 }
@@ -92,6 +93,8 @@ const setSelectedCount = () => {
 
   Array.from(getNodes('label[for^="check-all-"'))
   .forEach(node => node.textContent = countText);
+
+  setPurchaseButtonActivate();
 }
 
 const setActive = (node) => {
@@ -199,7 +202,8 @@ const handleDeleteSelectedItem = (e) => {
   }
 
   pb.collection('cart').update(user.cart_id, data)
-  .then(Array.from(checkedItem).forEach(node => node.closest('.cart-product').remove()));
+  .then(Array.from(checkedItem).forEach(node => node.closest('.cart-product').remove()))
+  .then(setPurchaseButtonActivate());
 }
 
 const handleDeleteItem = (e) => {
@@ -218,8 +222,16 @@ const handleDeleteItem = (e) => {
   }
 
   pb.collection('cart').update(user.cart_id, data)
-  .then(currentItem.remove());
+  .then(currentItem.remove())
+  .then(setPurchaseButtonActivate());
 
+}
+
+const setPurchaseButtonActivate = () => {
+  const cartItem = getNodes('.cart-product');
+  const checkedItem = getNodes('.cart-product-list input[type="checkbox"]:checked');
+  if(!cartItem.length || !checkedItem.length) getNode('.order-button').disabled = true;
+  else getNode('.order-button').disabled = false;
 }
 
 Array.from(expandArrow).forEach(node => {
