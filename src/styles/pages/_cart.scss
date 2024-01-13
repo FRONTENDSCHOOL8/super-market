@@ -113,8 +113,9 @@ body {
     }
     input[type='checkbox'] + label {
       @include relative();
-      padding-left: 30px;
-      padding-top: 6px;
+      @include px(30 0);
+      @include mx(0 5);
+      @include py(3 5);
     }
     .divider {
       @include size(1px, 100%);
@@ -122,7 +123,7 @@ body {
       background-color: $gray100;
     }
     .select-delete {
-      padding-top: 6px;
+      @include py(3 4);
       border: 0;
       background-color: transparent;
     }
@@ -256,11 +257,12 @@ body {
   @include flex-container(column center);
   @include gap(12);
   @include font(size $labelMedium);
+  
   &__title {
     @include size(100%);
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
+    @include flex-container(row items-center);
+    @include my(0 12);
+
     img {
       @include size(30px);
       color: $content;
@@ -274,12 +276,22 @@ body {
     color: $primary;
   }
   &__address-change {
-    padding: 10px;
+    @include p(10);
+    @include rounded(4px);
+    @include font(weight 600);
     background-color: inherit;
     border: 1px solid $primary;
-    border-radius: 4px;
     color: $primary;
-    font-weight: 600;
+  }
+  &__address-register {
+    @include p(12);
+    @include rounded(4px);
+    @include font(weight 600);
+    border: none;
+    background-color: $primary;
+    color: white;
+
+    
   }
 }
 .payment {

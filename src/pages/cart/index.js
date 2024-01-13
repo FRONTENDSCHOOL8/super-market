@@ -1,4 +1,4 @@
-import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast  } from '/src/lib';
+import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast, setSearchAddressEvent  } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 
 import '/src/styles/style.scss';
@@ -9,10 +9,11 @@ const expandArrow = document.querySelectorAll('.arrow');
 const wholeSelectCheckBox = document.querySelectorAll('input[id^="check-all-"]');
 const selectDeleteButton = document.querySelectorAll('.select-delete')
 const skeletonCard = document.querySelector('.skeleton-ui')
+const shipArea = document.querySelector('.shipping');
 
 const {isAuth, user} = await getStorage('auth');
 if(!isAuth) {
-
+  
   alert('로그인 후 이용해 주세요.')
   location.href = '/src/pages/login/';
 }
@@ -75,14 +76,7 @@ const setCartItem = async () => {
     setPurchaseButtonActivate();
     calculateTotalPrice()
   }).then(setTimeout(() => {skeletonCard.remove()}, 2000))
-
-  
-  
-
-
 }
-
-
 
 const calculateTotalPrice = () => {
   const discountPriceList = getNodes('.cart-product__price__discount')
@@ -385,4 +379,61 @@ Array.from(selectDeleteButton).forEach(node => {
 
 setCartItem();
 
+
+// 배송지
+
+const setShipInfo = async () => {
+  const address = JSON.parse(await getStorage('address'));
+  let template = '';
+
+  const setShipArea = () => {
+    if(address) {
+      template = /* html */ `
+        <p class="shipping__title">
+          <img src="/images/menu/map.svg" alt="" />
+          <span>배송지</span>
+        </p>
+        <span class="shipping__address">
+          ${address["address"]} ${address["detail-address"]}
+        </span>
+        <span class="shipping__address-type">샛별배송</span>
+        <button class="shipping__address-change">배송지 변경</button>
+      `
+
+      insertLast(shipArea, template);
+    } else if(user.address) {
+      template = /* html */ `
+        <p class="shipping__title">
+          <img src="/images/menu/map.svg" alt="" />
+          <span>배송지</span>
+        </p>
+        <span class="shipping__address">
+          ${user.address} ${user["detail_address"] ? user["detail_address"] : ''}
+        </span>
+        <span class="shipping__address-type">샛별배송</span>
+        <button class="shipping__address-change">배송지 변경</button>
+      `
+
+      insertLast(shipArea, template);
+    } else {
+      insertLast(shipArea, `<button class="shipping__address-register">배송지 등록</button>`)
+    }
+  }
+
+  new Promise((resolve, reject) => {
+    resolve(setShipArea())
+  }).then(() => {
+    if(address || user.address) {
+      setSearchAddressEvent(getNode('.shipping__address-change'), (popup) => {
+        popup.addEventListener('beforeunload', () => location.reload());
+      })
+    } else {
+      setSearchAddressEvent(getNode('.shipping__address-register'), (popup) => {
+        popup.addEventListener('beforeunload', () => location.reload());
+      })
+    }
+  })
+}
+
+setShipInfo();
 
