@@ -50,27 +50,110 @@ const setCartItem = async () => {
   new Promise ((resolve, reject) => {
     resolve(insertItem(cartItem));
   }).then(
-    Array.from(getNodes('label[for^="check-all-"'))
+    Array.from(getNodes('label[for^="check-all-"]'))
       .forEach(node => node.textContent = `전체선택(0/${Object.keys(cartItem).length})`)
   ).then(() => {
     const checkBox = getNodes('.cart-product-list input[type="checkbox"]')
     Array.from(checkBox).forEach(node => node.addEventListener('change', handleCheckboxOperate));
   }).then(() => {
     const deleteButton = getNodes('.cart-product__delete')
+    const plusButton = getNodes('.plus')
+    const minusButton = getNodes('.minus')
     Array.from(deleteButton).forEach(node => node.addEventListener('click', handleDeleteItem));
+    Array.from(plusButton).forEach(node => node.addEventListener('click', handleCalculatePrice))
+    Array.from(minusButton).forEach(node => node.addEventListener('click', handleCalculatePrice))
   }).then(() => {
     if(Object.keys(cartItem).length == 0) {
       Array.from(wholeSelectCheckBox).forEach(item => item.disabled = true);
     }
     setPurchaseButtonActivate();
+    calculateTotalPrice()
   })
 
+}
+
+const calculateTotalPrice = () => {
+  const discountPriceList = getNodes('.cart-product__price__discount')
+  const originPriceList = getNodes('.cart-product__price__regular')
+
+  const discountPrice = sumPrice(discountPriceList)
+  const originPrice = sumPrice(originPriceList)
+  const salePrice = originPrice - discountPrice;
+
+  getNode('.origin-price').textContent = comma(originPrice) + ' 원';
+  getNode('.sale-price').textContent = salePrice == 0 ? 
+      comma(salePrice) + ' 원' : '-' + comma(salePrice) + ' 원';
+  getNode('.delivery-tax').textContent = (discountPrice >= 43000 || discountPrice == 0) ? 
+      '0 원' : ' +3,000 원';
+  getNode('.payment__result__price b').textContent = (discountPrice >= 43000 || discountPrice == 0) ? 
+      `${comma(discountPrice)}` : `${comma(discountPrice + 3000)}`
+  getNode('.payment__grade__description').textContent = `최대 ${comma(~~(discountPrice * 0.001))}원 적립 일반 0.1%`;
+  
+}
+
+const handleCalculatePrice = (e) => {
+  const currentItem = e.target.closest('.cart-product')
+  const currentMinusButton = currentItem.querySelector('.minus');
+  const displayOrigin = currentItem.querySelector('.cart-product__price__regular')
+  const displayDiscount = currentItem.querySelector('.cart-product__price__discount')
+  const displayNumber = currentItem.querySelector('.cart-product__count__result')
+
+  let [origin, discount, number] = getItemPrice(displayOrigin, displayDiscount, displayNumber);
+  let [originPerItem, discountPerItem] = [origin / number, discount / number];
+
+  if(e.target.classList.contains('plus')) {
+    number++;
+    displayNumber.textContent = number;
+    displayOrigin.textContent = `${comma(origin + originPerItem)}원`
+    displayDiscount.textContent = `${comma(discount + discountPerItem)}원`
+    currentMinusButton.classList.add('is--active');
+  } else {
+    if(number == 1) {
+      return;
+    }
+    number--;
+    displayNumber.textContent = number;
+    displayOrigin.textContent = `${comma(origin - originPerItem)}원`
+    displayDiscount.textContent = `${comma(discount - discountPerItem)}원`
+
+    if(number == 1) {
+      currentMinusButton.classList.remove('is--active');
+    }
+  }
+
+  
+  calculateTotalPrice();
+}
+
+const getItemPrice = (origin, discount, number) => {
+  const originPrice = parseInt(origin.textContent.split(',').join(''));
+  const discountPrice = parseInt(discount.textContent.split(',').join(''));
+  const currentNumber = parseInt(number.textContent)
+
+  return [
+    originPrice,
+    discountPrice,
+    currentNumber
+  ];
+}
+
+const sumPrice = (nodeList) => {
+  let sum = 0;
+  
+  Array.from(nodeList).forEach(node => {
+
+    if(node.closest('.cart-product').querySelector('input[type="checkbox"]:checked'))
+      sum += parseInt(node.textContent.split(',').join(''))
+
+  })
+
+  return sum;
 }
 
 const handleCheckboxOperate = (e) => {
   setSelectedCount();
   setWholeCheckbox();
-
+  calculateTotalPrice();
 }
 
 const setWholeCheckbox = () => {
@@ -87,11 +170,11 @@ const setWholeCheckbox = () => {
 }
 
 const setSelectedCount = () => {
-  const currentText = getNode('label[for^="check-all-"').textContent;
+  const currentText = getNode('label[for^="check-all-"]').textContent;
   const count = getNodes('.cart-product-list input[type="checkbox"]:checked').length;
   let countText = `전체선택(${count}${currentText.slice(currentText.indexOf('/'))}`;
 
-  Array.from(getNodes('label[for^="check-all-"'))
+  Array.from(getNodes('label[for^="check-all-"]'))
   .forEach(node => node.textContent = countText);
 
   setPurchaseButtonActivate();
@@ -139,7 +222,7 @@ const createProductCart = (product, number) => {
     </div>
     <p class="cart-product__price">
       <span class="cart-product__price__discount">${comma(realPrice*number)}원</span>
-      <span class="cart-product__price__regular">${comma(price*number)}</span>
+      <span class="cart-product__price__regular">${comma(price*number)}원</span>
     </p>
     <img src="/public/images/menu/close.svg" alt="삭제하기" class="cart-product__delete id_${id}" />
   </div>
@@ -180,6 +263,7 @@ const handleWholeCheck = (e) => {
     Array.from(checkbox).forEach(item => item.checked = false);
   }
   setSelectedCount();
+  calculateTotalPrice();
 }
 
 const handleDeleteSelectedItem = (e) => {
@@ -203,7 +287,7 @@ const handleDeleteSelectedItem = (e) => {
 
   pb.collection('cart').update(user.cart_id, data)
   .then(Array.from(checkedItem).forEach(node => node.closest('.cart-product').remove()))
-  .then(setPurchaseButtonActivate());
+  .then(afterDeleteOperate())
 }
 
 const handleDeleteItem = (e) => {
@@ -223,16 +307,47 @@ const handleDeleteItem = (e) => {
 
   pb.collection('cart').update(user.cart_id, data)
   .then(currentItem.remove())
-  .then(setPurchaseButtonActivate());
+  .then(afterDeleteOperate())
 
+}
+
+const afterDeleteOperate = () => {
+  setSelectedCount();
+  setProductCount();
+  calculateTotalPrice();
+  setWholeCheckBoxUncheck();
+}
+
+const setWholeCheckBoxUncheck = () => {
+  if(!Array.from(getNodes('.cart-product')).length) {
+    Array.from(wholeSelectCheckBox).forEach(item => {
+      item.checked = false;
+      item.disabled = true;
+    });
+  }
+}
+
+const setProductCount = () => {
+  const cartItem = getNodes('.cart-product');
+  const currentText = getNode('label[for^="check-all-"]').textContent;
+
+  const countText = `${currentText.slice(0, currentText.indexOf('/'))}/${cartItem.length})`
+
+  Array.from(getNodes('label[for^="check-all-"]'))
+    .forEach(node => node.textContent = countText);
 }
 
 const setPurchaseButtonActivate = () => {
   const cartItem = getNodes('.cart-product');
   const checkedItem = getNodes('.cart-product-list input[type="checkbox"]:checked');
-  if(!cartItem.length || !checkedItem.length) getNode('.order-button').disabled = true;
-  else getNode('.order-button').disabled = false;
+
+  if(!cartItem.length || !checkedItem.length) {
+    getNode('.order-button').disabled = true;
+  } else {
+    getNode('.order-button').disabled = false;
+  }
 }
+
 
 Array.from(expandArrow).forEach(node => {
   node.addEventListener('click', handleExpandArea);
