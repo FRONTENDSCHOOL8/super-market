@@ -1,5 +1,9 @@
 export const validationInput = (inputSelector, reg) => {
   const RegTestInput = (inputNode, reg) => {
+    if (inputNode.value === '') {
+      inputNode.classList.remove('is--invalid');
+      return;
+    }
     const isValid = reg.test(String(inputNode.value).toLowerCase());
     inputNode.classList.toggle('is--invalid', !isValid);
   };

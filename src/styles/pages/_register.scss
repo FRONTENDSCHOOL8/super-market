@@ -51,19 +51,6 @@
   @include position(relative);
 }
 
-.register-error-message {
-  @include position(absolute, b 0);
-  @include font(size $paraGraphSmall);
-  @include m(l 147);
-  white-space: nowrap;
-  display: none;
-  color: $infoError;
-}
-
-.is--invalid ~ .register-error-message {
-  display: block;
-}
-
 .register-label-wrapper {
   @include flex-container(row);
   @include size(139px, 44px);
@@ -162,8 +149,8 @@
   @include justify-content(center);
   @include size(333px, 44px);
   @include rounded(sm);
+  @include position(relative);
   border: 1px solid $gray300;
-
   .birthday-input {
     @include px(10);
     @include size(60px, 40px);
@@ -277,4 +264,27 @@
       border: 1px solid $gray300;
     }
   }
+}
+
+.register-error-message {
+  @include position(absolute, b 0);
+  @include font(size $paraGraphSmall);
+  @include m(l 147);
+  white-space: nowrap;
+  display: none;
+  color: $infoError;
+}
+
+.birth-error-message {
+  @include position(absolute, b -20 l 0);
+  @include font(size $paraGraphSmall);
+  background: $white;
+  white-space: nowrap;
+  display: none;
+  color: $infoError;
+}
+
+.is--invalid ~ .register-error-message,
+.is--invalid ~ .birth-error-message {
+  display: block;
 }

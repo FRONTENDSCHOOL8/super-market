@@ -192,7 +192,9 @@
                   minlength="6"
                   required
                 />
-                <button class="register-input-button">중복확인</button>
+                <button class="register-input-button" id="id-verify-button">
+                  중복확인
+                </button>
                 <span class="register-error-message" id="useridError"
                   >6자 이상 16자 이하의 영문 혹은 영문과 숫자를 조합</span
                 >
@@ -292,7 +294,6 @@
                   name="userTel"
                   placeholder="숫자만 입력해주세요."
                   class="register-input-group"
-                  maxlength="12"
                   required
                 />
                 <button disabled class="register-input-button">
@@ -329,7 +330,7 @@
                       id="gender-male"
                       class="register-radio-checkbox register-gender-group"
                       name="gender"
-                      value="male"
+                      value="1"
                     />
                     <label for="gender-male" class="register-radio-label"
                       ><span class="register-radio-icon"></span>남자</label
@@ -342,7 +343,7 @@
                       id="gender-female"
                       class="register-radio-checkbox register-gender-group"
                       name="gender"
-                      value="female"
+                      value="2"
                     />
                     <label for="gender-female" class="register-radio-label"
                       ><span class="register-radio-icon"></span>여자</label
@@ -355,7 +356,7 @@
                       id="gender-none"
                       class="register-radio-checkbox register-gender-group"
                       name="gender"
-                      value="none"
+                      value="0"
                       checked
                     />
                     <label for="gender-none" class="register-radio-label"
@@ -377,9 +378,11 @@
                       type="number"
                       id="birthYear"
                       placeholder="YYYY"
-                      maxlength="4"
                       class="birthday-input"
                     />
+                    <span class="birth-error-message" id="BirthYearError"
+                      >출생연도를 올바르게 입력해 주세요.</span
+                    >
                   </div>
                   <span class="birthday-slash">/</span>
                   <div class="birthday-wrapper-input">
@@ -387,9 +390,11 @@
                       type="number"
                       id="birthMonth"
                       placeholder="MM"
-                      maxlength="2"
                       class="birthday-input"
                     />
+                    <span class="birth-error-message" id="BirthMonthError"
+                      >태어난 월을 올바르게 입력해 주세요.</span
+                    >
                   </div>
                   <span class="birthday-slash">/</span>
                   <div class="birthday-wrapper-input">
@@ -397,9 +402,11 @@
                       type="number"
                       id="birthDay"
                       placeholder="DD"
-                      maxlength="2"
                       class="birthday-input"
                     />
+                    <span class="birth-error-message" id="BirthDayError"
+                      >태어난 일을 올바르게 입력해 주세요.</span
+                    >
                   </div>
                 </div>
               </div>
@@ -521,6 +528,7 @@
                         type="checkbox"
                         id="agree-benefit"
                         class="agree-state-checkbox"
+                        value="1"
                       />
                       <label for="agree-benefit" class="agree-label"
                         ><span class="agree-check-icon"></span>무료배송,

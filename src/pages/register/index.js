@@ -1,6 +1,14 @@
-import { initHeader, getNode, getNodes } from '/src/lib';
+import {
+  initHeader,
+  getNode,
+  getNodes,
+  sliceNumberMaxLength,
+  validationInput,
+} from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
+
+initHeader();
 
 const userIdInput = getNode('#userId');
 const userPwInput = getNode('#userPw');
@@ -8,9 +16,10 @@ const userPwConfirmInput = getNode('#userPwConfirm');
 const userNameInput = getNode('#userName');
 const userEmailInput = getNode('#userEmail');
 const userTelInput = getNode('#userTel');
-const userGenders = getNodes('.register-gender-group');
-const userBirthDay = getNodes('.birthday-input');
-const userTerms = getNode('#agree-benefit');
+const userBirthYear = getNode('#birthYear');
+const userBirthMonth = getNode('#birthMonth');
+const userBirthDay = getNode('#birthDay');
+const birthInputs = getNodes('.birthday-input');
 const registerBtn = getNode('.register-button');
 const requiredInputs = getNodes('.register-input-group[required]');
 const requiredCheckboxes = getNodes('.agree-state-checkbox[required]');
@@ -19,18 +28,42 @@ const requiredCheckboxes = getNodes('.agree-state-checkbox[required]');
 
 const sendRegisterUserData = async (e) => {
   e.preventDefault();
-  const data = {
+
+  const userGender = getNode('.register-gender-group:checked');
+  const userTerms = getNode('#agree-benefit');
+
+  const userData = {
     username: userIdInput.value,
     password: userPwInput.value,
     passwordConfirm: userPwConfirmInput.value,
     email: userEmailInput.value,
     name: userNameInput.value,
     phone_number: userTelInput.value,
-    gender: 0,
+    gender: userGender.value,
+    birthday: `${userBirthYear.value}-${userBirthMonth.value}-${userBirthDay.value} 00:00:00.123Z`,
+    terms: userTerms.checked,
   };
-  pb.collection('users')
-    .create(data)
+
+  const cartData = {
+    product: '{}',
+  };
+  let cart;
+  pb.collection('cart')
+    .create(cartData)
+    .then(async () => {
+      cart = await pb.collection('cart').getList(1, 1, {
+        sort: '-created',
+      });
+      console.log(cart);
+    })
     .then(() => {
+      userData['cart_id'] = cart.items[0].id;
+    })
+    .then(() => {
+      pb.collection('users').create(userData);
+    })
+    .then(() => {
+      alert('회원가입을 축하드립니다. 로그인 페이지로 이동합니다.');
       location.href = '/src/pages/login/';
     })
     .catch(() => {
@@ -40,21 +73,7 @@ const sendRegisterUserData = async (e) => {
 
 registerBtn.addEventListener('click', sendRegisterUserData);
 
-initHeader();
-
-// 공통 유효성 검사 함수
-
-const validateInput = (inputNode, reg) => {
-  const isValid = reg.test(String(inputNode.value).toLowerCase());
-  inputNode.classList.toggle('is--invalid', !isValid);
-};
-
-// 유효성 검사 할 대상 함수
-
-const validationInput = (inputSelector, reg) => {
-  const userInput = getNode(inputSelector);
-  userInput.addEventListener('input', () => validateInput(userInput, reg));
-};
+// 유효성 검사
 
 validationInput('#userId', /^[A-Za-z0-9]{6,16}$/);
 validationInput(
@@ -66,6 +85,7 @@ validationInput(
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 );
 validationInput('#userTel', /^[0-9]{9,}$/);
+sliceNumberMaxLength(userTelInput, 11);
 
 // 비밀번호 확인 유효성 검사
 
@@ -85,6 +105,16 @@ const handleValidationNameInput = () => {
 
 userNameInput.addEventListener('input', handleValidationNameInput);
 
+// 생년월일 유효성 검사
+
+sliceNumberMaxLength(userBirthYear, 4);
+sliceNumberMaxLength(userBirthMonth);
+sliceNumberMaxLength(userBirthDay);
+
+validationInput('#birthYear', /^19\d{2}$|^20\d{2}$|^2100$/);
+validationInput('#birthMonth', /^(0[1-9]|1[0-2])$/);
+validationInput('#birthDay', /^(0[1-9]|[1-2]\d|3[0-1])$/);
+
 // 가입하기 버튼 활성화
 
 const verifyElements = (elements, checkCondition) => {
@@ -92,21 +122,33 @@ const verifyElements = (elements, checkCondition) => {
 };
 
 const toggleRegisterBtn = () => {
-  const verifyInputsValid = verifyElements(
+  const verifyRequiredInputsValid = verifyElements(
     requiredInputs,
     (input) => input.value !== '' && !input.classList.contains('is--invalid')
+  );
+  const verifyBirthInputsValid = verifyElements(
+    birthInputs,
+    (input) => !input.classList.contains('is--invalid')
   );
   const verifyCheckboxesChecked = verifyElements(
     requiredCheckboxes,
     (checkbox) => checkbox.checked
   );
 
-  if (verifyInputsValid && verifyCheckboxesChecked) {
+  if (
+    verifyRequiredInputsValid &&
+    verifyBirthInputsValid &&
+    verifyCheckboxesChecked
+  ) {
     registerBtn.removeAttribute('disabled');
   } else {
     registerBtn.setAttribute('disabled', '');
   }
 };
+
+birthInputs.forEach((input) =>
+  input.addEventListener('input', toggleRegisterBtn)
+);
 
 requiredInputs.forEach((input) =>
   input.addEventListener('input', toggleRegisterBtn)
