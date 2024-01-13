@@ -309,11 +309,13 @@ body {
     @include justify-content(between);
     &__description {
       @include font(size $paraGraphMedium);
+      white-space: nowrap;
       color: $content;
     }
     &__price {
       @include font(size $labelMedium);
       text-align: right;
+      white-space: nowrap;
       b {
         @include font(size $headingxl);
       }

@@ -74,7 +74,7 @@ const setCartItem = async () => {
     }
     setPurchaseButtonActivate();
     calculateTotalPrice()
-  }).then(setTimeout(() => {skeletonCard.remove()}, 4000))
+  }).then(setTimeout(() => {skeletonCard.remove()}, 2000))
 
   
   
