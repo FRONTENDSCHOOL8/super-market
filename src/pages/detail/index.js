@@ -105,6 +105,16 @@ const renderDetailData = async () => {
     total: /*html*/ `
     <p>총 상품금액: <span class="product-total-price">${realPrice}</span>원</p>
     `,
+    detailImage: /*html*/ `
+    <img
+    src="${getPbImageURL(detailData, 'product_detail_img')}"
+    alt="탱탱쫄면 제품설명"
+    loading="lazy"
+  />
+  <div class="sr-only">
+    <h3>${product_name} 제품설명</h3>
+  </div>
+    `,
   };
 
   insertFirst('.detail-main', template.mainImage);
@@ -121,7 +131,9 @@ const renderDetailData = async () => {
   }
   insertFirst('.product-option-wrapper', template.productOtion);
   insertFirst('.product-total-wrapper', template.total);
+  insertFirst('.product-description', template.detailImage);
 };
+
 await renderDetailData();
 
 const zzimButton = getNode('.zzim');
