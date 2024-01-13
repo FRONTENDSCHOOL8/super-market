@@ -8,12 +8,17 @@ initHeader();
 const expandArrow = document.querySelectorAll('.arrow');
 const wholeSelectCheckBox = document.querySelectorAll('input[id^="check-all-"]');
 const selectDeleteButton = document.querySelectorAll('.select-delete')
+const skeletonCard = document.querySelector('.skeleton-ui')
 
 const {isAuth, user} = await getStorage('auth');
 if(!isAuth) {
 
   alert('로그인 후 이용해 주세요.')
   location.href = '/src/pages/login/';
+}
+
+const setAddHandler = (node, type, handler) => {
+  Array.from(node).forEach(nodeItem => nodeItem.addEventListener(type, handler));
 }
 
 const setCartItem = async () => {
@@ -49,28 +54,35 @@ const setCartItem = async () => {
 
   new Promise ((resolve, reject) => {
     resolve(insertItem(cartItem));
-  }).then(
+  })
+  .then(
     Array.from(getNodes('label[for^="check-all-"]'))
       .forEach(node => node.textContent = `전체선택(0/${Object.keys(cartItem).length})`)
   ).then(() => {
     const checkBox = getNodes('.cart-product-list input[type="checkbox"]')
-    Array.from(checkBox).forEach(node => node.addEventListener('change', handleCheckboxOperate));
+    setAddHandler(checkBox, 'change', handleCheckboxOperate)
   }).then(() => {
     const deleteButton = getNodes('.cart-product__delete')
     const plusButton = getNodes('.plus')
     const minusButton = getNodes('.minus')
-    Array.from(deleteButton).forEach(node => node.addEventListener('click', handleDeleteItem));
-    Array.from(plusButton).forEach(node => node.addEventListener('click', handleCalculatePrice))
-    Array.from(minusButton).forEach(node => node.addEventListener('click', handleCalculatePrice))
+    setAddHandler(deleteButton, 'click', handleDeleteItem)
+    setAddHandler(plusButton, 'click', handleCalculatePrice)
+    setAddHandler(minusButton, 'click', handleCalculatePrice)
   }).then(() => {
     if(Object.keys(cartItem).length == 0) {
       Array.from(wholeSelectCheckBox).forEach(item => item.disabled = true);
     }
     setPurchaseButtonActivate();
     calculateTotalPrice()
-  })
+  }).then(setTimeout(() => {skeletonCard.remove()}, 4000))
+
+  
+  
+
 
 }
+
+
 
 const calculateTotalPrice = () => {
   const discountPriceList = getNodes('.cart-product__price__discount')
@@ -121,8 +133,26 @@ const handleCalculatePrice = (e) => {
     }
   }
 
-  
-  calculateTotalPrice();
+  const data = cartDataUpdateObject(getNodes('.cart-product'))
+
+  pb.collection('cart').update(user.cart_id, data)
+  .then(calculateTotalPrice());
+}
+
+const cartDataUpdateObject = (nodeList) => {
+  const updateCartItem = {};
+
+  Array.from(nodeList).forEach(item => {
+    const id = Array.from(item.querySelector('.cart-product__count__result').classList)
+      .filter(classItem => classItem != 'cart-product__count__result')[0];
+    
+    updateCartItem[id.split('_')[1]] = item.querySelector('.cart-product__count__result').textContent;
+
+  })
+
+  return {
+    product: JSON.stringify(updateCartItem)
+  }
 }
 
 const getItemPrice = (origin, discount, number) => {
@@ -216,7 +246,7 @@ const createProductCart = (product, number) => {
       <span class="cart-product__content__title">${product_name}</span>
     </p>
     <div class="cart-product__count">
-      <button class="cart-product__count__change minus id_${id}">-</button>
+      <button class="cart-product__count__change minus id_${id} ${number == 1 ? '' : 'is--active'}" >-</button>
       <span class="cart-product__count__result id_${id}">${number}</span>
       <button class="cart-product__count__change plus id_${id} is--active">+</button>
     </div>
@@ -293,22 +323,12 @@ const handleDeleteSelectedItem = (e) => {
 const handleDeleteItem = (e) => {
   const currentItem = e.target.closest('.cart-product');
   const remainItem = Array.from(getNodes('.cart-product')).filter(node => node != currentItem);
-  const updateCartItem = {};
 
-  Array.from(remainItem).forEach(item => {
-    const id = Array.from(item.querySelector('.cart-product__count__result').classList)
-      .filter(classItem => classItem != 'cart-product__count__result')[0];
-    updateCartItem[id.split('_')[1]] = item.querySelector('.cart-product__count__result').textContent;
-  })
-
-  const data = {
-    product: JSON.stringify(updateCartItem)
-  }
+  const data = cartDataUpdateObject(remainItem)
 
   pb.collection('cart').update(user.cart_id, data)
   .then(currentItem.remove())
   .then(afterDeleteOperate())
-
 }
 
 const afterDeleteOperate = () => {
@@ -347,6 +367,8 @@ const setPurchaseButtonActivate = () => {
     getNode('.order-button').disabled = false;
   }
 }
+
+
 
 
 Array.from(expandArrow).forEach(node => {

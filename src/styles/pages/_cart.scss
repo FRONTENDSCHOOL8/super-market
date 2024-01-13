@@ -5,6 +5,7 @@ body {
 .cart__wrapper {
   @include container-width(max, 1050px);
   @include size(100%, 100%);
+  @include relative();
   min-height: 710px;
   @include m(x auto y 80);
   h2 {
@@ -23,7 +24,75 @@ body {
     background-image: url('/images/checkbox/roundcheck.png');
     background-repeat: no-repeat;
   }
+
+  & .skeleton-ui {
+    @include size(100%, 100%);
+    @include flex-container(row items-center);
+    @include justify-content(between);
+    @include absolute(t -3);
+    background: white;
+    box-sizing: border-box;
+    z-index: 1;
+
+    & .skeleton-left {
+      @include size(70%, 100%);
+      @include flex-container(column items-start);
+      @include py(60);
+      @include gap(2);
+
+      & .skeleton-item {
+        @include my(0 0.5rem);
+        @include size(100%, 52px);
+
+        &:nth-child(1),
+        &:nth-child(6) {
+          @include size(30%, 40px);
+        }
+        &:nth-child(5) {
+          @include size(100%, 190px);
+        }
+      }
+    }
+
+    & .skeleton-right {
+      @include flex-container(column items-start);
+      @include size(26.5%, 100%);
+      @include gap(2);
+      @include py(70 0);
+
+      & .skeleton-item {
+
+        &:nth-child(1) {
+          @include size(100%, 205px);
+        }
+        &:nth-child(2) {
+          @include size(100%, 228px);
+        }
+        &:nth-child(3) {
+          @include size(100%, 39px);
+          @include my(12);
+        }
+        &:nth-child(4) {
+          @include size(100%, 144px);
+        }
+        
+      }
+    }
+  }
 }
+
+.skeleton-ui {
+  & .skeleton-left *,
+  & .skeleton-right * {
+    background: linear-gradient(120deg, #e5e5e5 30%, #f0f0f0 38%, #f0f0f0 40%, #e5e5e5 48%);
+    border-radius: 1rem;
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    animation: load 1s infinite;
+
+  }
+}
+
 .cart__description {
   @include size(100%);
   @include flex-container(row item-center);
