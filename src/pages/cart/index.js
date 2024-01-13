@@ -54,7 +54,10 @@ const setCartItem = async () => {
       .forEach(node => node.textContent = `전체선택(0/${Object.keys(cartItem).length})`)
   ).then(() => {
     const checkBox = getNodes('.cart-product-list input[type="checkbox"]')
-    Array.from(checkBox).forEach(item => item.addEventListener('change', handleCheckboxOperate));
+    Array.from(checkBox).forEach(node => node.addEventListener('change', handleCheckboxOperate));
+  }).then(() => {
+    const deleteButton = getNodes('.cart-product__delete')
+    Array.from(deleteButton).forEach(node => node.addEventListener('click', handleDeleteItem));
   }).then(() => {
     if(Object.keys(cartItem).length == 0) {
       Array.from(wholeSelectCheckBox).forEach(item => item.disabled = true);
@@ -135,7 +138,7 @@ const createProductCart = (product, number) => {
       <span class="cart-product__price__discount">${comma(realPrice*number)}원</span>
       <span class="cart-product__price__regular">${comma(price*number)}</span>
     </p>
-    <img src="/public/images/menu/close.svg" alt="삭제하기" class="cart-product__delete" />
+    <img src="/public/images/menu/close.svg" alt="삭제하기" class="cart-product__delete id_${id}" />
   </div>
   `
 
@@ -197,8 +200,26 @@ const handleDeleteSelectedItem = (e) => {
 
   pb.collection('cart').update(user.cart_id, data)
   .then(Array.from(checkedItem).forEach(node => node.closest('.cart-product').remove()));
-  
-  
+}
+
+const handleDeleteItem = (e) => {
+  const currentItem = e.target.closest('.cart-product');
+  const remainItem = Array.from(getNodes('.cart-product')).filter(node => node != currentItem);
+  const updateCartItem = {};
+
+  Array.from(remainItem).forEach(item => {
+    const id = Array.from(item.querySelector('.cart-product__count__result').classList)
+      .filter(classItem => classItem != 'cart-product__count__result')[0];
+    updateCartItem[id.split('_')[1]] = item.querySelector('.cart-product__count__result').textContent;
+  })
+
+  const data = {
+    product: JSON.stringify(updateCartItem)
+  }
+
+  pb.collection('cart').update(user.cart_id, data)
+  .then(currentItem.remove());
+
 }
 
 Array.from(expandArrow).forEach(node => {
