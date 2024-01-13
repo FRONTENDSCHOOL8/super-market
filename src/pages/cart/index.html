@@ -164,6 +164,22 @@
     <main>
       <section class="cart__wrapper">
         <h2>장바구니</h2>
+        <div class="skeleton-ui">
+          <div class="skeleton-left">
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+          </div>
+          <div class="skeleton-right">
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+          </div>
+        </div>
         <div class="cart__description">
           <!-- start: select__wrapper -->
           <div class="select__wrapper">
@@ -176,7 +192,6 @@
 
             <!-- start: cart-product-list -->
             <div class="cart-product-list">
-              <!-- TODO: arrow 이미지 클릭 시 cart-product__wrapper에 is--active 클래스 추가해서 아래 상품 리스트 볼 수 있게 -->
               <!-- start: 냉장 식품 -->
               <div class="product__list refrigeration">
                 <div class="cart-product__wrapper__bar">
@@ -216,7 +231,7 @@
               <input type="checkbox" name="check-all-under" id="check-all-under" />
               <label for="check-all-under"></label>
               <div class="divider"></div>
-              <span>선택삭제</span>
+              <button class="select-delete">선택삭제</button>
             </div>
           </div>
           <!-- start: information__wrapper -->
@@ -236,15 +251,15 @@
               <div class="payment">
                 <div class="payment__detail">
                   <span class="description">상품금액</span>
-                  <span class="amount">40,680 원</span>
+                  <span class="amount origin-price">원</span>
                   <span class="description">상품할인금액</span>
-                  <span class="amount">-4,651 원</span>
+                  <span class="amount sale-price">원</span>
                   <span class="description">배송비</span>
-                  <span class="amount">+3,000 원</span>
+                  <span class="amount delivery-tax">원</span>
                 </div>
                 <div class="payment__result">
                   <span class="payment__result__description">결제예정금액</span>
-                  <span class="payment__result__price"><b>40,680</b> 원</span>
+                  <span class="payment__result__price"><b></b> 원</span>
                 </div>
                 <p class="payment__grade">
                   <span class="payment__grade__type">적립</span>
