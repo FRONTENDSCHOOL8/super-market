@@ -122,15 +122,20 @@ validationInput('#birthDay', /^(0[1-9]|[1-2]\d|3[0-1])$/);
 let checkIdDuplication;
 
 const handleCheckIdDuplication = async () => {
-  const userData = await pb.collection('users').getList(1, 1, {
-    filter: `username = "${userIdInput.value}"`,
-  });
-  if (userData.totalItems) {
-    alert('이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.');
-    checkIdDuplication = false;
+  if (userIdInput.value === '') {
+    alert('사용하실 아이디를 입력해 주세요.');
+    return;
   } else {
-    alert('사용 가능한 아이디입니다.');
-    checkIdDuplication = true;
+    const userData = await pb.collection('users').getList(1, 1, {
+      filter: `username = "${userIdInput.value}"`,
+    });
+    if (userData.totalItems) {
+      alert('이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.');
+      checkIdDuplication = false;
+    } else {
+      alert('사용 가능한 아이디입니다.');
+      checkIdDuplication = true;
+    }
   }
 };
 
@@ -147,15 +152,20 @@ userIdInput.addEventListener('input', handleCheckDuplicationIdInput);
 let checkEmailDuplication;
 
 const handleCheckEmailDuplication = async () => {
-  const userData = await pb.collection('users').getList(1, 1, {
-    filter: `email = "${userEmailInput.value}"`,
-  });
-  if (userData.totalItems) {
-    alert('이미 사용 중인 이메일입니다. 다른 아이디를 입력해주세요.');
-    checkEmailDuplication = false;
+  if (userEmailInput.value === '') {
+    alert('사용하실 이메일을 입력해 주세요.');
+    return;
   } else {
-    alert('사용 가능한 이메일입니다.');
-    checkEmailDuplication = true;
+    const userData = await pb.collection('users').getList(1, 1, {
+      filter: `email = "${userEmailInput.value}"`,
+    });
+    if (userData.totalItems) {
+      alert('이미 사용 중인 이메일입니다. 다른 아이디를 입력해주세요.');
+      checkEmailDuplication = false;
+    } else {
+      alert('사용 가능한 이메일입니다.');
+      checkEmailDuplication = true;
+    }
   }
 };
 
