@@ -234,8 +234,8 @@ const createProductCart = (product, number) => {
 
   const template = /* html */ `
   <div class="cart-product">
-    <input type="checkbox" name="${id}" id="${id}" />
-    <label for="${id}"></label>
+    <input type="checkbox" name="id_${id}" id="id_${id}" />
+    <label for="id_${id}"></label>
     <img src="${getPbImageURL(product, 'product_img')}" class="thumbnail" alt="${product_name}" />
     <p class="cart-product__content">
       <span class="cart-product__content__title">${product_name}</span>
@@ -303,7 +303,7 @@ const handleDeleteSelectedItem = (e) => {
   }
 
   Array.from(uncheckedItem).forEach(item => {
-    updateCartItem[item.id] = getNode(`.cart-product__count__result.id_${item.id}`).textContent;
+    updateCartItem[item.id.split('_')[1]] = getNode(`.cart-product__count__result.${item.id}`).textContent;
   })
 
   const data = {
@@ -452,8 +452,8 @@ const handleOrderProduct = (e) => {
   const remainList = {};
 
   selectedProductList.forEach(id => {
-    orderList[id] = {
-      number: getNode(`span.id_${id}`).textContent, 
+    orderList[id.split('_')[1]] = {
+      number: getNode(`span.${id}`).textContent, 
       price: getNode(`#${id}`).closest('.cart-product')
                               .querySelector('.cart-product__price__discount')
                               .textContent
@@ -461,7 +461,7 @@ const handleOrderProduct = (e) => {
 
   })
   remainProductList.forEach(id => {
-    remainList[id] = getNode(`span.id_${id}`).textContent;
+    remainList[id.split('_')[1]] = getNode(`span.${id}`).textContent;
   })
 
   const orderData = {
