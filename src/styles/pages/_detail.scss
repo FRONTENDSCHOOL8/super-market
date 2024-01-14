@@ -214,6 +214,15 @@
   }
 }
 
+.nav-item {
+  @include size(1050px);
+  @include my(40px);
+  img {
+    @include container-width(max, 100%);
+    @include mx(auto);
+  }
+}
+
 .board {
   @include relative();
   @include m(b 72);
