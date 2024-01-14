@@ -242,6 +242,7 @@ const displayProductCard = async () => {
 
 const setPaginationButton = (number) => {
   
+  const currentPage = +(window.location.href.split('pages=')[1].split('')[0]);
   needPageNumber = number % 30 == 0? number / 30 : parseInt(number / 30)+1;
 
   let template = /* html */ `
@@ -250,7 +251,11 @@ const setPaginationButton = (number) => {
   `;
 
   for(let i=1; i<=needPageNumber; i++) {
-    template += /* html */ `<button type="button">${i}</button>`;
+    if(i == currentPage) {
+      template += /* html */ `<button class="current-page" type="button">${i}</button>`; 
+    } else {
+      template += /* html */ `<button type="button">${i}</button>`;
+    }
   }
 
   template += /* html */ `
