@@ -94,7 +94,8 @@ validationInput(
   '#userEmail',
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 );
-validationInput('#userTel', /^[0-9]{9,}$/);
+validationInput('#userTel', /^(010|011)[0-9]{7,8}$/);
+validationInput('#userName', /^[가-힣]{2,}|[a-zA-Z]{2,}$/);
 sliceNumberMaxLength(userTelInput, 11);
 
 // 비밀번호 확인 유효성 검사
@@ -105,15 +106,6 @@ const handleValidationPwConfirm = () => {
 };
 
 userPwConfirmInput.addEventListener('input', handleValidationPwConfirm);
-
-// 이름 유효성 검사
-
-const handleValidationNameInput = () => {
-  const isValid = userNameInput.value.length > 1;
-  userNameInput.classList.toggle('is--invalid', !isValid);
-};
-
-userNameInput.addEventListener('input', handleValidationNameInput);
 
 // 생년월일 유효성 검사
 
@@ -220,17 +212,27 @@ requiredCheckboxes.forEach((checkbox) =>
 // 전체 동의
 
 const changeRegisterAllCheck = (mainCheckboxSelector, checkboxesSelector) => {
-  const mainCheckbox = getNode(mainCheckboxSelector);
-  const checkboxes = getNodes(checkboxesSelector);
+  const mainCheckbox = document.querySelector(mainCheckboxSelector);
+  const checkboxes = document.querySelectorAll(checkboxesSelector);
 
-  const handleChangeCheckbox = () => {
+  const handleChangeSubCheckbox = () => {
+    const isAnyUnchecked = Array.from(checkboxes).some(
+      (checkbox) => !checkbox.checked
+    );
+    mainCheckbox.checked = !isAnyUnchecked;
+  };
+
+  const handleChangeMainCheckbox = () => {
     checkboxes.forEach((checkbox) => {
       checkbox.checked = mainCheckbox.checked;
     });
     toggleRegisterBtn();
   };
 
-  mainCheckbox.addEventListener('change', handleChangeCheckbox);
+  mainCheckbox.addEventListener('change', handleChangeMainCheckbox);
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', handleChangeSubCheckbox);
+  });
 };
 
-changeRegisterAllCheck('#allAgreeState', '.agree-state-checkbox');
+changeRegisterAllCheck('#allAgreeState', '.sub-checkbox');
