@@ -505,7 +505,7 @@ const displayOrderComplete = () => {
         </div>
         <p><sup>*</sup> 적립금은 배송당일에 적립됩니다.</p>
         <a href="/">홈으로 이동</a>
-        <a href="/src/pages/products/?pages=1">더 둘러보기</a>
+        <a href="/src/pages/products/">더 둘러보기</a>
       </div>
 
     </div>
