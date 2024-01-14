@@ -249,7 +249,7 @@
       & li:first-child {
         @include flex-container(row items-center);
         @include gap(4);
-        color: $content;
+        
       }
 
       & li:first-child::before {

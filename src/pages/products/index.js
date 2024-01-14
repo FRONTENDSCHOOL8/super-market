@@ -1,9 +1,10 @@
-import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist, createCardTemplate, createSkeletonCardTemplate } from '/src/lib';
+import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist, createCardTemplate, createSkeletonCardTemplate, getNode } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
 
 initHeader();
 hideElementNoExist();
+
 
 const navExpandButton = document.querySelectorAll('div[class^="nav-"] > button');
 const resetButton = document.querySelector('.products-navigation__header button');
@@ -28,11 +29,22 @@ const handleExpandNavigation = (e) => {
 }
 
 const handleReset = (e) => {
-  const currentUrl = window.location.href;
-
-  location.href = currentUrl.split('filters=')[0];
+  location.href = '/src/pages/products/?sort=1&pages=1';
 
 }
+
+const setSortLink = () => {
+
+  const url = window.location.href;
+
+  getNode('#sort-review').href = `${url.split('?sort=')[0]}?sort=1&pages${url.split('&pages')[1]}`
+  getNode('#sort-new').href = `${url.split('?sort=')[0]}?sort=2&pages${url.split('&pages')[1]}`
+  getNode('#sort-sale').href = `${url.split('?sort=')[0]}?sort=3&pages${url.split('&pages')[1]}`
+  getNode('#sort-discount').href = `${url.split('?sort=')[0]}?sort=4&pages${url.split('&pages')[1]}`
+  getNode('#sort-row-price').href = `${url.split('?sort=')[0]}?sort=5&pages${url.split('&pages')[1]}`
+  getNode('#sort-high-price').href = `${url.split('?sort=')[0]}?sort=6&pages${url.split('&pages')[1]}`
+}
+setSortLink();
 
 const handleCheckboxCount = (e) => {
 
@@ -91,9 +103,9 @@ const setCurrentUrl = (itemList) => {
   }  
   filters = filters.slice(0, -1);
   
-  if(filters === 'filters') filters = 'filters=';
+  if(filters === 'filters') filters = '';
 
-  return `${target.split('?pages=1')[0]}?pages=1&${filters}`;
+  return `${target.split('pages=')[0]}pages=1&${filters}`;
   
 }
 
@@ -168,17 +180,13 @@ const handleSetCategoryMenu = async (e) => {
         <label for="${item.id}">${item.category_name}<span class="sub-count">6</span></label>
       </li>
     `;
-  
   })
 
-  
   new Promise ((resolve, reject) => {
     resolve(insertLast(categoryNav, template))
   }).then(
     setCheckBoxEvent()
   )
-
-
 }
 
 const setCheckBoxEvent = () => {
@@ -221,30 +229,97 @@ const displayProductCard = async () => {
 const getProductData = () => {
 
   const filter = new URLSearchParams(window.location.search);
-  let filters = '';
+  let filters = [];
   
   const page = filter.get('pages');
   const selectData = findSelectedFilter(filter.get('filters'));
-  const {category} = selectData;
+  const {category, price, bonus, type } = selectData;
 
   if(category) {
-    filters += category.split(',').map(item => `category_id.id ?="${item}"`).join(' || ');
+    category.split(',').forEach(item => filters.push(`category_id.id ?="${item}"`));
   }
+  if(bonus) {
+    bonus.split(',').forEach(item => {
+      if(item == 'for-sale') filters.push('discount != 0');
+      if(item == 'limit') filters.push('limit = 1');
+    })
+  }
+  if(type) {
+    type.split(',').forEach(item => {
+      if(item == 'karly-only') filters.push('karly_only = 1')
+      if(item == 'scarcity') filters.push('karly_only = 2')
+    })
+  }
+  
+  if(filters.length) {
+    filters = ('('+filters+')').split(',').join(' || ');
+  };
+
+
+
+  
+  if(price) {
+    if(filter.length) filters += ' && '
+    switch(price) {
+      case 'level-one': filters += `(price < 7000)`; break;
+      case 'level-two': filters += `(price >= 7000 && price < 10965)`; break;
+      case 'level-three': filters += `(price >= 10965 && price < 15000)`; break;
+      case 'level-four': filters += `(price >= 15000)`; break;
+    }
+  }
+  let sort;
+
+  switch(filter.get('sort')) {
+    case '1': {
+      sort = '-created';
+      getNode('#sort-review').style.color='black';
+      break;
+    };
+    case '2': {
+      sort = 'created';
+      getNode('#sort-new').style.color='black';
+      break;
+    };
+    case '3': {
+      sort = 'id';
+      getNode('#sort-sale').style.color='black';
+      break;
+    };
+    case '4': {
+      sort = '-discount';
+      getNode('#sort-discount').style.color='black';
+      break;
+    };
+    case '5': {
+      sort = 'price';
+      getNode('#sort-row-price').style.color='black';
+      break;
+    };
+    case '6': {
+      sort = '-price';
+      getNode('#sort-high-price').style.color='black';
+      break;
+    };
+
+  };
 
   return pb
     .collection('products')
     .getList(page, 30, {
-      filter: filters
+      filter: filters,
+      sort: sort
     });
 }
 
 const findSelectedFilter = (string) => {
   const data = {};
 
-  const split = string.split('|').forEach(item => {
-    const [key, value] = item.split(':');
-    data[key] = value;
-  })
+  if(string) {
+    string.split('|').forEach(item => {
+      const [key, value] = item.split(':');
+      data[key] = value;
+    })
+  }
 
   return data
 }
@@ -253,6 +328,8 @@ resetButton.addEventListener('click', handleReset);
 
 document.addEventListener('DOMContentLoaded', handleSetCategoryMenu);
 document.addEventListener('DOMContentLoaded', displayProductCard);
+
+
 
 
 

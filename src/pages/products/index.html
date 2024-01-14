@@ -12,7 +12,6 @@
     
     <header class="header">
       <div class="header__wrapper">
-
         <ul class="sign_menu">
           <li>
             <a href="/src/pages/register/" class="menu_join">회원가입</a>
@@ -38,24 +37,35 @@
               <button type="button" class="beauty-karly">뷰티칼리</button>
             </span>
           </div>
-    
+
           <div class="search_box">
             <form action="/src/pages/products/" method="POST">
-              <input type="text" placeholder="검색어를 입력해주세요"/>
+              <input type="text" placeholder="검색어를 입력해주세요" />
               <button type="button" class="erase"></button>
             </form>
             <button type="submit" class="search"></button>
           </div>
-    
-          <div class="menu_link">
-            <button type="button" aria-label="배송지" class="menu_link__address"></button>
-            <button type="button" aria-label="찜하기" class="menu_link__like"></button>
-            <a href="/src/pages/cart/" role="button" aria-label="장바구니" class="menu_link__cart"></a>
 
+          <div class="menu_link">
+            <button
+              type="button"
+              aria-label="배송지"
+              class="menu_link__address"
+            ></button>
+            <button
+              type="button"
+              aria-label="찜하기"
+              class="menu_link__like"
+            ></button>
+            <a
+              href="/src/pages/cart/"
+              role="button"
+              aria-label="장바구니"
+              class="menu_link__cart"
+            ></a>
           </div>
-          
         </div>
-      </div>      
+      </div>
 
       <nav class="menu">
         <div class="menu__category">
@@ -63,75 +73,75 @@
             <span></span>
             카테고리
           </a>
-          <ul class="menu__category--list" style="display: none;">
+          <ul class="menu__category--list">
             <li>
-              <a href="">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:rc6eiyivfaxv3gk">
                 <img src="/images/menu/gift.svg" alt="" />
-                <span>선물하기</span>
+                <span>2024 설 선물세트</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:ou1z12op4bmziv9,5ksmgbbqq27rcrx">
                 <img src="/images/menu/Vegetable.svg" alt="" />
                 <span>채소</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:ou1z12op4bmziv9">
                 <img src="/images/menu/Fruit.svg" alt="" />
                 <span>과일&middot;견과&middot;쌀</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:capqtjjiyug3qla">
                 <img src="/images/menu/SeaFood.svg" alt="" />
                 <span>수산&middot;해산&middot;건어물</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:gd1sil4n8tc1oka">
                 <img src="/images/menu/Meat.svg" alt="" />
                 <span>정육&middot;계란</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:nimqdjpj1j196xm">
                 <img src="/images/menu/Cook.svg" alt="" />
                 <span>국&middot;반찬&middot;메인요리</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:5ksmgbbqq27rcrx">
                 <img src="/images/menu/Salad.svg" alt="" />
                 <span>샐러드&middot;간편식</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:640sehqzc3pzwpk">
                 <img src="/images/menu/Oil.svg" alt="" />
                 <span>면&middot;양념&middot;오일</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:jloxu9l0ex8lolj">
                 <img src="/images/menu/Coffee.svg" alt="" />
                 <span>생수&middot;음료&middot;우유&middot;커피</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:rh0j1wogvr8aser">
                 <img src="/images/menu/Snack.svg" alt="" />
                 <span>간식&middot;과자&middot;떡</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:bpau9tbwp1gfjml,kc4800mg8n2fge2">
                 <img src="/images/menu/Bread.svg" alt="" />
                 <span>베이커리&middot;치즈&middot;델리</span>
               </a>
             </li>
             <li>
-              <a href="/src/pages/products/">
+              <a href="/src/pages/products/?sort=1&pages=1&filters=category:qch5ae9fxz5tre8">
                 <img src="/images/menu/medicine.svg" alt="" />
                 <span>건강식품</span>
               </a>
@@ -140,21 +150,20 @@
         </div>
         <div class="menu__list">
           <ul>
-            <li><a href="/src/pages/products/">신상품</a></li>
-            <li><a href="/src/pages/products/">베스트</a></li>
-            <li><a href="/src/pages/products/">알뜰쇼핑</a></li>
-            <li><a href="/src/pages/products/">특가/혜택</a></li>
+            <li><a href="/src/pages/products/?sort=2&pages=1">신상품</a></li>
+            <li><a href="/src/pages/products/?sort=1&pages=1">베스트</a></li>
+            <li><a href="/src/pages/products/?sort=5&pages=1">알뜰쇼핑</a></li>
+            <li><a href="/src/pages/products/?sort=4&pages=1">특가/혜택</a></li>
           </ul>
         </div>
         <a href="" class="menu__info"><em>샛별&middot;낮</em>배송안내</a>
       </nav>
-    
     </header>
 
 
     <main class="main">
       <div class="products-container">
-        <h1 class="products-container__category">베스트</h1>
+        <h1 class="products-container__category">상품 목록</h1>
         <div class="products-container__products">
           <nav class="products-navigation">
             <div class="products-navigation__header">
@@ -174,33 +183,6 @@
                   <span>브랜드<em class="category-count"></em></span>
                   <img src="/images/menu/downarrow.svg" alt="펼치기" />
                 </button>
-                <!-- <div class="brand-sort">
-                  <ul>
-                    <li><button type="button" class="alphabetical is--selected">가나다순</button></li>
-                    <li><div class="brand-divider"></div></li>
-                    <li><button type="button" class="many">상품 많은순</button></li>
-                  </ul>
-                  <div class="alphabet">
-                    <ul>
-                      <li><button type="button" class="all is--selected">전체</button></li>
-                      <li><button type="button" class="rldur">ㄱ</button></li>
-                      <li><button type="button" class="sldms">ㄴ</button></li>
-                      <li><button type="button" class="elrme">ㄷ</button></li>
-                      <li><button type="button" class="fldmf">ㄹ</button></li>
-                      <li><button type="button" class="aldma">ㅁ</button></li>
-                      <li><button type="button" class="qldmq">ㅂ</button></li>
-                      <li><button type="button" class="tldht">ㅅ</button></li>
-                      <li><button type="button" class="dldmd">ㅇ</button></li>
-                      <li><button type="button" class="wldmw">ㅈ</button></li>
-                      <li><button type="button" class="cldmc">ㅊ</button></li>
-                      <li><button type="button" class="zldmz">ㅋ</button></li>
-                      <li><button type="button" class="xlrmx">ㅌ</button></li>
-                      <li><button type="button" class="vldmv">ㅍ</button></li>
-                      <li><button type="button" class="gldmg">ㅎ</button></li>
-                      <li><button type="button" class="a-z">A-Z</button></li>
-                    </ul>
-                  </div>
-                </div> -->
                 <ul>
                   <li class="category-list">
                     <input type="checkbox" name="goraesa" id="goraesa" />
@@ -356,23 +338,23 @@
               <strong class="products-total-count"></strong>
               <ul class="sort-area">
                 <li>
-                  <a href="#">추천순</a>
+                  <a href="" id="sort-review">추천순</a>
                   <div><img src="/images/menu/help.svg" alt="추천순 이란?" /></div>
                 </li>
                 <li>
-                  <a href="#">신상품순</a>
+                  <a href="" id="sort-new">신상품순</a>
                 </li>
                 <li>
-                  <a href="#">판매량순</a>
+                  <a href="" id="sort-sale">판매량순</a>
                 </li>
                 <li>
-                  <a href="#">혜택순</a>
+                  <a href="" id="sort-discount">혜택순</a>
                 </li>
                 <li>
-                  <a href="#">낮은 가격순</a>
+                  <a href="" id="sort-row-price">낮은 가격순</a>
                 </li>
                 <li>
-                  <a href="#">높은 가격순</a>
+                  <a href="" id="sort-high-price">높은 가격순</a>
                 </li>
               </ul>
               <div class="checked-item-list"></div>
