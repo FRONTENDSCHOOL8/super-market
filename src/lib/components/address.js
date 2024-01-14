@@ -11,9 +11,9 @@ const handleSetAddress = (callback) => {
     const height = 547;
     const popupX = (screen.width / 2) - (width / 2);
     const popupY = (screen.height / 2) - (height / 2);
-    window.open('/src/pages/address/', '_blank', `width=${width},height=${height},left=${popupX},top=${popupY}`);
+    const searchPopup = window.open('/src/pages/address/', '_blank', `width=${width},height=${height},left=${popupX},top=${popupY}`);
     
-    if(callback) callback();
+    if(callback) callback(searchPopup);
 
   }
 

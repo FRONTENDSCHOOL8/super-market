@@ -1,4 +1,4 @@
-import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast  } from '/src/lib';
+import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast, setSearchAddressEvent  } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 
 import '/src/styles/style.scss';
@@ -9,10 +9,12 @@ const expandArrow = document.querySelectorAll('.arrow');
 const wholeSelectCheckBox = document.querySelectorAll('input[id^="check-all-"]');
 const selectDeleteButton = document.querySelectorAll('.select-delete')
 const skeletonCard = document.querySelector('.skeleton-ui')
+const shipArea = document.querySelector('.shipping');
+const orderButton = document.querySelector('.order-button');
 
 const {isAuth, user} = await getStorage('auth');
 if(!isAuth) {
-
+  
   alert('로그인 후 이용해 주세요.')
   location.href = '/src/pages/login/';
 }
@@ -75,14 +77,7 @@ const setCartItem = async () => {
     setPurchaseButtonActivate();
     calculateTotalPrice()
   }).then(setTimeout(() => {skeletonCard.remove()}, 2000))
-
-  
-  
-
-
 }
-
-
 
 const calculateTotalPrice = () => {
   const discountPriceList = getNodes('.cart-product__price__discount')
@@ -239,8 +234,8 @@ const createProductCart = (product, number) => {
 
   const template = /* html */ `
   <div class="cart-product">
-    <input type="checkbox" name="${id}" id="${id}" />
-    <label for="${id}"></label>
+    <input type="checkbox" name="id_${id}" id="id_${id}" />
+    <label for="id_${id}"></label>
     <img src="${getPbImageURL(product, 'product_img')}" class="thumbnail" alt="${product_name}" />
     <p class="cart-product__content">
       <span class="cart-product__content__title">${product_name}</span>
@@ -308,7 +303,7 @@ const handleDeleteSelectedItem = (e) => {
   }
 
   Array.from(uncheckedItem).forEach(item => {
-    updateCartItem[item.id] = getNode(`.cart-product__count__result.id_${item.id}`).textContent;
+    updateCartItem[item.id.split('_')[1]] = getNode(`.cart-product__count__result.${item.id}`).textContent;
   })
 
   const data = {
@@ -384,5 +379,179 @@ Array.from(selectDeleteButton).forEach(node => {
 })
 
 setCartItem();
+
+
+// 배송지
+
+const setShipInfo = async () => {
+  const address = JSON.parse(await getStorage('address'));
+  let template = '';
+
+  Array.from(shipArea.childNodes).forEach(node => node.remove());
+
+  const setShipArea = () => {
+    if(address) {
+      template = /* html */ `
+        <p class="shipping__title">
+          <img src="/images/menu/map.svg" alt="" />
+          <span>배송지</span>
+        </p>
+        <span class="shipping__address">
+          ${address["address"]} ${address["detail-address"]}
+        </span>
+        <span class="shipping__address-type">샛별배송</span>
+        <button class="shipping__address-change">배송지 변경</button>
+      `
+
+      insertLast(shipArea, template);
+    } else if(user.address) {
+      template = /* html */ `
+        <p class="shipping__title">
+          <img src="/images/menu/map.svg" alt="" />
+          <span>배송지</span>
+        </p>
+        <span class="shipping__address">
+          ${user.address} ${user["detail_address"] ? user["detail_address"] : ''}
+        </span>
+        <span class="shipping__address-type">샛별배송</span>
+        <button class="shipping__address-change">배송지 변경</button>
+      `
+
+      insertLast(shipArea, template);
+    } else {
+      insertLast(shipArea, `<button class="shipping__address-register">배송지 등록</button>`)
+    }
+  }
+
+  new Promise((resolve, reject) => {
+    resolve(setShipArea())
+  }).then(() => {
+    if(address || user.address) {
+      setSearchAddressEvent(getNode('.shipping__address-change'), (popup) => {
+        popup.addEventListener('beforeunload', setShipInfo);
+      })
+    } else {
+      setSearchAddressEvent(getNode('.shipping__address-register'), (popup) => {
+        popup.addEventListener('beforeunload', setShipInfo);
+      })
+    }
+  })
+}
+
+setShipInfo();
+
+
+// 주문하기
+const handleOrderProduct = (e) => {
+  const cartList = getCartIdList('.cart-product-list', 'input[type="checkbox"]');
+  const selectedProductList = getCartIdList('.cart-product-list', 'input[type="checkbox"]:checked')
+
+  const remainProductList = cartList.filter(
+    item => !selectedProductList.includes(item)
+  )
+  
+  const orderList = {};
+  const remainList = {};
+
+  selectedProductList.forEach(id => {
+    orderList[id] = {
+      number: getNode(`span.id_${id}`).textContent, 
+      price: getNode(`#id_${id}`).closest('.cart-product')
+                              .querySelector('.cart-product__price__discount')
+                              .textContent
+    };
+
+  })
+  remainProductList.forEach(id => {
+    remainList[id] = getNode(`span.id_${id}`).textContent;
+  })
+
+  const orderData = {
+    user_id: user.id,
+    address: getNode('.shipping__address').textContent,
+    product: JSON.stringify(orderList)
+  }
+  const remainData = {
+    product: JSON.stringify(remainList)
+  }
+
+  
+
+  if(!confirm('주문하시겠습니까?')) return;
+  else {
+    pb.collection('order_list').create(orderData)
+    .then(pb.collection('cart').update(user.cart_id, remainData))
+    .then(() => {
+      displayOrderComplete();
+    })
+  }
+}
+
+// 주문완료 화면 띄우기
+const displayOrderComplete = () => {
+
+  const paidPrice = getNode('.payment__result__price b').textContent;
+  const paidPriceToNumber = parseInt(paidPrice.split(',').join(''));
+  const accumulate = paidPriceToNumber >= 43000 ? 
+    comma(Math.round(paidPriceToNumber * 0.001)) : 
+    comma(Math.round((paidPriceToNumber - 3000) * 0.001));
+
+  const template = /* html */ `
+  <section class="order__wrapper">
+    <div class="receipt">
+      <div class="receipt__complete">
+        <img src="/images/product/order-complete-check.svg" alt="주문 완료" />
+        <p>${user.name}님의 주문이 완료되었습니다.</p>
+        <p><em>내일 아침</em>에 만나요!</p>
+      </div>
+      <div class="receipt__info">
+        <p>결제금액</p>
+        <div class="receipt__info--price">
+          <span>${paidPrice} 원</span>
+          <span><em>${accumulate} 원 적립*</em> (일반 배송비 제외 금액의 0.1%)</span>
+        </div>
+        <p><sup>*</sup> 적립금은 배송당일에 적립됩니다.</p>
+        <a href="/">홈으로 이동</a>
+        <a href="/src/pages/products/">더 둘러보기</a>
+      </div>
+
+    </div>
+
+    <div class="collect-info">
+      <p class="collect-info__title">포장재 수거 안내</p>
+      <p class="collect-info__desc">다음 주문완료시 마켓컬리가 포장재를 회수합니다.</p>
+      <div class="box-info">
+        <div class="styrofoam">
+          <div class="box-img">
+            <img src="/images/product/styrofoam-box.png" alt="스티로폼박스" />
+            <img src="/images/product/styrofoam-box.png" alt="스티로폼박스" />
+          </div>
+          <p>스티로폼 박스 (최대 <em>2</em>개)</p>
+        </div>
+        <div class="icepack">
+          <div class="box-img">
+            <img src="/images/product/ice-pack.png" alt="아이스팩" />
+          </div>
+          <p>아이스팩 (최대 <em>5</em>개)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-info">
+      <img src="/images/product/cs-info.png" alt="주문문의" />
+      <p>주문/배송 및 기타 문의가 있을 경우, 1:1문의에 남겨주시면 신속히 해결해드리겠습니다.</p>
+    </div>
+    
+  </section>
+  `
+
+  insertLast(getNode('.cart-main'), template);
+}
+
+const getCartIdList = (node, target) => {
+  return Array.from(getNode(node).querySelectorAll(target)).map(item => item.id.split('_')[1]);
+}
+
+orderButton.addEventListener('click', handleOrderProduct);
 
 

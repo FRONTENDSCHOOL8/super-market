@@ -161,7 +161,7 @@
         <a href="" class="menu__info"><em>샛별&middot;낮</em>배송안내</a>
       </nav>
     </header>
-    <main>
+    <main class="cart-main">
       <section class="cart__wrapper">
         <h2>장바구니</h2>
         <div class="skeleton-ui">
@@ -197,7 +197,7 @@
                 <div class="cart-product__wrapper__bar">
 
                   <section class="fridge">
-                    <img src="/images/menu/type-refrigerated.svg" />
+                    <img src="/images/menu/type-refrigerated.svg" alt="" />
                     <span>냉장 식품</span>
                     <img class="arrow" src="/images/menu/arrow.svg" alt="상품 자세히 보기" />
                   </section>  
@@ -209,7 +209,7 @@
                 <div class="cart-product__wrapper__bar">
 
                   <section class="freezer">
-                    <img src="/images/menu/type-frozen.svg" />
+                    <img src="/images/menu/type-frozen.svg" alt="" />
                     <span>냉동 식품</span>
                     <img class="arrow" src="/images/menu/arrow.svg" alt="상품 자세히 보기" />
                   </section>
@@ -220,7 +220,7 @@
               <div class="product__list room-temperature">
                 <div class="cart-product__wrapper__bar">
                   <section class="ambient">
-                    <img src="/images/menu/type-normal.svg" />
+                    <img src="/images/menu/type-normal.svg" alt="" />
                     <span>상온 식품</span>
                     <img class="arrow" src="/images/menu/arrow.svg" alt="상품 자세히 보기" />
                   </section>
@@ -237,17 +237,9 @@
           <!-- start: information__wrapper -->
           <div class="information__wrapper">
             <div class="location__wrapper">
-              <div class="shipping">
-                <p class="shipping__title">
-                  <img src="/images/menu/map.svg" />
-                  <span>배송지</span>
-                </p>
-                <span class="shipping__address">
-                  서울 중랑구 면목로 42길 11 (행운빌딩) 603호
-                </span>
-                <span class="shipping__address-type">샛별배송</span>
-                <button class="shipping__address-change">배송지 변경</button>
-              </div>
+
+              <div class="shipping"></div>
+
               <div class="payment">
                 <div class="payment__detail">
                   <span class="description">상품금액</span>
@@ -288,6 +280,7 @@
           </div>
         </div>
       </section>
+
     </main>
     <footer class="footer">
       <div class="footer__wrapper">

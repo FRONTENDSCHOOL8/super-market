@@ -2,6 +2,12 @@
 body {
   @include size(100vw);
 }
+
+.cart-main {
+  @include relative;
+}
+
+
 .cart__wrapper {
   @include container-width(max, 1050px);
   @include size(100%, 100%);
@@ -95,12 +101,12 @@ body {
 
 .cart__description {
   @include size(100%);
-  @include flex-container(row item-center);
+  @include flex-container(row);
   @include gap(16);
 }
 .select__wrapper {
   @include size(100%);
-  @include flex-container(column item-center);
+  @include flex-container(column);
   @include gap(16);
   .select__all {
     @include size(100%, 20px);
@@ -113,8 +119,9 @@ body {
     }
     input[type='checkbox'] + label {
       @include relative();
-      padding-left: 30px;
-      padding-top: 6px;
+      @include px(30 0);
+      @include mx(0 5);
+      @include py(3 5);
     }
     .divider {
       @include size(1px, 100%);
@@ -122,7 +129,7 @@ body {
       background-color: $gray100;
     }
     .select-delete {
-      padding-top: 6px;
+      @include py(3 4);
       border: 0;
       background-color: transparent;
     }
@@ -256,11 +263,12 @@ body {
   @include flex-container(column center);
   @include gap(12);
   @include font(size $labelMedium);
+
   &__title {
     @include size(100%);
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
+    @include flex-container(row items-center);
+    @include my(0 12);
+
     img {
       @include size(30px);
       color: $content;
@@ -274,12 +282,22 @@ body {
     color: $primary;
   }
   &__address-change {
-    padding: 10px;
+    @include p(10);
+    @include rounded(4px);
+    @include font(weight 600);
     background-color: inherit;
     border: 1px solid $primary;
-    border-radius: 4px;
     color: $primary;
-    font-weight: 600;
+  }
+  &__address-register {
+    @include p(12);
+    @include rounded(4px);
+    @include font(weight 600);
+    border: none;
+    background-color: $primary;
+    color: white;
+
+    
   }
 }
 .payment {
@@ -354,5 +372,198 @@ body {
   color: $gray400;
   li {
     line-height: 1.5;
+  }
+}
+
+
+.order__wrapper {
+  @include absolute(t -65 l 50%);
+  @include size(1050px);
+  @include mx(auto);
+  z-index: 10;
+  transform: translateX(-50%);
+  background-color: rgb(250, 245, 255);
+  animation: slideIn 1s ease-out forwards;
+
+  & .receipt {
+    @include flex-container(column items-center);
+    @include size(600px);
+    @include mx(auto);
+    
+    &__complete {
+      @include flex-container(column items-center);
+      @include size(100%);
+      @include py(50 0);
+      @include my(40 0);
+      background-color: white;
+
+      & img {
+        @include size(64px, 64px);
+        @include my(0 30);
+      }
+
+      & p {
+        @include font(size $paraGraphLarge weight 500 lh 1.5);
+
+        & em {
+          @include font(weight 700);
+        }
+
+        &:last-child {
+          @include size(75%);
+          @include py(0 20);
+          text-align: center;
+          border-bottom: 1px solid $gray100;
+        }
+      }
+    }
+
+    &__info {
+      @include flex-container(column items-start);
+      @include size(100%);
+      @include px(12.5%);
+      @include py(20 35);
+      @include gap(10);
+      background-color: white;
+
+      & p {
+        &:first-child {
+          @include font(size $paraGraphLarge weight 500);
+        }
+        
+        &:nth-child(3) {
+          @include font(size $paraGraphSmall weight 500);
+          color: $gray500;
+        }
+      }
+
+      &--price {
+        @include flex-container(row items-start);
+
+        & span {
+
+          &:first-child {
+            @include font(size $paraGraphLarge weight 700);
+          }
+
+          &:last-child {
+            @include font(size 0.8rem weight 500 1);
+            @include mx(10 0);
+            @include px(7 3);
+            @include py(3);
+            color: $primary;
+            border: 1px solid $gray200;
+            
+            & em {
+              @include font(size 0.8rem weight 700 1);
+
+            }
+          }
+        }
+      }
+
+      & a {
+        @include size(100%, 40px);
+        @include show(block);
+        @include flex-container(row items-center);
+        @include justify-content(center);
+        @include font(size $paraGraphMedium weight 600);
+        border: 1px solid $primary;
+
+        &:nth-child(4) {
+          background-color: $primary;
+          color: white;
+        }
+        &:nth-child(5) {
+          color: $primary;
+        }
+      }
+
+    }
+    
+  }
+
+  & .collect-info {
+    @include flex-container(column items-start);
+    @include size(600px);
+    @include mx(auto);
+    @include my(20 0);
+    @include py(20);
+    @include px(20);
+    @include gap(10);
+    border: 1px solid $gray200;
+
+    &__title {
+      @include font(size $paraGraphMedium weight 600);
+    }
+    
+    &__desc {
+      @include font(size $paraGraphMedium weight 400);
+    }
+
+    & .box-info {
+      @include flex-container(row items-center);
+      @include justify-content(between);
+      @include size(100%);
+      @include my(10 0);
+
+      & .styrofoam {
+        @include flex-container(column items-center);
+        @include size(50%);
+        @include gap(5);
+
+        & .box-img {
+          @include flex-container(row items-center);
+          @include justify-content(center);
+          @include gap(10);
+        }
+        & p {
+          text-align: center;
+
+          & em {
+            @include font(size 1.1rem weight 600);
+          }
+        }
+      }
+      & .icepack {
+        @include flex-container(column items-center);
+        @include size(50%);
+        @include gap(5);
+        
+        & .box-img {
+          @include flex-container(row items-center);
+          @include justify-content(center);
+        }
+        & p {
+          text-align: center;
+
+          & em {
+            @include font(size 1.1rem weight 600);
+          }
+        }
+      }
+    }
+  }
+
+  & .cs-info {
+    @include flex-container(row items-start);
+    @include size(600px);
+    @include gap(20);
+    @include mx(auto);
+    @include my(10 30);
+    @include p(20);
+    border: 1px solid $gray200;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-50%) translateY(20%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(0%);
+    opacity: 1;
   }
 }
