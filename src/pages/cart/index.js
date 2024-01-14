@@ -446,22 +446,24 @@ const handleOrderProduct = (e) => {
   const cartList = getCartIdList('.cart-product-list', 'input[type="checkbox"]');
   const selectedProductList = getCartIdList('.cart-product-list', 'input[type="checkbox"]:checked')
 
-  const remainProductList = Array.from(cartList)
-    .filter(item => item.indexOf(selectedProductList) == -1);
+  const remainProductList = cartList.filter(
+    item => !selectedProductList.includes(item)
+  )
+  
   const orderList = {};
   const remainList = {};
 
   selectedProductList.forEach(id => {
-    orderList[id.split('_')[1]] = {
-      number: getNode(`span.${id}`).textContent, 
-      price: getNode(`#${id}`).closest('.cart-product')
+    orderList[id] = {
+      number: getNode(`span.id_${id}`).textContent, 
+      price: getNode(`#id_${id}`).closest('.cart-product')
                               .querySelector('.cart-product__price__discount')
                               .textContent
     };
 
   })
   remainProductList.forEach(id => {
-    remainList[id.split('_')[1]] = getNode(`span.${id}`).textContent;
+    remainList[id] = getNode(`span.id_${id}`).textContent;
   })
 
   const orderData = {
@@ -472,6 +474,8 @@ const handleOrderProduct = (e) => {
   const remainData = {
     product: JSON.stringify(remainList)
   }
+
+  
 
   if(!confirm('주문하시겠습니까?')) return;
   else {
@@ -487,7 +491,10 @@ const handleOrderProduct = (e) => {
 const displayOrderComplete = () => {
 
   const paidPrice = getNode('.payment__result__price b').textContent;
-  const accumulate = parseInt(getNode('.origin-price').textContent.split(',').join('')) * 0.001;
+  const paidPriceToNumber = parseInt(paidPrice.split(',').join(''));
+  const accumulate = paidPriceToNumber >= 43000 ? 
+    comma(Math.round(paidPriceToNumber * 0.001)) : 
+    comma(Math.round((paidPriceToNumber - 3000) * 0.001));
 
   const template = /* html */ `
   <section class="order__wrapper">
@@ -542,7 +549,7 @@ const displayOrderComplete = () => {
 }
 
 const getCartIdList = (node, target) => {
-  return Array.from(getNode(node).querySelectorAll(target)).map(item => item.id);
+  return Array.from(getNode(node).querySelectorAll(target)).map(item => item.id.split('_')[1]);
 }
 
 orderButton.addEventListener('click', handleOrderProduct);
