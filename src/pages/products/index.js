@@ -267,11 +267,47 @@ const getProductData = () => {
       case 'level-four': filters += `(price >= 15000)`; break;
     }
   }
+  let sort;
+
+  switch(filter.get('sort')) {
+    case '1': {
+      sort = '-created';
+      getNode('#sort-review').style.color='black';
+      break;
+    };
+    case '2': {
+      sort = 'created';
+      getNode('#sort-new').style.color='black';
+      break;
+    };
+    case '3': {
+      sort = 'id';
+      getNode('#sort-sale').style.color='black';
+      break;
+    };
+    case '4': {
+      sort = '-discount';
+      getNode('#sort-discount').style.color='black';
+      break;
+    };
+    case '5': {
+      sort = 'price';
+      getNode('#sort-row-price').style.color='black';
+      break;
+    };
+    case '6': {
+      sort = '-price';
+      getNode('#sort-high-price').style.color='black';
+      break;
+    };
+
+  };
 
   return pb
     .collection('products')
     .getList(page, 30, {
-      filter: filters
+      filter: filters,
+      sort: sort
     });
 }
 
@@ -292,6 +328,7 @@ resetButton.addEventListener('click', handleReset);
 
 document.addEventListener('DOMContentLoaded', handleSetCategoryMenu);
 document.addEventListener('DOMContentLoaded', displayProductCard);
+
 
 
 
