@@ -93,8 +93,8 @@ export const createSkeletonCardTemplate = () => {
         <div class="skeleton_loading">
           <div class="skeleton_img"></div>
         </div>
-        <img src="#" class="product__images__thumbnail" alt="#" />
-        <img src="/images/menu/cart.svg" alt="장바구니에 담기" class="cart" />
+        <img src="#" class="product__images__thumbnail" alt="#" width="250" height="322" loading="lazy" decoding="async" />
+        <img src="/images/menu/cart.svg" alt="장바구니에 담기" class="cart" width="45" height="45" />
       </div>
       <div class="product__desc">
         <div class="skeleton_loading">

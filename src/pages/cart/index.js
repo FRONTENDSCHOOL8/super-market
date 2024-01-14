@@ -236,7 +236,7 @@ const createProductCart = (product, number) => {
   <div class="cart-product">
     <input type="checkbox" name="id_${id}" id="id_${id}" />
     <label for="id_${id}"></label>
-    <img src="${getPbImageURL(product, 'product_img')}" class="thumbnail" alt="${product_name}" />
+    <img src="${getPbImageURL(product, 'product_img')}" class="thumbnail" alt="${product_name}" width="60" height="77" decoding="async" loading="lazy" />
     <p class="cart-product__content">
       <span class="cart-product__content__title">${product_name}</span>
     </p>

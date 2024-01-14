@@ -1,4 +1,13 @@
-import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist, createCardTemplate, createSkeletonCardTemplate, getNode } from '/src/lib';
+import { 
+  initHeader, 
+  insertLast, 
+  getStorage, 
+  setStorage, 
+  hideElementNoExist, 
+  createCardTemplate, 
+  createSkeletonCardTemplate, 
+  getNode, 
+  openCartModal } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
 
@@ -224,6 +233,8 @@ const displayProductCard = async () => {
   })
   .then(skeletonCard.forEach(node => node.remove()))
   .then(totalCount.textContent = `총 ${productData.totalItems}건`);
+
+  productArea.addEventListener('click', openCartModal);
 }
 
 const getProductData = () => {
