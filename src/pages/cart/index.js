@@ -10,6 +10,7 @@ const wholeSelectCheckBox = document.querySelectorAll('input[id^="check-all-"]')
 const selectDeleteButton = document.querySelectorAll('.select-delete')
 const skeletonCard = document.querySelector('.skeleton-ui')
 const shipArea = document.querySelector('.shipping');
+const orderButton = document.querySelector('.order-button');
 
 const {isAuth, user} = await getStorage('auth');
 if(!isAuth) {
@@ -386,6 +387,8 @@ const setShipInfo = async () => {
   const address = JSON.parse(await getStorage('address'));
   let template = '';
 
+  Array.from(shipArea.childNodes).forEach(node => node.remove());
+
   const setShipArea = () => {
     if(address) {
       template = /* html */ `
@@ -425,15 +428,68 @@ const setShipInfo = async () => {
   }).then(() => {
     if(address || user.address) {
       setSearchAddressEvent(getNode('.shipping__address-change'), (popup) => {
-        popup.addEventListener('beforeunload', () => location.reload());
+        popup.addEventListener('beforeunload', setShipInfo);
       })
     } else {
       setSearchAddressEvent(getNode('.shipping__address-register'), (popup) => {
-        popup.addEventListener('beforeunload', () => location.reload());
+        popup.addEventListener('beforeunload', setShipInfo);
       })
     }
   })
 }
 
 setShipInfo();
+
+
+// 주문하기
+
+const handleOrderProduct = (e) => {
+  const cartList = getCartIdList('.cart-product-list', 'input[type="checkbox"]');
+  const selectedProductList = getCartIdList('.cart-product-list', 'input[type="checkbox"]:checked')
+
+  const remainProductList = Array.from(cartList)
+    .filter(item => item.indexOf(selectedProductList) == -1);
+  const orderList = {};
+  const remainList = {};
+
+  // number: 클래스 id_상품id의 textContent 가져오기, price: 고민..
+  selectedProductList.forEach(id => {
+    orderList[id] = {
+      number: getNode(`span.id_${id}`).textContent, 
+      price: getNode(`#${id}`).closest('.cart-product')
+                              .querySelector('.cart-product__price__discount')
+                              .textContent
+    };
+
+  })
+  remainProductList.forEach(id => {
+    remainList[id] = getNode(`span.id_${id}`).textContent;
+  })
+
+  const orderData = {
+    user_id: user.id,
+    address: getNode('.shipping__address').textContent,
+    product: JSON.stringify(orderList)
+  }
+  const remainData = {
+    product: JSON.stringify(remainList)
+  }
+
+  if(!confirm('주문하시겠습니까?')) return;
+  else {
+    pb.collection('order_list').create(orderData)
+    .then(pb.collection('cart').update(user.cart_id, remainData))
+    .then(() => {
+      alert('주문이 완료되었습니다! 주문내역 페이지는 이 다음에..');
+      location.reload()
+    })
+  }
+}
+
+const getCartIdList = (node, target) => {
+  return Array.from(getNode(node).querySelectorAll(target)).map(item => item.id);
+}
+
+orderButton.addEventListener('click', handleOrderProduct);
+
 
