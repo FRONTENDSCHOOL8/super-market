@@ -25,6 +25,11 @@ const userInputs = getNodes('.login-input-group');
 const userId = getNode('#loginUserId');
 const userPw = getNode('#loginUserPw');
 
+const userData = await pb.collection('users').getList(1, 1, {
+  filter: 'username = "dhtldka"',
+});
+console.log(userData);
+
 // 로그인 기능
 
 const handleLogin = async (e) => {
