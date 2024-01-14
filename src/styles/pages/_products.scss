@@ -309,6 +309,13 @@
       background-color: white;
       border: 1px solid $gray100;
 
+      &.current-page {
+        @include font(weight 600);
+        border: 1px solid $primary;
+        background-color: $primary;
+        color: white;
+      }
+
     }
 
   }

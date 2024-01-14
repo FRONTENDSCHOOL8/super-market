@@ -1,6 +1,10 @@
 @use '/src/styles/base' as *;
 @use '/src/styles/abstracts' as *;
 
+img {
+  content-visibility : auto;
+}
+
 .header {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
   position: relative;

@@ -236,7 +236,7 @@ const createProductCart = (product, number) => {
   <div class="cart-product">
     <input type="checkbox" name="id_${id}" id="id_${id}" />
     <label for="id_${id}"></label>
-    <img src="${getPbImageURL(product, 'product_img')}" class="thumbnail" alt="${product_name}" />
+    <img src="${getPbImageURL(product, 'product_img')}" class="thumbnail" alt="${product_name}" width="60" height="77" decoding="async" loading="lazy" />
     <p class="cart-product__content">
       <span class="cart-product__content__title">${product_name}</span>
     </p>
@@ -512,7 +512,7 @@ const displayOrderComplete = () => {
         </div>
         <p><sup>*</sup> 적립금은 배송당일에 적립됩니다.</p>
         <a href="/">홈으로 이동</a>
-        <a href="/src/pages/products/">더 둘러보기</a>
+        <a href="/src/pages/products/?sort=1&pages=1">더 둘러보기</a>
       </div>
 
     </div>

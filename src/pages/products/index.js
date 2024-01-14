@@ -1,4 +1,13 @@
-import { initHeader, insertLast, getStorage, setStorage, hideElementNoExist, createCardTemplate, createSkeletonCardTemplate, getNode } from '/src/lib';
+import { 
+  initHeader, 
+  insertLast, 
+  getStorage, 
+  setStorage, 
+  hideElementNoExist, 
+  createCardTemplate, 
+  createSkeletonCardTemplate, 
+  getNode, 
+  openCartModal } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
 
@@ -8,7 +17,9 @@ hideElementNoExist();
 
 const navExpandButton = document.querySelectorAll('div[class^="nav-"] > button');
 const resetButton = document.querySelector('.products-navigation__header button');
+const paginationArea = getNode('.pagination-area');
 const selectedItemList = {};
+let needPageNumber;
 
 const handleExpandNavigation = (e) => {
   let menu = e.target.closest('button').nextElementSibling;
@@ -224,7 +235,86 @@ const displayProductCard = async () => {
   })
   .then(skeletonCard.forEach(node => node.remove()))
   .then(totalCount.textContent = `총 ${productData.totalItems}건`);
+
+  productArea.addEventListener('click', openCartModal);
+  setPaginationButton(productData.totalItems);
 }
+
+const setPaginationButton = (number) => {
+  
+  const currentPage = +(window.location.href.split('pages=')[1].split('')[0]);
+  needPageNumber = number % 30 == 0? number / 30 : parseInt(number / 30)+1;
+
+  let template = /* html */ `
+    <button type="button" class="page-first"><img src="/images/pagination/firstpage.svg" alt="첫 페이지로 이동하기" /></button>
+    <button type="button" class="page-prev"><img src="/images/pagination/prev.svg" alt="이전 페이지로 이동하기" /></button>
+  `;
+
+  for(let i=1; i<=needPageNumber; i++) {
+    if(i == currentPage) {
+      template += /* html */ `<button class="current-page" type="button">${i}</button>`; 
+    } else {
+      template += /* html */ `<button type="button">${i}</button>`;
+    }
+  }
+
+  template += /* html */ `
+    <button type="button" class="page-next"><img src="/images/pagination/next.svg" alt="다음 페이지로 이동하기" /></button>
+    <button type="button" class="page-last"><img src="/images/pagination/lastpage.svg" alt="마지막 페이지로 이동하기" /></button>
+  `
+
+  insertLast(paginationArea, template);
+  
+}
+
+const handlePagination = (e) => {
+  const targetPage = e.target.closest('button').textContent;
+  const buttonClass = e.target.closest('button').classList.value;
+
+  let currentUrl = window.location.href;
+  const split = currentUrl.split('pages=');
+
+  let currentPage;
+  let targetUrl;
+  
+  if(split[1]) {
+    currentPage = split[1].split('')[0];
+    split[1] = split[1].slice(1);
+    if(currentPage == targetPage) return; 
+  }
+
+  if(!targetPage) {
+    switch(buttonClass) {
+      case 'page-first': {
+        if(currentPage == 1) return;
+        targetUrl = split.join(`pages=1`);
+        break;
+      };
+      case 'page-prev': {
+        if(currentPage == 1) return;
+        targetUrl = split.join(`pages=${(+currentPage)-1}`);
+        break;
+      };
+      case 'page-next': {
+        if(currentPage == needPageNumber) return;
+        targetUrl = split.join(`pages=${(+currentPage)+1}`);
+        break;
+      };
+      case 'page-last': {
+        if(currentPage == needPageNumber) return;
+        targetUrl = split.join(`pages=${needPageNumber}`);
+        break;
+      };
+    }
+  }
+  else {
+    targetUrl = split.join(`pages=${targetPage}`);
+  }
+
+  location.href=targetUrl;
+}
+
+
 
 const getProductData = () => {
 
@@ -325,10 +415,10 @@ const findSelectedFilter = (string) => {
 }
 
 resetButton.addEventListener('click', handleReset);
+paginationArea.addEventListener('click', handlePagination);
 
 document.addEventListener('DOMContentLoaded', handleSetCategoryMenu);
 document.addEventListener('DOMContentLoaded', displayProductCard);
-
 
 
 
