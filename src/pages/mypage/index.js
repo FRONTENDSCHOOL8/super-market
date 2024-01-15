@@ -10,7 +10,6 @@ initHeader();
 
 const checkUserAuth = async () => {
   const {isAuth, user} = await getStorage('auth');
-  console.log(isAuth);
   if(!isAuth){
     alert('로그인 후 이용해 주세요.')
     location.href = '/src/pages/login/';
