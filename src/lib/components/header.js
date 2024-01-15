@@ -3,6 +3,7 @@ import defaultAuthData from '/src/lib/api/defaultAuthData';
 
 const header = document.querySelector('.header');
 const headerMenubar = document.querySelector('.menu');
+const categoryMenu = document.querySelector('.menu__category--button');
 
 const menuLink = document.querySelector('.menu_link')
 const addressButton = document.querySelector('.menu_link__address');
@@ -30,7 +31,6 @@ const handleAddressBox = async () => {
   let template;
   const address = JSON.parse(await getStorage('address'));
 
-  // 이 부분에서 로그인 기능 구현 이후 로그인했을 경우 주소를 가져오는 로직도 추가해야 한다.
   if(!address) {
     template = /* html */`
       <div class="menu_link__address-box">
@@ -134,13 +134,18 @@ const handleLogout = (e) => {
   }
 }
 
+const handleCategoryMenuDisable = (e) => {
+  e.preventDefault();
+}
+
 
 const fixHeader = () => document.addEventListener('scroll', handleScrollHeader);
 const showAddressBox = () => addressButton.addEventListener('click', handleAddressBox);
+const setCategoryMenuDisable = () => categoryMenu.addEventListener('click', handleCategoryMenuDisable);
 
 export const initHeader = () => {
   fixHeader();
   showAddressBox();
   setDefaultAuth();
-  
+  setCategoryMenuDisable();
 }
