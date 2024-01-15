@@ -312,6 +312,69 @@
   }
 }
 
+dialog {
+  border: none;
+  @include rounded(lg);
+  @include p(x 32 y 32);
+
+  .review-header {
+    @include font(size $headingxl);
+  }
+
+  figure {
+    @include flex-container(row items-center);
+
+    .review-thumnail {
+      @include mx(0);
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+    }
+
+    figcaption {
+      @include mx(20px);
+    }
+  }
+
+  .review-body {
+    label {
+      width: 100px;
+      display: inline-block;
+      // text-align: center;
+    }
+    input {
+      width: 600px;
+      height: 44px;
+      @include px(20px);
+      @include my(12px);
+
+      &#review-text {
+        height: 200px;
+      }
+    }
+  }
+
+  .dialog-button {
+    @include flex-container(row justify-center);
+  }
+  button {
+    @include reset-button();
+    width: 180px;
+    height: 54px;
+    @include m(x 12px y 12px);
+    border: 1px solid $gray200;
+
+    &.dialog-cancel {
+      background-color: $white;
+    }
+
+    &.dialog-write {
+      background-color: $gray200;
+      color: $white;
+    }
+  }
+}
+
 .review-board {
   border-top: 1px solid $gray300;
   color: $content;

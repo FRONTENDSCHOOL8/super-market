@@ -23,6 +23,9 @@ const totalPrice = getNode('.product-total-price');
 const detailNavMenu = getNodes('.detail-navigation-list li');
 const navItem = getNodes('.nav-item');
 const addCart = getNode('.add-cart');
+const writeReview = getNode('.write-review');
+const reviewDialog = getNode('.review-dialog');
+
 let isClick;
 
 initHeader();
@@ -154,6 +157,10 @@ const handleDetailNav = () => {
   });
 };
 
+const show = (target) => {
+  target.showModal();
+};
+
 window.addEventListener('DOMContentLoaded', async () => {
   await renderDetailData();
 });
@@ -164,3 +171,6 @@ countDecrease.addEventListener('click', handleCount);
 countIncrease.addEventListener('click', handleCount);
 window.addEventListener('scroll', handleDetailNav);
 addCart.addEventListener('click', handleAddCartDetail);
+writeReview.addEventListener('click', () => {
+  show(reviewDialog);
+});
