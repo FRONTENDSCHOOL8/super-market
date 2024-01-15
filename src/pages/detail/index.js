@@ -74,7 +74,7 @@ const renderDetailData = async () => {
   fillTagContent('.product-name', product_name);
   fillTagContent('.product-explanation', product_description);
   fillTagContent('.product__discount-rate', `${discount}%`);
-  fillTagContent('.product__price', realPrice);
+  fillTagContent('.product__price', `${realPrice}원`);
   fillTagContent('.original-price', `${comma(price)}원`);
   fillTagContent('.product-detail-delivery p:first-child', delivery_type);
   fillTagContent('.product-detail-package p:first-child', packaging_type);
@@ -82,7 +82,11 @@ const renderDetailData = async () => {
   fillTagContent('.product-option-price', `${realPrice}원`);
 
   fillTagContent('.product-total-price', `${realPrice}`);
-  fillTagContent('.product-description.nav-item img', getPbImageURL, 'src');
+  fillTagContent(
+    '.product-description.nav-item img',
+    getPbImageURL(detailData, 'product_detail_img'),
+    'src'
+  );
   fillTagContent('.sr-only h3', `${product_name} 제품설명`);
 
   for (let key in etc) {

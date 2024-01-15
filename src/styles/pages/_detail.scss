@@ -321,49 +321,45 @@ dialog {
     @include font(size $headingxl);
   }
 
-  figure {
-    @include flex-container(row items-center);
+  .review-body {
+    label {
+      width: 100px;
+      display: inline-block;
+    }
+    input {
+      width: 600px;
+      height: 44px;
+      @include px(20px);
+      @include my(12px);
 
-    .review-body {
-      label {
-        width: 100px;
-        display: inline-block;
+      &:focus {
+        outline-color: $primary;
       }
-      input {
-        width: 600px;
-        height: 44px;
-        @include px(20px);
-        @include my(12px);
 
-        &:focus {
-          outline-color: $primary;
-        }
-
-        &#review-text {
-          height: 200px;
-        }
+      &#review-text {
+        height: 200px;
       }
     }
+  }
 
-    .dialog-button {
-      @include flex-container(row justify-center);
+  .dialog-button {
+    @include flex-container(row justify-center);
+  }
+  button {
+    @include reset-button();
+    width: 180px;
+    height: 54px;
+    @include m(x 12px y 12px);
+    @include rounded(8px);
+    border: 1px solid $gray200;
+
+    &.dialog-cancel {
+      background-color: $white;
     }
-    button {
-      @include reset-button();
-      width: 180px;
-      height: 54px;
-      @include m(x 12px y 12px);
-      @include rounded(8px);
-      border: 1px solid $gray200;
 
-      &.dialog-cancel {
-        background-color: $white;
-      }
-
-      &.dialog-write {
-        background-color: $primary;
-        color: $white;
-      }
+    &.dialog-write {
+      background-color: $primary;
+      color: $white;
     }
   }
 }
