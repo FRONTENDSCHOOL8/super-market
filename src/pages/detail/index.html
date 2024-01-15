@@ -163,15 +163,66 @@
     </header>
     <main class="product-detail-main">
       <div class="detail-main">
+        <!-- TODO: main-Image: src, alt -->
+        <figure><img src="" alt="" class="main-image" /></figure>
         <div class="main-description">
+          <!-- TODO: main-description: delivery_type, product_name, product_description, discount, realPrice, comma(price) -->
+          <p class="delivery"></p>
+          <h1 class="product-name"></h1>
+          <h2 class="product-explanation"></h2>
+          <p class="product-price">
+            <span class="product__discount-rate"></span>
+          </p>
+          <span class="product__price"></span>
+          <span class="original-price"></span>
           <p class="benefit">로그인 후, 적립 혜택이 제공됩니다.</p>
+          <!-- TODO: product-detail: delivery_type, packaging_type -->
           <dl class="product-detail">
+            <dt>배송</dt>
+            <dd class="product-detail-delivery">
+              <p></p>
+              <p>
+                23시 전 주문시 내일 아침 7시 전 도착 <br />(대구 부산 울산
+                샛별배송 운영시간 별도 확인
+              </p>
+            </dd>
+            <dt>판매자</dt>
+            <dd class="product-detail-seller"><p>칼리</p></dd>
+            <dt>포장타입</dt>
+            <dd class="product-detail-package">
+              <p></p>
+              <p>택배배송은 에코 포장이 스티로폼으로 대체됩니다.</p>
+            </dd>
             <dt class="product-option-row">상품선택</dt>
             <dd>
-              <div class="product-option-wrapper"></div>
+              <div class="product-option-wrapper">
+                <!-- TODO: product-option-wrapper: product_name, realPrice -->
+                <p class="product-option-name"></p>
+                <div class="product-option-count">
+                  <input
+                    value="-"
+                    class="decrease"
+                    type="button"
+                    aria-label="수량 빼기"
+                  />
+                  <input type="number" min="1" value="1" class="count" />
+                  <input
+                    value="+"
+                    class="increase"
+                    type="button"
+                    aria-label="수량 증가"
+                  />
+                </div>
+                <span class="product-option-price"></span>
+              </div>
             </dd>
           </dl>
+          <!-- TODO: product-total-wrapper: realPrice -->
           <div class="product-total-wrapper">
+            <p>
+              총 상품금액:
+              <span class="product-total-price"></span>원
+            </p>
             <div class="product-total-benefit">
               <p class="reward">
                 <span>적립</span>
@@ -198,7 +249,13 @@
           <li><a href="#qna">문의</a></li>
         </ul>
       </nav>
-      <article class="product-description nav-item" id="description"></article>
+      <!-- TODO: product-description: product_name 뒤에 '제품설명'이라는 텍스트 붙어야 함-->
+      <article class="product-description nav-item" id="description">
+        <img src="" alt="" loading="lazy" />
+        <div class="sr-only">
+          <h3></h3>
+        </div>
+      </article>
       <article
         class="product-detail-description nav-item"
         id="detail-description"

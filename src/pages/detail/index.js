@@ -8,13 +8,31 @@ import {
   getPbImageURL,
   insertFirst,
   insertBefore,
+  handleAddCartDetail,
 } from '/src/lib';
 import pb from '../../lib/api/pocketbase.js';
+
+const zzimButton = getNode('.zzim');
+const notifyButton = getNode('.notify');
+const countDecrease = getNode('.decrease');
+const countIncrease = getNode('.increase');
+
+const productCount = getNode('.count');
+const optionPrice = getNode('.product-option-price');
+const totalPrice = getNode('.product-total-price');
+const detailNavMenu = getNodes('.detail-navigation-list li');
+const navItem = getNodes('.nav-item');
+const addCart = getNode('.add-cart');
+let isClick;
 
 initHeader();
 hideElementNoExist();
 
+const fillTagContent = (target, value, element = 'textContent') => {
+  getNode(target)[element] = value;
+};
 const renderDetailData = async () => {
+  console.log('renderDetailData start');
   const hash = window.location.hash.slice(1);
   const detailData = await pb.collection('products').getOne(hash);
   let {
@@ -26,7 +44,6 @@ const renderDetailData = async () => {
     product_description,
     etc,
   } = detailData;
-
   switch (packaging_type) {
     case '1':
       packaging_type = '상온';
@@ -38,88 +55,30 @@ const renderDetailData = async () => {
       packaging_type = '냉동';
       break;
   }
-
   const realPrice = comma(
     Math.floor((price * (1 - 0.01 * discount)) / 10) * 10
   );
+  fillTagContent(
+    '.main-image',
+    getPbImageURL(detailData, 'product_img'),
+    'src'
+  );
+  fillTagContent('.main-image', product_name, 'alt');
+  fillTagContent('.delivery', 'textContent', delivery_type);
+  fillTagContent('.product-name', product_name);
+  fillTagContent('.product-explanation', product_description);
+  fillTagContent('.product__discount-rate', `${discount}%`);
+  fillTagContent('.product__price', realPrice);
+  fillTagContent('.original-price', `${comma(price)}원`);
+  fillTagContent('.product-detail-delivery p:first-child', delivery_type);
+  fillTagContent('.product-detail-package p:first-child', packaging_type);
+  fillTagContent('.product-option-name', product_name);
+  fillTagContent('.product-option-price', `${realPrice}원`);
 
-  const template = {
-    mainImage: /*html*/ `
-  <figure>
-  <img
-    class="main-image"
-    src="${getPbImageURL(detailData, 'product_img')}"
-    alt="${product_name}"
-  />
-</figure>
-  `,
-    mainDescription: /*html*/ `
-  <p class="delivery">${delivery_type}</p>
-  <h1 class="product-name">${product_name}</h1>
-  <h2 class="product-explanation">${product_description}</h2>
-  <p class="product-price"><span class="product__discount-rate">${discount}%</span>
-  <span class="product__price">${realPrice}원</span>
-  <span class="original-price">${comma(price)}원</span>
-  `,
-    detailDescription: /*html*/ `
-  <dt>배송</dt>
-            <dd class="product-detail-delivery">
-              <p>${delivery_type}</p>
-              <p>
-                23시 전 주문시 내일 아침 7시 전 도착 <br />
-                (대구 부산 울산 샛별배송 운영시간 별도 확인)
-              </p>
-            </dd>
+  fillTagContent('.product-total-price', `${realPrice}`);
+  fillTagContent('.product-description.nav-item img', getPbImageURL, 'src');
+  fillTagContent('.sr-only h3', `${product_name} 제품설명`);
 
-            <dt>판매자</dt>
-            <dd class="product-detail-seller"><p>칼리</p></dd>
-
-            <dt>포장타입</dt>
-            <dd class="product-detail-package">
-              <p>${packaging_type}</p>
-              <p>택배배송은 에코 포장이 스티로폼으로 대체됩니다.</p>
-            </dd>
-
-
-
-  `,
-    productOtion: /*html*/ `
-    <p class="product-option-name">${product_name}</p>
-                <div class="product-option-count">
-                  <input
-                    value="-"
-                    class="decrease"
-                    type="button"
-                    aria-label="수량 빼기"
-                  />
-                  <input type="number" min="1" value="1" class="count" />
-                  <input
-                    value="+"
-                    class="increase"
-                    type="button"
-                    aria-label="수량 증가"
-                  />
-                </div>
-                <span class="product-option-price">${realPrice}원</span>
-            `,
-    total: /*html*/ `
-    <p>총 상품금액: <span class="product-total-price">${realPrice}</span>원</p>
-    `,
-    detailImage: /*html*/ `
-    <img
-    src="${getPbImageURL(detailData, 'product_detail_img')}"
-    alt="탱탱쫄면 제품설명"
-    loading="lazy"
-  />
-  <div class="sr-only">
-    <h3>${product_name} 제품설명</h3>
-  </div>
-    `,
-  };
-
-  insertFirst('.detail-main', template.mainImage);
-  insertFirst('.main-description', template.mainDescription);
-  insertFirst('.product-detail', template.detailDescription);
   for (let key in etc) {
     insertBefore(
       '.product-option-row',
@@ -129,24 +88,7 @@ const renderDetailData = async () => {
     `
     );
   }
-  insertFirst('.product-option-wrapper', template.productOtion);
-  insertFirst('.product-total-wrapper', template.total);
-  insertFirst('.product-description', template.detailImage);
 };
-
-await renderDetailData();
-
-const zzimButton = getNode('.zzim');
-const notifyButton = getNode('.notify');
-const countDecrease = getNode('.decrease');
-const countIncrease = getNode('.increase');
-const productCount = getNode('.count');
-const optionPrice = getNode('.product-option-price');
-const totalPrice = getNode('.product-total-price');
-const detailNavMenu = getNodes('.detail-navigation-list li');
-const navItem = getNodes('.nav-item');
-
-let isClick;
 
 const handleButton = (target) => {
   isClick = !target.classList.contains('is--active');
@@ -163,7 +105,8 @@ const handleNotify = () => {
   console.log(`알림 : ${isClick}`);
 };
 
-const handleCount = (e) => {
+const handleCount = async (e) => {
+  if (!e) return;
   let value = e.target.value;
   let count = +productCount.value;
   if (value === '-') {
@@ -187,7 +130,7 @@ const showTotalPrice = () => {
 };
 
 const handleDetailNav = () => {
-  if (!navItem) return;
+  if (!navItem) return; // Error: navItem이 없는데...?
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -211,8 +154,13 @@ const handleDetailNav = () => {
   });
 };
 
+window.addEventListener('DOMContentLoaded', async () => {
+  await renderDetailData();
+});
+
 zzimButton.addEventListener('click', handleLike);
 notifyButton.addEventListener('click', handleNotify);
 countDecrease.addEventListener('click', handleCount);
 countIncrease.addEventListener('click', handleCount);
 window.addEventListener('scroll', handleDetailNav);
+addCart.addEventListener('click', handleAddCartDetail);
