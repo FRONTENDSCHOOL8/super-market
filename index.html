@@ -4,7 +4,7 @@
     <title>슈퍼마켙</title>
     <meta charset="UTF-8" />
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script type="module" src="./main.js"></script>
+    <script type="module" src="/main.js"></script>
     <link
       rel="stylesheet"
       crossorigin
@@ -35,7 +35,6 @@
     <header class="header">
       <div class="header__wrapper">
         <ul class="sign_menu"></ul>
-
         <div class="visual">
           <div class="visual__title">
             <a href="/" class="logo">
@@ -186,7 +185,7 @@
             <li><a href="/src/pages/products/?sort=2&pages=1">신상품</a></li>
             <li><a href="/src/pages/products/?sort=1&pages=1">베스트</a></li>
             <li><a href="/src/pages/products/?sort=5&pages=1">알뜰쇼핑</a></li>
-            <li><a href="/src/pages/products/?sort=4&pages=1">특가/혜택</a></li>
+            <li><a href="/src/pages/benefit/">특가/혜택</a></li>
           </ul>
         </div>
         <a href="" class="menu__info"><em>샛별&middot;낮</em>배송안내</a>
@@ -198,22 +197,32 @@
         <div class="banner__cover swiper-container">
           <div class="banner__wrapper swiper-wrapper">
             <figure class="swiper-slide">
-              <img src="./src/assets/main/banner01.png" />
-              <figcaption>
-                부드러운 달콤한 컬리 과일 광고, 멜론 9,900원
-              </figcaption>
+              <a href="/src/pages/benefit/">
+                <img src="/src/assets/main/banner01.png" />
+                <figcaption>
+                  부드러운 달콤한 컬리 과일 광고, 멜론 9,900원
+                </figcaption>
+              </a>
             </figure>
             <figure class="swiper-slide">
-              <img src="./src/assets/main/banner02.png" />
-              <figcaption>카드 혜택 광고, 최대 10% 카드 쿠폰</figcaption>
+              <a href="/src/pages/benefit/">
+                <img src="/src/assets/main/banner02.png" />
+                <figcaption>카드 혜택 광고, 최대 10% 카드 쿠폰</figcaption>
+              </a>
             </figure>
             <figure class="swiper-slide">
-              <img src="./src/assets/main/banner03.png" />
-              <figcaption>퍼플 위크 광고, 더 높은 적립과 3종 쿠폰팩</figcaption>
+              <a href="/src/pages/benefit/">
+                <img src="/src/assets/main/banner03.png" />
+                <figcaption>
+                  퍼플 위크 광고, 더 높은 적립과 3종 쿠폰팩
+                </figcaption>
+              </a>
             </figure>
             <figure class="swiper-slide">
-              <img src="./src/assets/main/banner04.png" />
-              <figcaption>이번주 특가 한눈에 보기</figcaption>
+              <a href="/src/pages/benefit/">
+                <img src="/src/assets/main/banner04.png" />
+                <figcaption>이번주 특가 한눈에 보기</figcaption>
+              </a>
             </figure>
           </div>
           <button class="banner__button swiper-button-prev"></button>
@@ -230,8 +239,10 @@
       </section>
       <div class="line-banner">
         <figure>
-          <img src="./src/assets/main/line-banner.png" />
-          <figcaption>퍼플 위크 광고, 더 높은 적립과 3종 쿠폰팩</figcaption>
+          <a href="/src/pages/benefit/">
+            <img src="/src/assets/main/line-banner.png" />
+            <figcaption>퍼플 위크 광고, 더 높은 적립과 3종 쿠폰팩</figcaption>
+          </a>
         </figure>
       </div>
       <section class="discount-products">
@@ -261,14 +272,19 @@
     <!-- start: popup -->
     <div class="popup">
       <div class="popup__wrapper">
-        <img
-          src="./src/assets/main/popup.png"
-          alt="마켓컬리 뷰티 플랫폼으로 이동하기"
-          class="popup__image"
-        />
+        <a
+          href="/src/pages/products/?sort=2&pages=1&filters=category:csddssjsnia0ypc"
+          tabindex="1"
+        >
+          <img
+            src="/src/assets/main/popup.png"
+            alt="마켓컬리 뷰티 플랫폼으로 이동하기"
+            class="popup__image"
+          />
+        </a>
         <div class="popup__button__wrapper">
-          <button class="watch-today" tabindex="1">오늘 하루 안 보기</button>
-          <button class="close" tabindex="2">닫기</button>
+          <button class="watch-today" tabindex="2">오늘 하루 안 보기</button>
+          <button class="close" tabindex="3">닫기</button>
         </div>
       </div>
     </div>
