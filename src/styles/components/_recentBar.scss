@@ -10,6 +10,9 @@
   top: 50%;
   right: 20px;
   transform: translate(0, -50%);
+  transition: top 0.5s ease;
+  background-color: $white;
+  max-height: calc(100vh - 2 * 10px);
   &__title {
     margin: 34px auto 0 auto;
     color: $black;
