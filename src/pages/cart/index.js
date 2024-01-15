@@ -1,4 +1,4 @@
-import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast, setSearchAddressEvent  } from '/src/lib';
+import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast, setSearchAddressEvent } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 
 import '/src/styles/style.scss';
@@ -12,18 +12,23 @@ const skeletonCard = document.querySelector('.skeleton-ui')
 const shipArea = document.querySelector('.shipping');
 const orderButton = document.querySelector('.order-button');
 
-const {isAuth, user} = await getStorage('auth');
-if(!isAuth) {
+const checkUserAuth = async () => {
+  const {isAuth, user} = await getStorage('auth');
+  if(!isAuth){
+    alert('로그인 후 이용해 주세요.')
+    location.href = '/src/pages/login/';
+  }
   
-  alert('로그인 후 이용해 주세요.')
-  location.href = '/src/pages/login/';
 }
+
+checkUserAuth();
 
 const setAddHandler = (node, type, handler) => {
   Array.from(node).forEach(nodeItem => nodeItem.addEventListener(type, handler));
 }
 
 const setCartItem = async () => {
+  const {user} = await getStorage('auth');
 
   const cartItem = await getCartItem(user.cart_id);
   let ambientTemplate = ''
@@ -98,12 +103,14 @@ const calculateTotalPrice = () => {
   
 }
 
-const handleCalculatePrice = (e) => {
+const handleCalculatePrice = async (e) => {
   const currentItem = e.target.closest('.cart-product')
   const currentMinusButton = currentItem.querySelector('.minus');
   const displayOrigin = currentItem.querySelector('.cart-product__price__regular')
   const displayDiscount = currentItem.querySelector('.cart-product__price__discount')
   const displayNumber = currentItem.querySelector('.cart-product__count__result')
+
+  const {user} = await getStorage('auth');
 
   let [origin, discount, number] = getItemPrice(displayOrigin, displayDiscount, displayNumber);
   let [originPerItem, discountPerItem] = [origin / number, discount / number];
@@ -291,7 +298,8 @@ const handleWholeCheck = (e) => {
   calculateTotalPrice();
 }
 
-const handleDeleteSelectedItem = (e) => {
+const handleDeleteSelectedItem = async (e) => {
+  const {user} = await getStorage('auth');
   const uncheckedItem = getNodes('.cart-product-list input[type="checkbox"]:not(:checked)');
   const checkedItem = getNodes('.cart-product-list input[type="checkbox"]:checked');
   const updateCartItem = {};
@@ -315,7 +323,8 @@ const handleDeleteSelectedItem = (e) => {
   .then(afterDeleteOperate())
 }
 
-const handleDeleteItem = (e) => {
+const handleDeleteItem = async (e) => {
+  const {user} = await getStorage('auth');
   const currentItem = e.target.closest('.cart-product');
   const remainItem = Array.from(getNodes('.cart-product')).filter(node => node != currentItem);
 
@@ -385,6 +394,7 @@ setCartItem();
 
 const setShipInfo = async () => {
   const address = JSON.parse(await getStorage('address'));
+  const {user} = await getStorage('auth');
   let template = '';
 
   Array.from(shipArea.childNodes).forEach(node => node.remove());
@@ -442,7 +452,8 @@ setShipInfo();
 
 
 // 주문하기
-const handleOrderProduct = (e) => {
+const handleOrderProduct = async (e) => {
+  const {user} = await getStorage('auth');
   const cartList = getCartIdList('.cart-product-list', 'input[type="checkbox"]');
   const selectedProductList = getCartIdList('.cart-product-list', 'input[type="checkbox"]:checked')
 
@@ -488,7 +499,8 @@ const handleOrderProduct = (e) => {
 }
 
 // 주문완료 화면 띄우기
-const displayOrderComplete = () => {
+const displayOrderComplete = async () => {
+  const {user} = await getStorage('auth');
 
   const paidPrice = getNode('.payment__result__price b').textContent;
   const paidPriceToNumber = parseInt(paidPrice.split(',').join(''));

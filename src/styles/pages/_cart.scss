@@ -377,18 +377,19 @@ body {
 
 
 .order__wrapper {
-  @include absolute(t -65 l 50%);
+  @include absolute(t -45 l 50%);
   @include size(1050px);
   @include mx(auto);
-  z-index: 10;
+  z-index: 1;
   transform: translateX(-50%);
-  background-color: rgb(250, 245, 255);
-  animation: slideIn 1s ease-out forwards;
+  background-color: white;
+  animation: slideIn .5s cubic-bezier(0.83, 0, 0.17, 1) forwards;
 
   & .receipt {
     @include flex-container(column items-center);
     @include size(600px);
     @include mx(auto);
+    border: 1px solid $gray200;
     
     &__complete {
       @include flex-container(column items-center);
@@ -550,7 +551,7 @@ body {
     @include size(600px);
     @include gap(20);
     @include mx(auto);
-    @include my(10 30);
+    @include my(10 0);
     @include p(20);
     border: 1px solid $gray200;
   }
@@ -558,7 +559,7 @@ body {
 
 @keyframes slideIn {
   0% {
-    transform: translateX(-50%) translateY(20%);
+    transform: translateX(-50%) translateY(10%);
     opacity: 0;
   }
 

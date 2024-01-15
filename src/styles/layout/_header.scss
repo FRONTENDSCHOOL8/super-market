@@ -127,6 +127,10 @@ img {
 
   & > .search_box {
     @include absolute(t -11 r 310);
+
+    & input[type="text"] {
+      @include size(100%);
+    }
   }
 
   &__title {
