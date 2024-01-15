@@ -4,6 +4,8 @@ import {
   getNodes,
   sliceNumberMaxLength,
   validationInput,
+  setStorage,
+  getRandomMinMax,
 } from '/src/lib';
 import pb from '/src/lib/api/pocketbase.js';
 import '/src/styles/style.scss';
@@ -16,6 +18,7 @@ const userNameInput = getNode('#userName');
 const userEmailInput = getNode('#userEmail');
 const emailVerifyBtn = getNode('#email-verify-button');
 const userTelInput = getNode('#userTel');
+const telVerifyBtn = getNode('#tel-verify-button');
 const userBirthYear = getNode('#birthYear');
 const userBirthMonth = getNode('#birthMonth');
 const userBirthDay = getNode('#birthDay');
@@ -29,6 +32,9 @@ const recommenderIdInput = getNode('#recommenderIdInput');
 const recommenderIdVerifyBtn = getNode('#recommenderid-verify-button');
 const eventCheckbox = getNode('#additional-event');
 const eventInputWrapper = getNode('.event-input-wrapper');
+const verifyNumberInput = getNode('#verifyNumberInput');
+const numberVerifyBtn = getNode('#verifyNumberButton');
+const verifyNumberWrapper = getNode('.verify-number-wrapper');
 
 initHeader();
 
@@ -38,12 +44,13 @@ const sendRegisterUserData = async () => {
   if (!checkIdDuplication) {
     alert('아이디 중복 확인을 진행해 주세요.');
     return;
-  }
-  if (!checkEmailDuplication) {
+  } else if (!checkEmailDuplication) {
     alert('이메일 중복 확인을 진행해 주세요.');
     return;
-  }
-  if (checkIdDuplication && checkEmailDuplication) {
+  } else if (!verifyNumberIsOk) {
+    alert('휴대폰 인증을 진행해 주세요.');
+    return;
+  } else if (checkIdDuplication && checkEmailDuplication) {
     const userGender = getNode('.register-gender-group:checked');
     const userTerms = getNode('#agree-benefit');
 
@@ -187,6 +194,47 @@ const handleCheckDuplicationEmailInput = () => {
 
 userEmailInput.addEventListener('input', handleCheckDuplicationEmailInput);
 
+// 휴대폰 인증번호 기능
+
+const handleVerifyTelNumber = () => {
+  if (userTelInput.value === '') {
+    alert('연락처를 입력해 주세요.');
+    return;
+  } else if (userTelInput.classList.contains('is--invalid')) {
+    alert('올바른 연락처를 입력해 주세요.');
+    return;
+  } else {
+    verifyNumberWrapper.style.display = 'flex';
+    let verifyNumber = getRandomMinMax(111111, 999999);
+    alert(`인증번호는 ${verifyNumber}입니다.`);
+    setStorage('verifyNumber', verifyNumber);
+  }
+};
+
+telVerifyBtn.addEventListener('click', handleVerifyTelNumber);
+
+let verifyNumberIsOk;
+numberVerifyBtn.addEventListener('click', () => {
+  const storageVerifyNumber = localStorage.getItem('verifyNumber');
+  if (verifyNumberInput.value === '') {
+    alert('인증번호를 입력해 주세요.');
+    return;
+  } else if (verifyNumberInput.value === storageVerifyNumber) {
+    alert('인증되었습니다.');
+    numberVerifyBtn.disabled = true;
+    return (verifyNumberIsOk = true);
+  } else {
+    alert('인증번호가 일치하지 않습니다. 다시 시도해 주세요.');
+  }
+});
+
+const handleVerifyNumberInput = () => {
+  numberVerifyBtn.disabled = false;
+  return (verifyNumberIsOk = false);
+};
+
+verifyNumberInput.addEventListener('input', handleVerifyNumberInput);
+
 // 가입하기 버튼 활성화
 
 const verifyElements = (elements, checkCondition) => {
@@ -232,8 +280,8 @@ requiredCheckboxes.forEach((checkbox) =>
 // 전체 동의
 
 const changeRegisterAllCheck = (mainCheckboxSelector, checkboxesSelector) => {
-  const mainCheckbox = document.querySelector(mainCheckboxSelector);
-  const checkboxes = document.querySelectorAll(checkboxesSelector);
+  const mainCheckbox = getNode(mainCheckboxSelector);
+  const checkboxes = getNodes(checkboxesSelector);
 
   const handleChangeSubCheckbox = () => {
     const isAnyUnchecked = Array.from(checkboxes).some(
@@ -306,11 +354,8 @@ recommenderIdVerifyBtn.addEventListener(
   handleCheckRecommenderIdDuplication
 );
 
-const handlehandleCheckRecommenderIdInput = () => {
+const handleCheckRecommenderIdInput = () => {
   recommenderIdVerifyBtn.disabled = false;
 };
 
-recommenderIdInput.addEventListener(
-  'input',
-  handlehandleCheckRecommenderIdInput
-);
+recommenderIdInput.addEventListener('input', handleCheckRecommenderIdInput);
