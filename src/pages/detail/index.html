@@ -8,6 +8,25 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
+    <link rel="icon" type="image/svg+xml" href="/logo.ico" />
+    <meta property="og:site_name" content="'나만 고양이 없어'팀의 슈퍼마켙" />
+    <meta
+      property="og:title"
+      content="HTML, SASS, Pure JavaScript로 만든 슈퍼마켙"
+    />
+    <meta
+      property="twitter:title"
+      content="HTML, SASS, Pure JavaScript로 만든 슈퍼마켙"
+    />
+    <meta property="description" content="마켓칼리 클론코딩" />
+    <meta property="og:description" content="마켓칼리 클론코딩" />
+    <meta
+      property="article:published_time"
+      content="2024-01-04T09:00:00.000Z"
+    />
+    <meta property="article:modified_time" content="2024-01-16T09:00:00.000Z" />
+    <meta property="og:image" content="/logo.png" />
+    <meta name="twitter:image" content="/logo.png" />
     <script type="module" src="/src/pages/detail/index.js"></script>
     <title>슈퍼마켙</title>
   </head>
@@ -183,7 +202,7 @@
               <p></p>
               <p>
                 23시 전 주문시 내일 아침 7시 전 도착 <br />(대구 부산 울산
-                샛별배송 운영시간 별도 확인
+                샛별배송 운영시간 별도 확인)
               </p>
             </dd>
             <dt>판매자</dt>
@@ -280,20 +299,32 @@
             소요)
           </li>
         </ul>
-        <button class="write-review write">후기 작성하기</button>
-
+        <button class="write-review write" aria-haspopup="dialog">
+          후기 작성하기
+        </button>
+        <dialog class="review-dialog">
+          <form method="dialog">
+            <div class="review-header"><p>후기작성</p></div>
+            <hr />
+            <div class="review-body">
+              <label for="review-subject">제목 </label>
+              <input
+                type="text"
+                name="review-subject"
+                id="review-subject"
+                placeholder="제목을 입력 해주세요"
+              /><br />
+              <label for="review-text">내용 </label>
+              <input type="textarea" name="review-text" id="review-text" />
+            </div>
+            <hr />
+            <div class="dialog-button">
+              <button type="submit" class="dialog-cancel">취소</button>
+              <button type="submit" class="dialog-write">등록</button>
+            </div>
+          </form>
+        </dialog>
         <div class="board-wrapper">
-          <div class="board-top-wrapper">
-            <p class="total-post">총 2개</p>
-            <form action="" method="get">
-              <label for="recommended"
-                ><input type="button" id="recommended" />추천순</label
-              >
-              <label for="latest"
-                ><input type="button" id="latest" />최근등록순</label
-              >
-            </form>
-          </div>
           <div class="review-board">
             <div class="notice-row">
               <div class="subject"><span class="notice">공지</span></div>
@@ -305,51 +336,6 @@
 
               <p>상품 후기 적립금 정책 안내</p>
             </div>
-
-            <div class="review-row">
-              <div class="subject">
-                <span class="best">베스트</span>
-                <span class="purple">퍼플</span>
-                <p class="user-name">김*빈</p>
-              </div>
-              <article>
-                <div class="option">[풀무원] 탱탱쫄면 (4개입)</div>
-                <p class="review-detail">
-                  너무 맛있어여~쫄면이 쫄깃하고 양념도 짱맛나요!!
-                </p>
-                <p class="date">2022.01.01</p>
-              </article>
-            </div>
-
-            <div class="review-row">
-              <div class="subject">
-                <span class="best">베스트</span>
-                <span class="purple">퍼플</span>
-                <p class="user-name">aaaaa</p>
-              </div>
-              <article>
-                <div class="option">[풀무원] 탱탱쫄면 (4개입)</div>
-                <p class="review-detail">aaaaaaaaaaaa</p>
-                <p class="date">2022.01.01</p>
-              </article>
-            </div>
-
-            <div class="review-row">
-              <div class="subject">
-                <span class="best">베스트</span>
-                <span class="purple">퍼플</span>
-                <p class="user-name">vvvvv</p>
-              </div>
-              <article>
-                <div class="option">[풀무원] 탱탱쫄면 (4개입)</div>
-                <p class="review-detail">aaaaaaaaaaaavvvvvv</p>
-                <p class="date">2022.01.01</p>
-              </article>
-            </div>
-          </div>
-          <div class="board-bottom-wrapper">
-            <button class="prev"></button>
-            <button class="next"></button>
           </div>
         </div>
       </section>

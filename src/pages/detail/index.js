@@ -6,11 +6,12 @@ import {
   comma,
   hideElementNoExist,
   getPbImageURL,
-  insertFirst,
   insertBefore,
+  insertLast,
   handleAddCartDetail,
+  getStorage,
 } from '/src/lib';
-import pb from '../../lib/api/pocketbase.js';
+import pb from '/src/lib/api/pocketbase.js';
 
 const zzimButton = getNode('.zzim');
 const notifyButton = getNode('.notify');
@@ -23,6 +24,11 @@ const totalPrice = getNode('.product-total-price');
 const detailNavMenu = getNodes('.detail-navigation-list li');
 const navItem = getNodes('.nav-item');
 const addCart = getNode('.add-cart');
+const writeReview = getNode('.write-review');
+const reviewDialog = getNode('.review-dialog');
+const dialogWrite = getNode('.dialog-write');
+const dialogCancel = getNode('.dialog-cancel');
+
 let isClick;
 
 initHeader();
@@ -154,6 +160,75 @@ const handleDetailNav = () => {
   });
 };
 
+const show = (target) => {
+  target.showModal();
+};
+
+const close = (target) => {
+  target.close();
+};
+
+// if (review && reviewSubject !== null) {
+//   dialogWrite.classList.add('is--active');
+// }
+
+const handleReview = async () => {
+  const { user } = await getStorage('auth');
+  const productId = window.location.hash.slice(1);
+  const reviewSubject = getNode('#review-subject').value;
+  const review = getNode('#review-text').value;
+
+  const reviewData = {
+    board_type: 2,
+    user_id: `${user.id}`,
+    product_id: `${productId}`,
+    review_subject: `${reviewSubject}`,
+    review: `${review}`,
+  };
+
+  const record = await pb.collection('review_boards').create(reviewData);
+
+  await location.reload();
+};
+
+const listReview = async () => {
+  pb.autoCancellation(false);
+
+  const productId = window.location.hash.slice(1);
+  const record = await pb.collection('review_boards').getFullList({
+    filter: `product_id="${productId}"`,
+    expand: 'user_id',
+    sort: '-updated',
+  });
+  const detailData = await pb.collection('products').getOne(productId);
+
+  record.forEach((row) => {
+    const userName = row.expand.user_id.name;
+    const maskingName = userName.replace(/(?<=.{1})./gi, '*');
+
+    const template = /* html */ `
+    <div class="review-row">
+    <div class="subject">
+      <span class="best">베스트</span>
+      <span class="purple">퍼플</span>
+      <p class="user-name">${maskingName}</p>
+    </div>
+    <article>
+      <div class="option">${detailData.product_name}</div>
+      <p class="review-detail">
+        ${row.review}
+      </p>
+      <p class="date">${row.updated.slice(0, 10).replace('-', '.')}</p>
+    </article>
+    </div>
+    `;
+
+    insertLast('.review-board', template);
+  });
+};
+
+listReview();
+
 window.addEventListener('DOMContentLoaded', async () => {
   await renderDetailData();
 });
@@ -164,3 +239,8 @@ countDecrease.addEventListener('click', handleCount);
 countIncrease.addEventListener('click', handleCount);
 window.addEventListener('scroll', handleDetailNav);
 addCart.addEventListener('click', handleAddCartDetail);
+writeReview.addEventListener('click', () => {
+  show(reviewDialog);
+});
+dialogCancel.addEventListener('click', () => close(reviewDialog));
+dialogWrite.addEventListener('click', handleReview);
