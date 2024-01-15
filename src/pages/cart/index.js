@@ -1,4 +1,4 @@
-import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast, setSearchAddressEvent  } from '/src/lib';
+import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast, setSearchAddressEvent } from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 
 import '/src/styles/style.scss';
@@ -12,18 +12,24 @@ const skeletonCard = document.querySelector('.skeleton-ui')
 const shipArea = document.querySelector('.shipping');
 const orderButton = document.querySelector('.order-button');
 
-const {isAuth, user} = await getStorage('auth');
-if(!isAuth) {
+const checkUserAuth = async () => {
+  const {isAuth, user} = await getStorage('auth');
+  console.log(isAuth);
+  if(!isAuth){
+    alert('로그인 후 이용해 주세요.')
+    location.href = '/src/pages/login/';
+  }
   
-  alert('로그인 후 이용해 주세요.')
-  location.href = '/src/pages/login/';
 }
+
+checkUserAuth();
 
 const setAddHandler = (node, type, handler) => {
   Array.from(node).forEach(nodeItem => nodeItem.addEventListener(type, handler));
 }
 
 const setCartItem = async () => {
+  const {user} = await getStorage('auth');
 
   const cartItem = await getCartItem(user.cart_id);
   let ambientTemplate = ''
