@@ -141,6 +141,7 @@ const handleCheckIdDuplication = async () => {
     } else {
       alert('사용 가능한 아이디입니다.');
       checkIdDuplication = true;
+      idVerifyBtn.disabled = true;
     }
   }
 };
@@ -149,6 +150,7 @@ idVerifyBtn.addEventListener('click', handleCheckIdDuplication);
 
 const handleCheckDuplicationIdInput = () => {
   checkIdDuplication = false;
+  idVerifyBtn.disabled = false;
 };
 
 userIdInput.addEventListener('input', handleCheckDuplicationIdInput);
@@ -171,6 +173,7 @@ const handleCheckEmailDuplication = async () => {
     } else {
       alert('사용 가능한 이메일입니다.');
       checkEmailDuplication = true;
+      emailVerifyBtn.disabled = true;
     }
   }
 };
@@ -179,6 +182,7 @@ emailVerifyBtn.addEventListener('click', handleCheckEmailDuplication);
 
 const handleCheckDuplicationEmailInput = () => {
   checkEmailDuplication = false;
+  emailVerifyBtn.disabled = false;
 };
 
 userEmailInput.addEventListener('input', handleCheckDuplicationEmailInput);
@@ -289,6 +293,7 @@ const handleCheckRecommenderIdDuplication = async () => {
     if (userData.totalItems) {
       alert('추천인 아이디가 확인되었습니다.');
       checkRecommenderIdDuplication = true;
+      recommenderIdVerifyBtn.disabled = true;
     } else {
       alert('입력하신 추천인 아이디가 존재하지 않습니다.');
       checkRecommenderIdDuplication = false;
@@ -299,4 +304,13 @@ const handleCheckRecommenderIdDuplication = async () => {
 recommenderIdVerifyBtn.addEventListener(
   'click',
   handleCheckRecommenderIdDuplication
+);
+
+const handlehandleCheckRecommenderIdInput = () => {
+  recommenderIdVerifyBtn.disabled = false;
+};
+
+recommenderIdInput.addEventListener(
+  'input',
+  handlehandleCheckRecommenderIdInput
 );

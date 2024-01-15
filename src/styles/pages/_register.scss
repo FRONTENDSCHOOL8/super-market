@@ -84,6 +84,11 @@
   border: 1px solid $primary;
   background-color: $white;
   color: $primary;
+  &:disabled {
+    color: $white;
+    background: $gray200;
+    border: 1px solid $gray300;
+  }
 }
 
 #userTel,
