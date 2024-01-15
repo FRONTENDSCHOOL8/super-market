@@ -73,8 +73,13 @@ const handleAddressBox = async () => {
 }
 
 const setDefaultAuth = async () => {
-  if(!(await getStorage('auth')))
-    setStorage('auth', defaultAuthData);
+
+  if(!(await getStorage('auth'))) {
+    setStorage('auth', defaultAuthData)
+    .then(setLoginStatus())
+  } else {
+    setLoginStatus();
+  }
 }
 
 const setLoginStatus = async () => {
@@ -103,7 +108,7 @@ const setLoginStatus = async () => {
       <span class="menu_welcome">😊<em>${user.name}</em>님 환영합니다!</span>
     </li>
     <li>
-      <a href="/" class="menu_mypage">
+      <a href="/src/pages/mypage/" class="menu_mypage">
         마이페이지
       </a>
     </li>
@@ -113,18 +118,29 @@ const setLoginStatus = async () => {
     `
   }
 
-  insertLast(userArea, template);
-
+  new Promise((resolve, reject) => {
+    resolve(insertLast(userArea, template));
+  }).then(() => {
+    if(getNode('.menu_logout')) {
+      getNode('.menu_logout').addEventListener('click', handleLogout);
+    }
+  })
 }
 
+const handleLogout = (e) => {
+  if(confirm('로그아웃 하시겠습니까?')) {
+    setStorage('auth', defaultAuthData);
+    location.reload();
+  }
+}
 
 
 const fixHeader = () => document.addEventListener('scroll', handleScrollHeader);
 const showAddressBox = () => addressButton.addEventListener('click', handleAddressBox);
 
 export const initHeader = () => {
-  setLoginStatus();
   fixHeader();
   showAddressBox();
   setDefaultAuth();
+  
 }
