@@ -348,6 +348,10 @@ dialog {
       @include px(20px);
       @include my(12px);
 
+      &:focus {
+        outline-color: $primary;
+      }
+
       &#review-text {
         height: 200px;
       }
@@ -362,6 +366,7 @@ dialog {
     width: 180px;
     height: 54px;
     @include m(x 12px y 12px);
+    @include rounded(8px);
     border: 1px solid $gray200;
 
     &.dialog-cancel {
@@ -369,12 +374,8 @@ dialog {
     }
 
     &.dialog-write {
-      background-color: $gray200;
+      background-color: $primary;
       color: $white;
-
-      &.is--active {
-        background-color: $primary;
-      }
     }
   }
 }
