@@ -371,6 +371,10 @@ dialog {
     &.dialog-write {
       background-color: $gray200;
       color: $white;
+
+      &.is--active {
+        background-color: $primary;
+      }
     }
   }
 }
