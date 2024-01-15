@@ -215,7 +215,12 @@ const setProductCount = async (productId, productCount) => {
   };
   pb.collection('cart').update(user.cart_id, data);
 };
-
+const closeCartPopup = () => {
+  setTimeout(() => {
+    const cartPopup = getNode('.cart-popup');
+    if (cartPopup) cartPopup.remove();
+  }, 3000);
+};
 export const handleAddCart = (e, target, countElement) => {
   const menuLink = getNode('.menu_link');
   const cartData = extractCartData(target);
@@ -225,8 +230,19 @@ export const handleAddCart = (e, target, countElement) => {
   closeCartModal();
   const template = generateTemplate('cartPopup', cartData);
   insertLast(menuLink, template);
-  setTimeout(() => {
-    const cartPopup = getNode('.cart-popup');
-    if (cartPopup) cartPopup.remove();
-  }, 3000);
+  closeCartPopup();
+};
+
+export const handleAddCartDetail = (e) => {
+  const menuLink = getNode('.menu_link');
+  const thumbnail = getNode('.detail-main .main-image');
+  const productName = getNode('.detail-main .product-name');
+  const cartData = {
+    thumbnail: thumbnail.src,
+    description: thumbnail.alt,
+    title: productName.textContent,
+  };
+  const template = generateTemplate('cartPopup', cartData);
+  insertLast(menuLink, template);
+  closeCartPopup();
 };
