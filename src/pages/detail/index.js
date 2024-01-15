@@ -17,7 +17,6 @@ const zzimButton = getNode('.zzim');
 const notifyButton = getNode('.notify');
 const countDecrease = getNode('.decrease');
 const countIncrease = getNode('.increase');
-
 const productCount = getNode('.count');
 const optionPrice = getNode('.product-option-price');
 const totalPrice = getNode('.product-total-price');
@@ -28,6 +27,7 @@ const writeReview = getNode('.write-review');
 const reviewDialog = getNode('.review-dialog');
 const dialogWrite = getNode('.dialog-write');
 const dialogCancel = getNode('.dialog-cancel');
+const detailReward = getNodes('.detail-rewards');
 
 let isClick;
 
@@ -50,6 +50,7 @@ const renderDetailData = async () => {
     product_description,
     etc,
   } = detailData;
+
   switch (packaging_type) {
     case '1':
       packaging_type = '상온';
@@ -114,6 +115,17 @@ const handleNotify = () => {
   handleButton(notifyButton);
   console.log(`알림 : ${isClick}`);
 };
+
+const setRewards = async () => {
+  const { isAuth, user } = await getStorage('auth');
+  if (isAuth) {
+    detailReward.forEach((element) => {
+      element.textContent = '구매시, 5원 적립';
+    });
+  }
+  console.log(isAuth, detailReward);
+};
+setRewards();
 
 const handleCount = async (e) => {
   if (!e) return;
