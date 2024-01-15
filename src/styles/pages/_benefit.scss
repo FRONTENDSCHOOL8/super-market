@@ -1,0 +1,18 @@
+@use '/src/styles/abstracts' as *;
+
+main {
+  @include size(100vw);
+}
+.benefit__cover {
+  @include size(100%);
+  @include flex-container(column items-center);
+  @include gap(16px);
+  @include m(b 60px);
+  figure img {
+    @include size(100%);
+    @include container-width(max, 1050px);
+  }
+  figcaption {
+    @include sr-only();
+  }
+}
