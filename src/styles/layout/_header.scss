@@ -71,7 +71,11 @@ img {
   @include py($paraGraphSmall 0);
 
   & li {
-    @include font(size $paraGraphSmall weight 400);
+    @include font(size $paraGraphSmall weight 500);
+
+    & * {
+      vertical-align: middle;
+    }
 
     &:first-child {
       @include mx(0 12);
@@ -84,6 +88,22 @@ img {
       @include mx(12 0);
       @include px(12 0);
       border-left: 1px solid #d9d9d9;
+    }
+
+    & .menu_welcome {
+      color: $content;
+
+      & em {
+        @include font(weight 700);
+      }
+    }
+
+    & .menu_logout {
+      @include py(0);
+      @include px(0);
+      border: none;
+      background-color: white;
+
     }
   }
 

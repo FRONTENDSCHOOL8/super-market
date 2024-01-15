@@ -1,4 +1,4 @@
-import { setSearchAddressEvent, getNode, getStorage, setStorage, promiseInsertLast } from '/src/lib';
+import { setSearchAddressEvent, getNode, getStorage, setStorage, promiseInsertLast, insertLast } from '/src/lib';
 import defaultAuthData from '/src/lib/api/defaultAuthData';
 
 const header = document.querySelector('.header');
@@ -77,6 +77,45 @@ const setDefaultAuth = async () => {
     setStorage('auth', defaultAuthData);
 }
 
+const setLoginStatus = async () => {
+  const { isAuth, user } = await getStorage('auth');
+  const userArea = getNode('.sign_menu');
+  let template;
+
+  if(!isAuth) {
+    template = /* html */ `
+    <li>
+      <a href="/src/pages/register/" class="menu_join">회원가입</a>
+    </li>
+    <li>
+      <a href="/src/pages/login/" class="menu_login">로그인</a>
+    </li>
+    <li>
+      <a href="/" class="menu_customer">
+        고객센터
+        <span class="icon_down"></span>
+      </a>
+    </li>
+    `
+  } else {
+    template = /* html */ `
+    <li>
+      <span class="menu_welcome">😊<em>${user.name}</em>님 환영합니다!</span>
+    </li>
+    <li>
+      <a href="/" class="menu_mypage">
+        마이페이지
+      </a>
+    </li>
+    <li>
+      <button class="menu_logout">로그아웃</button>
+    </li>
+    `
+  }
+
+  insertLast(userArea, template);
+
+}
 
 
 
@@ -84,6 +123,7 @@ const fixHeader = () => document.addEventListener('scroll', handleScrollHeader);
 const showAddressBox = () => addressButton.addEventListener('click', handleAddressBox);
 
 export const initHeader = () => {
+  setLoginStatus();
   fixHeader();
   showAddressBox();
   setDefaultAuth();
