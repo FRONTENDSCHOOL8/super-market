@@ -23,6 +23,12 @@ const birthInputs = getNodes('.birthday-input');
 const registerBtn = getNode('.register-button');
 const requiredInputs = getNodes('.register-input-group[required]');
 const requiredCheckboxes = getNodes('.agree-state-checkbox[required]');
+const recommenderCheckbox = getNode('#additional-recommender');
+const recommenderInputWrapper = getNode('.recommender-input-wrapper');
+const recommenderIdInput = getNode('#recommenderIdInput');
+const recommenderIdVerifyBtn = getNode('#recommenderid-verify-button');
+const eventCheckbox = getNode('#additional-event');
+const eventInputWrapper = getNode('.event-input-wrapper');
 
 initHeader();
 
@@ -246,3 +252,51 @@ const changeRegisterAllCheck = (mainCheckboxSelector, checkboxesSelector) => {
 };
 
 changeRegisterAllCheck('#allAgreeState', '.sub-checkbox');
+
+// 추가입력 사항
+
+const handleChangeRecommender = () => {
+  if (recommenderCheckbox.checked) {
+    eventInputWrapper.style.display = 'none';
+    recommenderInputWrapper.style.display = 'flex';
+  } else {
+    recommenderInputWrapper.style.display = 'none';
+  }
+};
+
+const handleChangeEvent = () => {
+  if (eventCheckbox.checked) {
+    recommenderInputWrapper.style.display = 'none';
+    eventInputWrapper.style.display = 'flex';
+  } else {
+    eventInputWrapper.style.display = 'none';
+  }
+};
+
+recommenderCheckbox.addEventListener('change', handleChangeRecommender);
+eventCheckbox.addEventListener('change', handleChangeEvent);
+
+let checkRecommenderIdDuplication;
+
+const handleCheckRecommenderIdDuplication = async () => {
+  if (recommenderIdInput.value === '') {
+    alert('추천인 아이디를 입력해 주세요.');
+    return;
+  } else {
+    const userData = await pb.collection('users').getList(1, 1, {
+      filter: `username = "${recommenderIdInput.value}"`,
+    });
+    if (userData.totalItems) {
+      alert('추천인 아이디가 확인되었습니다.');
+      checkRecommenderIdDuplication = true;
+    } else {
+      alert('입력하신 추천인 아이디가 존재하지 않습니다.');
+      checkRecommenderIdDuplication = false;
+    }
+  }
+};
+
+recommenderIdVerifyBtn.addEventListener(
+  'click',
+  handleCheckRecommenderIdDuplication
+);

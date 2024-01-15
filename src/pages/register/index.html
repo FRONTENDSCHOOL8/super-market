@@ -14,20 +14,7 @@
   <body>
     <header class="header">
       <div class="header__wrapper">
-        <ul class="sign_menu">
-          <li>
-            <a href="/src/pages/register/" class="menu_join">회원가입</a>
-          </li>
-          <li>
-            <a href="/src/pages/login/" class="menu_login">로그인</a>
-          </li>
-          <li>
-            <a href="/" class="menu_customer">
-              고객센터
-              <span class="icon_down"></span>
-            </a>
-          </li>
-        </ul>
+        <ul class="sign_menu"></ul>
 
         <div class="visual">
           <div class="visual__title">
@@ -483,6 +470,46 @@
                     >
                   </div>
                 </div>
+                <p class="additional-message">
+                  추천인 아이디와 참여 이벤트명 중 하나만 선택 가능합니다.<br />
+                  가입 이후는 수정이 불가능하며, 이 점 유의하며 정확히 입력해
+                  주세요.
+                </p>
+              </div>
+
+              <div class="register-input-wrapper recommender-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label class="register-label sr-only">추천인 아이디</label>
+                </div>
+                <input
+                  type="text"
+                  id="recommenderIdInput"
+                  name="recommenderIdInput"
+                  placeholder="추천인 아이디를 입력해주세요"
+                  class="register-input-group"
+                  maxlength="16"
+                  minlength="6"
+                />
+                <button
+                  type="button"
+                  class="register-input-button"
+                  id="recommenderid-verify-button"
+                >
+                  아이디 확인
+                </button>
+              </div>
+
+              <div class="register-input-wrapper event-input-wrapper">
+                <div class="register-label-wrapper">
+                  <label class="register-label sr-only">참여 이벤트명</label>
+                </div>
+                <input
+                  type="text"
+                  id="eventNameInput"
+                  name="eventNameInput"
+                  placeholder="참여 이벤트명을 입력해주세요"
+                  class="register-input-group"
+                />
               </div>
             </section>
 
