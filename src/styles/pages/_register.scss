@@ -40,6 +40,7 @@
 .register-form-field {
   @include flex-container(column items-start);
   @include size(640px);
+  @include p(b 25);
   border-top: 2px solid $content;
   border-bottom: 1px solid $content;
 }
@@ -264,6 +265,19 @@
       border: 1px solid $gray300;
     }
   }
+}
+
+.additional-message {
+  @include position(absolute, b -15);
+  @include font(size $paraGraphSmall weight 400 lh 160%);
+  @include m(l 147);
+  color: $black;
+}
+
+.recommender-input-wrapper,
+.event-input-wrapper {
+  @include p(t 30);
+  display: none;
 }
 
 .register-error-message {
