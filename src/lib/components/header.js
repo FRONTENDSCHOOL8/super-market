@@ -109,7 +109,7 @@ const setLoginStatus = async () => {
     </li>
     <li>
       <a href="/src/pages/mypage/" class="menu_mypage">
-        마이페이지
+        마이칼리
       </a>
     </li>
     <li>

@@ -9,7 +9,7 @@
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
     <script type="module" src="/src/pages/mypage/index.js"></script>
-    <title>마이페이지 - super-market</title>
+    <title>마이칼리 - super-market</title>
   </head>
   <body>
     <header class="header">
@@ -150,7 +150,62 @@
     </header>
 
     <main class="mypage-main">
-      <h1>마이페이지</h1>
+      <section class="my-karly">
+        <h1>마이칼리</h1>
+        <nav class="my-nav">
+          <ul>
+            <li><button type="button" class="my-nav__order">주문 내역
+              <img src="/images/menu/downarrow.svg" alt="" width="18" height="18" />
+            </button></li>
+            <li><button type="button" class="my-nav__edit">개인 정보 수정
+              <img src="/images/menu/downarrow.svg" alt="" width="18" height="18" />
+            </button></li>
+          </ul>
+        </nav>
+      </section>
+      <section class="my-karly-page">
+        <h2>개인 정보 수정</h2>
+        <div class="edit-karly">
+          <div class="edit-area">
+            <div class="edit-area__input">
+              <span>아이디</span>
+              <input type="text" value="sang2973" id="id" name="id" placeholder="아이디를 입력해 주세요"/>
+            </div>
+            <div class="edit-area__input">
+              <span>현재 비밀번호</span>
+              <input type="password" id="cur-pw" name="cur-pw" placeholder="비밀번호를 입력해 주세요" />
+            </div>
+            <div class="edit-area__input">
+              <span>새 비밀번호</span>
+              <input type="text" id="new-pw" name="new-pw" placeholder="새 비밀번호를 입력해 주세요" />
+            </div>
+            <div class="edit-area__input">
+              <span>새 비밀번호 확인</span>
+              <input type="text" id="new-pw-confirm" name="new-pw-confirm" placeholder="새 비밀번호를 다시 입력해 주세요" />
+            </div>
+            <div class="edit-area__input">
+              <span>이름</span>
+              <input type="text" value="이상원" id="name" name="name" placeholder="아이디를 입력해 주세요" />
+            </div>
+            <div class="edit-area__input">
+              <span>이메일</span>
+              <input type="email" value="kek2973@naver.com" id="email" name="email" placeholder="아이디를 입력해 주세요" />
+              <button type="button" class="edit-confirm-email" disabled>중복확인</button>
+            </div>
+            <div class="edit-area__input">
+              <span>휴대폰</span>
+              <input type="number" value="01031092744" id="phone" name="phone" placeholder="아이디를 입력해 주세요" />
+              <button type="button" class="edit-confirm-phone">다른번호 인증</button>
+            </div>
+
+          </div>
+          <div class="edit-button-area">
+            <button type="button" class="leave-karly">탈퇴하기</button>
+            <button type="button" class="edit-complete">회원정보수정</button>
+
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">

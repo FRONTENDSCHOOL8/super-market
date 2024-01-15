@@ -1,0 +1,117 @@
+@use '/src/styles/base' as *;
+@use '/src/styles/abstracts' as *;
+
+
+.mypage-main {
+  @include flex-container(row items-start);
+  @include justify-content(between);
+  @include size(1050px);
+  @include mx(auto);
+  @include py(50 80);
+
+  & .my-karly {
+    @include size(200px);
+
+    & h1 {
+      @include font(size 1.8rem weight 500 lh 1.5);
+      @include size(100%, 75px);
+    }
+    
+    & .my-nav {
+      @include size(100%);
+
+      & button {
+        @include flex-container(row items-center);
+        @include justify-content(between);
+        @include font(size 0.9rem lh 1.4);
+        @include size(100%, 50px);
+        @include px(20 13);
+        @include py(15);
+        border: 1px solid $gray100;
+        background-color: white;
+
+        & img {
+          transform: rotate(-90deg);
+        }
+
+      }
+    }
+  }
+
+  & .my-karly-page {
+    @include size(820px);
+
+    & h2 {
+      @include font(size 1.6rem weight 500 lh 1.5);
+      @include size(100%, 75px);
+      border-bottom: 2px solid black;
+    }
+
+    & .edit-karly {
+      @include px(120 60);
+      @include py(7);
+      @include font(size 0.9rem weight 500);
+
+      & .edit-area__input {
+        @include flex-container(row items-center);
+        @include py(10);
+        @include px(10);
+
+        & span {
+          @include size(139px, 48px);
+          @include py(12 0);
+        }
+
+        & input {
+          @include size(333px, 48px);
+          @include px(15 11);
+          @include rounded(4px);
+          border: 1px solid $gray200;
+
+        }
+      }
+      & button {
+        @include size(120px, 48px);
+        @include font(weight 600);
+        @include rounded(4px);
+        border: 1px solid $primary;
+        background-color: white;
+        color: $primary;
+
+        &:disabled {
+          border: 1px solid $gray200;
+          color: $gray200;
+        }
+      }
+
+      & .edit-confirm-email,
+      & .edit-confirm-phone {
+        @include mx(7 0);
+      }
+
+      & .edit-button-area {
+        @include flex-container(row items-center);
+        @include justify-content(center);
+        @include py(40 60);
+        @include my(10 0);
+        @include gap(10);
+        border-top: 1px solid $gray400;
+
+        & .edit-complete {
+          background-color: $primary;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
