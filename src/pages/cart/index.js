@@ -256,7 +256,7 @@ const createProductCart = (product, number) => {
       <span class="cart-product__price__discount">${comma(realPrice*number)}원</span>
       <span class="cart-product__price__regular">${comma(price*number)}원</span>
     </p>
-    <img src="/public/images/menu/close.svg" alt="삭제하기" class="cart-product__delete id_${id}" />
+    <img src="/images/menu/close.svg" alt="삭제하기" class="cart-product__delete id_${id}" />
   </div>
   `
 
