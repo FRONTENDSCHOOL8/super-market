@@ -335,11 +335,42 @@
                   class="register-input-group"
                   required
                 />
-                <button disabled class="register-input-button">
+                <button
+                  type="button"
+                  class="register-input-button"
+                  id="tel-verify-button"
+                >
                   인증번호 받기
                 </button>
                 <span class="register-error-message" id="userTelError"
                   >휴대폰 번호를 올바르게 입력해 주세요.</span
+                >
+              </div>
+
+              <!-- 인증번호 입력란 -->
+
+              <div class="register-input-wrapper verify-number-wrapper">
+                <div class="register-label-wrapper">
+                  <label for="verifyNumber" class="register-label sr-only"
+                    >인증번호 입력</label
+                  >
+                </div>
+                <input
+                  type="number"
+                  id="verifyNumberInput"
+                  name="verifyNumberInput"
+                  placeholder="받으신 인증번호를 입력해주세요."
+                  class="register-input-group"
+                />
+                <button
+                  type="button"
+                  class="register-input-button"
+                  id="verifyNumberButton"
+                >
+                  인증번호 확인
+                </button>
+                <span class="register-error-message" id="userTelError"
+                  >인증번호 6자리를 입력해 주세요.</span
                 >
               </div>
 
@@ -495,6 +526,7 @@
                 </p>
               </div>
 
+              <!-- 추가입력사항 입력란 -->
               <div class="register-input-wrapper recommender-input-wrapper">
                 <div class="register-label-wrapper">
                   <label class="register-label sr-only">추천인 아이디</label>

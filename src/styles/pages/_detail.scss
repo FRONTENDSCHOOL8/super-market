@@ -131,18 +131,19 @@
     @include m(l 18 r 10);
   }
 
+  .reward-icon {
+    display: inline-block;
+    height: 24px;
+    color: $white;
+    @include font(size 10px weight 400 lh 1.6);
+    background-color: $accentYellow;
+    border-radius: 12px;
+    @include p(x 8 y 4);
+  }
+
   .reward {
     @include m(t 8);
-
-    span {
-      display: inline-block;
-      height: 24px;
-      color: $white;
-      @include font(size 10px weight 400 lh 1.6);
-      background-color: $accentYellow;
-      border-radius: 12px;
-      @include p(x 8 y 4);
-    }
+    display: inline-block;
   }
 }
 
@@ -309,6 +310,58 @@
     color: $white;
     @include font(size $labelMedium);
     @include absolute(t 0 r 0);
+  }
+}
+
+dialog {
+  border: none;
+  @include rounded(lg);
+  @include p(x 32 y 32);
+
+  .review-header {
+    @include font(size $headingxl);
+  }
+
+  .review-body {
+    label {
+      width: 100px;
+      display: inline-block;
+    }
+    input {
+      width: 600px;
+      height: 44px;
+      @include px(20px);
+      @include my(12px);
+
+      &:focus {
+        outline-color: $primary;
+      }
+
+      &#review-text {
+        height: 200px;
+      }
+    }
+  }
+
+  .dialog-button {
+    @include flex-container(row justify-center);
+  }
+  button {
+    @include reset-button();
+    width: 180px;
+    height: 54px;
+    @include m(x 12px y 12px);
+    @include rounded(8px);
+    border: 1px solid $gray200;
+
+    &.dialog-cancel {
+      background-color: $white;
+    }
+
+    &.dialog-write {
+      background-color: $primary;
+      color: $white;
+    }
   }
 }
 

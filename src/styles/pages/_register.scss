@@ -92,12 +92,17 @@
 }
 
 #userTel,
+#verifyNumberInput,
 .birthday-input {
   &::-webkit-inner-spin-button {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
   }
+}
+
+.verify-number-wrapper {
+  display: none;
 }
 
 .search-address-wrapper {
