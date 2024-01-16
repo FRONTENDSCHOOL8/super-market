@@ -37,4 +37,14 @@ const handleLeaveKarly = async () => {
   }
 };
 
+const setUserInfo = async () => {
+  const { user } = await getStorage('auth');
+
+  getNode('#myPageId').value = user.username;
+  getNode('#email').value = user.email;
+  getNode('#phone').value = user.phone_number;
+}
+
+setUserInfo();
+
 leaveKarlyBtn.addEventListener('click', handleLeaveKarly);

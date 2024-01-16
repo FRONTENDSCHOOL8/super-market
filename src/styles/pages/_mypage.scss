@@ -57,7 +57,7 @@
         @include py(10);
         @include px(10);
 
-        & span {
+        & label {
           @include size(139px, 48px);
           @include py(12 0);
         }
