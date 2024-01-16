@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script type="module" src="/src/pages/address/index.js"></script>
+  <title>주소입력 - 슈퍼마켙</title>
+  <link rel="icon" type="image/svg+xml" href="/logo.ico" />
+    <meta property="og:site_name" content="'나만 고양이 없어'팀의 슈퍼마켙" />
+    <meta
+      property="og:title"
+      content="HTML, SASS, Pure JavaScript로 만든 슈퍼마켙"
+    />
+    <meta
+      property="twitter:title"
+      content="HTML, SASS, Pure JavaScript로 만든 슈퍼마켙"
+    />
+    <meta property="description" content="마켓칼리 클론코딩" />
+    <meta property="og:description" content="마켓칼리 클론코딩" />
+    <meta
+      property="article:published_time"
+      content="2024-01-04T09:00:00.000Z"
+    />
+    <meta property="article:modified_time" content="2024-01-16T09:00:00.000Z" />
+    <meta property="og:image" content="/logo.png" />
+    <meta name="twitter:image" content="/logo.png" />
+</head>
+<body>
+  <header class="address-header">
+    <h1><strong>샛별배송</strong> 지역입니다.</h1>
+    <h3>매일 새벽, 문 앞까지 신선함을 전해드려요.</h3>
+  </header>
+
+  <main class="address-main">
+    <div class="address-result">
+      <input type="hidden" name="selected-zipcode" id="selected-zipcode" />
+      <input type="text" name="selected-address" id="selected-address" disabled />
+      <button type="button" class="address-research">재검색</button>
+    </div>
+    <input type="text" name="address-detail" 
+            id="address-detail" 
+            class="address-detail"
+            placeholder="나머지 주소를 입력해 주세요" />
+
+    <div class="delete-address-info">
+      <span>&#8251; 저장된 배송지는 최대 7일 간 임시 저장 후 자동 삭제됩니다.</span>
+    </div>
+
+    <button class="address-save">저장</button>
+
+
+  </main>
+
+  <footer class="address-footer">
+    <p class="address-information">샛별배송 지역 중 배송불가 장소 안내</p>
+    <p class="address-cannot-list">관공서 / 학교 / 병원 / 시장 / 공단지역 / 산간지역 / 백화점 등</p>
+  </footer>
+
+
+
+  <div class="post_wrapper"></div>
+
+
+</body>
+</html>

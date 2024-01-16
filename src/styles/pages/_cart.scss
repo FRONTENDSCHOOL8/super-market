@@ -1,4 +1,570 @@
+@use '/src/styles/abstracts' as *;
 body {
-  background-color: black;
-  color: white;
+  @include size(100vw);
+}
+
+.cart-main {
+  @include relative;
+}
+
+
+.cart__wrapper {
+  @include container-width(max, 1050px);
+  @include size(100%, 100%);
+  @include relative();
+  min-height: 710px;
+  @include m(x auto y 80);
+  h2 {
+    text-align: center;
+    font-size: $labelLarge;
+    margin-bottom: 44px;
+  }
+  input[type='checkbox'] {
+    @include hide;
+  }
+  input[type='checkbox'] + label {
+    background-image: url('/images/checkbox/rounduncheck.png');
+    background-repeat: no-repeat;
+  }
+  input[type='checkbox']:checked + label {
+    background-image: url('/images/checkbox/roundcheck.png');
+    background-repeat: no-repeat;
+  }
+
+  & .skeleton-ui {
+    @include size(100%, 100%);
+    @include flex-container(row items-center);
+    @include justify-content(between);
+    @include absolute(t -3);
+    background: white;
+    box-sizing: border-box;
+    z-index: 1;
+
+    & .skeleton-left {
+      @include size(70%, 100%);
+      @include flex-container(column items-start);
+      @include py(60);
+      @include gap(2);
+
+      & .skeleton-item {
+        @include my(0 0.5rem);
+        @include size(100%, 52px);
+
+        &:nth-child(1),
+        &:nth-child(6) {
+          @include size(30%, 40px);
+        }
+        &:nth-child(5) {
+          @include size(100%, 190px);
+        }
+      }
+    }
+
+    & .skeleton-right {
+      @include flex-container(column items-start);
+      @include size(26.5%, 100%);
+      @include gap(2);
+      @include py(70 0);
+
+      & .skeleton-item {
+
+        &:nth-child(1) {
+          @include size(100%, 205px);
+        }
+        &:nth-child(2) {
+          @include size(100%, 228px);
+        }
+        &:nth-child(3) {
+          @include size(100%, 39px);
+          @include my(12);
+        }
+        &:nth-child(4) {
+          @include size(100%, 144px);
+        }
+        
+      }
+    }
+  }
+}
+
+.skeleton-ui {
+  & .skeleton-left *,
+  & .skeleton-right * {
+    background: linear-gradient(120deg, #e5e5e5 30%, #f0f0f0 38%, #f0f0f0 40%, #e5e5e5 48%);
+    border-radius: 1rem;
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    animation: load 1s infinite;
+
+  }
+}
+
+.cart__description {
+  @include size(100%);
+  @include flex-container(row);
+  @include gap(16);
+}
+.select__wrapper {
+  @include size(100%);
+  @include flex-container(column);
+  @include gap(16);
+  .select__all {
+    @include size(100%, 20px);
+    @include gap(10px);
+    display: flex;
+    align-items: center;
+    color: $content;
+    input[type='checkbox'] {
+      @include hide;
+    }
+    input[type='checkbox'] + label {
+      @include relative();
+      @include px(30 0);
+      @include mx(0 5);
+      @include py(3 5);
+    }
+    .divider {
+      @include size(1px, 100%);
+      display: block;
+      background-color: $gray100;
+    }
+    .select-delete {
+      @include py(3 4);
+      border: 0;
+      background-color: transparent;
+    }
+  }
+}
+.cart-product-list {
+
+  & .product__list {
+    @include size(auto, 62px);
+    transition: height .5s;
+    overflow-y: hidden;
+
+    &.is--active {
+      @include size(auto, auto);
+    }
+  }
+
+  & .cart-product__wrapper {
+    &__bar {
+      @include size(100%);
+      @include flex-container(column items-center);
+      @include gap(4);
+      @include py(0 10);
+      border-top: 1px solid $black;
+
+      & .fridge, & .freezer, & .ambient {
+        @include flex-container(row items-center);
+        @include justify-content(around);
+        @include size(100%);
+        & span {
+          flex: 1;
+          @include font(size $labelMedium);
+        }
+        & .arrow {
+          transform: rotate(-90deg);
+          cursor: pointer;
+        }
+
+      }
+    }
+  }
+  .room-temperature {
+    border-bottom: 1px solid $black;
+  }
+  .cart-product {
+    @include size(100%);
+    @include gap(8);
+    @include hide();
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    label {
+      content: ' ';
+      display: block;
+      margin-left: 4px;
+      padding-left: 24px;
+      padding-top: 24px;
+    }
+    .thumbnail {
+      @include size(60px);
+    }
+    &__content {
+      flex: 1;
+      @include size(100%);
+      @include flex-container(column);
+      @include gap(8);
+      &__title {
+        @include font(size $labelMedium weight 600);
+      }
+      &__description {
+        @include font(size $paraGraphMedium);
+        color: $content;
+      }
+    }
+    &__count {
+      @include size(100%);
+      max-width: 90px;
+      border: 1px solid $gray200;
+      @include flex-container(row items-center);
+      @include justify-content(space-between);
+      text-align: center;
+      &__change {
+        border: none;
+        background-color: transparent;
+        color: $gray300;
+      }
+      &__change.is--active {
+        color: $content;
+      }
+      &__change,
+      &__result {
+        @include size(100%, 30px);
+        max-width: 30px;
+        line-height: 30px;
+      }
+    }
+    &__price {
+      width: 100%;
+      max-width: 120px;
+      display: flex;
+      flex-direction: column;
+      text-align: right;
+      &__discount {
+        font-size: $labelMedium;
+        font-weight: 600;
+      }
+      &__regular {
+        font-size: $labelSmall;
+        color: $content;
+        text-decoration: line-through;
+      }
+    }
+    &__delete {
+      @include size(30px);
+      cursor: pointer;
+    }
+  }
+
+}
+.information__wrapper {
+  @include size(100%);
+  max-width: 280px;
+  margin-left: 20px;
+  .location__wrapper {
+    border: 1px solid $gray100;
+  }
+}
+.shipping {
+  @include size(100%);
+  @include p(18);
+  @include flex-container(column center);
+  @include gap(12);
+  @include font(size $labelMedium);
+
+  &__title {
+    @include size(100%);
+    @include flex-container(row items-center);
+    @include my(0 12);
+
+    img {
+      @include size(30px);
+      color: $content;
+    }
+    span {
+      margin-top: 3px;
+    }
+  }
+  &__address-type {
+    @include font(size $labelSmall weight 600);
+    color: $primary;
+  }
+  &__address-change {
+    @include p(10);
+    @include rounded(4px);
+    @include font(weight 600);
+    background-color: inherit;
+    border: 1px solid $primary;
+    color: $primary;
+  }
+  &__address-register {
+    @include p(12);
+    @include rounded(4px);
+    @include font(weight 600);
+    border: none;
+    background-color: $primary;
+    color: white;
+
+    
+  }
+}
+.payment {
+  @include size(100%);
+  @include p(20px);
+  background-color: $gray50;
+  border-top: 2px solid $gray100;
+  &__detail {
+    @include size(100%);
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    border-bottom: 1px dashed $gray100;
+    margin-bottom: 24px;
+    .amount {
+      margin-bottom: 16px;
+      text-align: right;
+    }
+    .description {
+      margin-bottom: 16px;
+    }
+  }
+  &__result {
+    @include size(100%);
+    @include flex-container(row items-center);
+
+    @include justify-content(between);
+    &__description {
+      @include font(size $paraGraphMedium);
+      white-space: nowrap;
+      color: $content;
+    }
+    &__price {
+      @include font(size $labelMedium);
+      text-align: right;
+      white-space: nowrap;
+      b {
+        @include font(size $headingxl);
+      }
+    }
+  }
+  &__grade {
+    @include size(100%);
+    @include font(size $labelSmall);
+    margin-top: 11px;
+    text-align: right;
+    &__type {
+      background-color: $accentYellow;
+      color: $white;
+      padding: 2px 8px;
+    }
+    &__description {
+      color: $content;
+    }
+  }
+}
+.order-button {
+  @include size(100%);
+  @include py(10);
+  @include my(16);
+  background-color: $primary;
+  color: $white;
+  border: none;
+  border-radius: 4px;
+}
+.order-button:disabled {
+  background-color: $gray300;
+}
+.detail {
+  @include font(size $labelSmall);
+  max-width: 280px;
+  color: $gray400;
+  li {
+    line-height: 1.5;
+  }
+}
+
+
+.order__wrapper {
+  @include absolute(t -45 l 50%);
+  @include size(1050px);
+  @include mx(auto);
+  z-index: 1;
+  transform: translateX(-50%);
+  background-color: white;
+  animation: slideIn .5s cubic-bezier(0.83, 0, 0.17, 1) forwards;
+
+  & .receipt {
+    @include flex-container(column items-center);
+    @include size(600px);
+    @include mx(auto);
+    border: 1px solid $gray200;
+    
+    &__complete {
+      @include flex-container(column items-center);
+      @include size(100%);
+      @include py(50 0);
+      @include my(40 0);
+      background-color: white;
+
+      & img {
+        @include size(64px, 64px);
+        @include my(0 30);
+      }
+
+      & p {
+        @include font(size $paraGraphLarge weight 500 lh 1.5);
+
+        & em {
+          @include font(weight 700);
+        }
+
+        &:last-child {
+          @include size(75%);
+          @include py(0 20);
+          text-align: center;
+          border-bottom: 1px solid $gray100;
+        }
+      }
+    }
+
+    &__info {
+      @include flex-container(column items-start);
+      @include size(100%);
+      @include px(12.5%);
+      @include py(20 35);
+      @include gap(10);
+      background-color: white;
+
+      & p {
+        &:first-child {
+          @include font(size $paraGraphLarge weight 500);
+        }
+        
+        &:nth-child(3) {
+          @include font(size $paraGraphSmall weight 500);
+          color: $gray500;
+        }
+      }
+
+      &--price {
+        @include flex-container(row items-start);
+
+        & span {
+
+          &:first-child {
+            @include font(size $paraGraphLarge weight 700);
+          }
+
+          &:last-child {
+            @include font(size 0.8rem weight 500 1);
+            @include mx(10 0);
+            @include px(7 3);
+            @include py(3);
+            color: $primary;
+            border: 1px solid $gray200;
+            
+            & em {
+              @include font(size 0.8rem weight 700 1);
+
+            }
+          }
+        }
+      }
+
+      & a {
+        @include size(100%, 40px);
+        @include show(block);
+        @include flex-container(row items-center);
+        @include justify-content(center);
+        @include font(size $paraGraphMedium weight 600);
+        border: 1px solid $primary;
+
+        &:nth-child(4) {
+          background-color: $primary;
+          color: white;
+        }
+        &:nth-child(5) {
+          color: $primary;
+        }
+      }
+
+    }
+    
+  }
+
+  & .collect-info {
+    @include flex-container(column items-start);
+    @include size(600px);
+    @include mx(auto);
+    @include my(20 0);
+    @include py(20);
+    @include px(20);
+    @include gap(10);
+    border: 1px solid $gray200;
+
+    &__title {
+      @include font(size $paraGraphMedium weight 600);
+    }
+    
+    &__desc {
+      @include font(size $paraGraphMedium weight 400);
+    }
+
+    & .box-info {
+      @include flex-container(row items-center);
+      @include justify-content(between);
+      @include size(100%);
+      @include my(10 0);
+
+      & .styrofoam {
+        @include flex-container(column items-center);
+        @include size(50%);
+        @include gap(5);
+
+        & .box-img {
+          @include flex-container(row items-center);
+          @include justify-content(center);
+          @include gap(10);
+        }
+        & p {
+          text-align: center;
+
+          & em {
+            @include font(size 1.1rem weight 600);
+          }
+        }
+      }
+      & .icepack {
+        @include flex-container(column items-center);
+        @include size(50%);
+        @include gap(5);
+        
+        & .box-img {
+          @include flex-container(row items-center);
+          @include justify-content(center);
+        }
+        & p {
+          text-align: center;
+
+          & em {
+            @include font(size 1.1rem weight 600);
+          }
+        }
+      }
+    }
+  }
+
+  & .cs-info {
+    @include flex-container(row items-start);
+    @include size(600px);
+    @include gap(20);
+    @include mx(auto);
+    @include my(10 0);
+    @include p(20);
+    border: 1px solid $gray200;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-50%) translateY(10%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(0%);
+    opacity: 1;
+  }
 }

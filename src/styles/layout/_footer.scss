@@ -1,0 +1,176 @@
+@use '/src/styles/base' as *;
+@use '/src/styles/abstracts' as *;
+
+.footer {
+  @include relative;
+  @include size(100%, 629px);
+  
+  &__wrapper {
+    @include flex-container(column);
+    @include absolute(b 0);
+    @include size(100%);
+    border-top: 1px solid $gray100;
+    
+    &--info {
+      @include mx(auto);
+      @include py(32);
+      @include flex-container(row items-start);
+      @include justify-content(between);
+      @include size(1050px);
+      border-bottom: 1px solid $gray100;
+
+    }
+
+    &--family {
+      @include flex-container(row items-start);
+      @include justify-content(between);
+      @include mx(auto);
+      @include py(24 32);
+      @include size(1050px);
+
+      & .isms, & .privacy, & .toss-payments, & .wooribank {
+        @include flex-container(row);
+        @include gap(8);
+        @include font(size 10px weight 400 lh 1.6);
+
+        & img {
+          @include size(34px, 34px);
+        }
+
+        & span {
+          @include show(block);
+        }
+      }
+
+      & .toss-payments {
+        & img {
+          @include size(102px);
+        }
+        & span {
+          @include size(160px);
+        }
+      }
+
+      & .wooribank { 
+        & span {
+          @include size(241px);
+        }
+      }
+
+    }
+
+    & > .copyright {
+      @include py(20 32);
+      @include font(size 10 weight 400 lh 1.6);
+      background-color: $gray50;
+      text-align: center;
+      color: $gray400;
+      
+      & em {
+        @include my(8 0);
+        @include show(inline-block);
+      }
+    }
+  }
+}
+
+
+.customer-service {
+  @include flex-container(column nowrap items-start);
+  @include gap(16);
+
+  & .center-name {
+    @include font(size $paraGraphLarge weight 700 lh 1.4);
+  }
+
+  & .center-info {
+    @include flex-container(row nowrap);
+    @include align-items(center);
+    @include gap(8);
+
+    & em {
+      @include font(size $headingxxl weight 700 lh 1.4);
+    }
+    & span {
+      @include font(weight 600 lh 1.5);
+      @include size(auto, 100%)
+    }
+  }
+}
+
+.inquiry {
+  @include flex-container(column);
+  @include gap(16);
+
+  &__kakao, &__one-on-one, &__bulk {
+    @include flex-container(row);
+    @include align-items(center);
+    @include gap(16);
+
+    & button {
+      @include p(4);
+      @include font(weight 400 lh 1.6);
+      @include size(140px, 40px);
+
+      background: white;
+      border: 1px solid $gray200;
+    }
+
+    & p {
+      @include font(weight 400 lh 1.6);
+
+      & span {
+        @include show(block);
+      }
+    }
+  }
+}
+
+.inquiry-mail {
+  @include font(size $paraGraphSmall weight 400 lh 1.6);
+  color: $content;
+
+  & a {
+    @include px(4);
+    @include show(inline-block);
+    color: $primary;
+
+  }
+}
+
+.karly-about {
+  @include flex-container(column items-start);
+  @include gap(28);
+
+  &__link {
+    @include flex-container(row items-start);
+    @include justify-content(between);
+    @include size(486px);
+  }
+
+  &__area {
+    @include flex-container(column items-start);
+    @include font(size $paraGraphSmall weight 400 lh 1.6);
+
+    & a {
+      color: $primary;
+    }
+  }
+
+  &__sns {
+    @include flex-container(row items-start);
+    @include gap(20);
+
+    & img {
+      @include size(30px, 30px);
+    }
+  }
+}
+
+
+
+
+
+
+
+

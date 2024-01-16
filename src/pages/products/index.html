@@ -3,11 +3,539 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff"
-      rel="stylesheet"
+    <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <script type="module" src="/src/pages/products/index.js"></script>
+    <title>상품목록 - 슈퍼마켙</title>
+    <link rel="icon" type="image/svg+xml" href="/logo.ico" />
+    <meta property="og:site_name" content="'나만 고양이 없어'팀의 슈퍼마켙" />
+    <meta
+      property="og:title"
+      content="HTML, SASS, Pure JavaScript로 만든 슈퍼마켙"
     />
-    <title>Document</title>
+    <meta
+      property="twitter:title"
+      content="HTML, SASS, Pure JavaScript로 만든 슈퍼마켙"
+    />
+    <meta property="description" content="마켓칼리 클론코딩" />
+    <meta property="og:description" content="마켓칼리 클론코딩" />
+    <meta
+      property="article:published_time"
+      content="2024-01-04T09:00:00.000Z"
+    />
+    <meta property="article:modified_time" content="2024-01-16T09:00:00.000Z" />
+    <meta property="og:image" content="/logo.png" />
+    <meta name="twitter:image" content="/logo.png" />
   </head>
-  <body></body>
+  <body>
+    
+    <header class="header">
+      <div class="header__wrapper">
+        <ul class="sign_menu"></ul>
+        <div class="visual">
+          <div class="visual__title">
+            <a href="/" class="logo">
+              <img src="/logo.svg" alt="Karly" />
+            </a>
+            <span class="karly-wrapper">
+              <button type="button" class="market-karly">마켓칼리</button>
+              <button type="button" class="beauty-karly">뷰티칼리</button>
+            </span>
+          </div>
+
+          <div class="search_box">
+            <form action="/src/pages/products/" method="POST">
+              <input type="text" placeholder="검색어를 입력해주세요" />
+              <button type="button" class="erase"></button>
+            </form>
+            <button type="submit" class="search"></button>
+          </div>
+
+          <div class="menu_link">
+            <button
+              type="button"
+              aria-label="배송지"
+              class="menu_link__address"
+            ></button>
+            <button
+              type="button"
+              aria-label="찜하기"
+              class="menu_link__like"
+            ></button>
+            <a
+              href="/src/pages/cart/"
+              role="button"
+              aria-label="장바구니"
+              class="menu_link__cart"
+            ></a>
+          </div>
+        </div>
+      </div>
+
+      <nav class="menu">
+        <div class="menu__category">
+          <a href="" class="menu__category--button">
+            <span></span>
+            카테고리
+          </a>
+          <ul class="menu__category--list">
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:rc6eiyivfaxv3gk"
+              >
+                <img src="/images/menu/gift.svg" alt="" />
+                <span>2024 설 선물세트</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:ou1z12op4bmziv9,5ksmgbbqq27rcrx"
+              >
+                <img src="/images/menu/Vegetable.svg" alt="" />
+                <span>채소</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:ou1z12op4bmziv9"
+              >
+                <img src="/images/menu/Fruit.svg" alt="" />
+                <span>과일&middot;견과&middot;쌀</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:capqtjjiyug3qla"
+              >
+                <img src="/images/menu/SeaFood.svg" alt="" />
+                <span>수산&middot;해산&middot;건어물</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:gd1sil4n8tc1oka"
+              >
+                <img src="/images/menu/Meat.svg" alt="" />
+                <span>정육&middot;계란</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:nimqdjpj1j196xm"
+              >
+                <img src="/images/menu/Cook.svg" alt="" />
+                <span>국&middot;반찬&middot;메인요리</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:5ksmgbbqq27rcrx"
+              >
+                <img src="/images/menu/Salad.svg" alt="" />
+                <span>샐러드&middot;간편식</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:640sehqzc3pzwpk"
+              >
+                <img src="/images/menu/Oil.svg" alt="" />
+                <span>면&middot;양념&middot;오일</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:jloxu9l0ex8lolj"
+              >
+                <img src="/images/menu/Coffee.svg" alt="" />
+                <span>생수&middot;음료&middot;우유&middot;커피</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:rh0j1wogvr8aser"
+              >
+                <img src="/images/menu/Snack.svg" alt="" />
+                <span>간식&middot;과자&middot;떡</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:bpau9tbwp1gfjml,kc4800mg8n2fge2"
+              >
+                <img src="/images/menu/Bread.svg" alt="" />
+                <span>베이커리&middot;치즈&middot;델리</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/src/pages/products/?sort=1&pages=1&filters=category:qch5ae9fxz5tre8"
+              >
+                <img src="/images/menu/medicine.svg" alt="" />
+                <span>건강식품</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="menu__list">
+          <ul>
+            <li><a href="/src/pages/products/?sort=2&pages=1">신상품</a></li>
+            <li><a href="/src/pages/products/?sort=1&pages=1">베스트</a></li>
+            <li><a href="/src/pages/products/?sort=5&pages=1">알뜰쇼핑</a></li>
+            <li><a href="/src/pages/benefit/">특가/혜택</a></li>
+          </ul>
+        </div>
+        <a href="" class="menu__info"><em>샛별&middot;낮</em>배송안내</a>
+      </nav>
+    </header>
+
+
+    <main class="main">
+      <div class="products-container">
+        <h1 class="products-container__category">상품 목록</h1>
+        <div class="products-container__products">
+          <nav class="products-navigation">
+            <div class="products-navigation__header">
+              <span>필터</span>
+              <button type="button">초기화</button>
+            </div>
+            <div class="products-navigation__set">
+              <div class="nav-category">
+                <button type="button">
+                  <span>카테고리<em class="category-count"></em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul></ul>
+              </div>
+              <div class="nav-brand">
+                <button type="button">
+                  <span>브랜드<em class="category-count"></em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="goraesa" id="goraesa" />
+                    <label for="goraesa">고래사<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="glad" id="glad" />
+                    <label for="glad">글래드<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="ggooak" id="ggooak" />
+                    <label for="ggooak">꾸악<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="notdaam" id="notdaam" />
+                    <label for="notdaam">놋담<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="deloni" id="deloni" />
+                    <label for="deloni">데로니<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="locknlock" id="locknlock" />
+                    <label for="locknlock">락앤락<span class="sub-count">2</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="matila" id="matila" />
+                    <label for="matila">마틸라<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="mungmoong" id="mungmoong" />
+                    <label for="mungmoong">멍뭉<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="bagen" id="bagen" />
+                    <label for="bagen">바겐슈타이거<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="sajo" id="sajo" />
+                    <label for="sajo">사조대림<span class="sub-count">2</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="samsam" id="samsam" />
+                    <label for="samsam">삼삼물산<span class="sub-count">3</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="avena" id="avena" />
+                    <label for="avena">아베나<span class="sub-count">2</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="chess" id="chess" />
+                    <label for="chess">체스키포슬란<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="conish" id="conish" />
+                    <label for="conish">코니쉬웨어<span class="sub-count">2</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="teri" id="teri" />
+                    <label for="teri">테리파머<span class="sub-count">1</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="frauna" id="frauna" />
+                    <label for="frauna">프라우나<span class="sub-count">2</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="haspet" id="haspet" />
+                    <label for="haspet">하즈펫<span class="sub-count">1</span></label>
+                  </li>                  
+                  <li class="category-list">
+                    <input type="checkbox" name="herbish" id="herbish" />
+                    <label for="herbish">허비쉬<span class="sub-count">1</span></label>
+                  </li>     
+                  <li class="category-list">
+                    <input type="checkbox" name="lays" id="lays" />
+                    <label for="lays">Lay's<span class="sub-count">5</span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-price">
+                <button type="button">
+                  <span>가격<em class="category-count"></em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="radio" name="price" id="level-one" value="1" />
+                    <label for="level-one">7,700원 미만<span class="sub-count">20</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="radio" name="price" id="level-two" value="2" />
+                    <label for="level-two">7,700원 ~ 10,965원<span class="sub-count">32</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="radio" name="price" id="level-three" value="3" />
+                    <label for="level-three">10,965원 ~ 15,000원<span class="sub-count">16</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="radio" name="price" id="level-four" value="4" />
+                    <label for="level-four">15,000원 이상<span class="sub-count">41</span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-bonus">
+                <button type="button">
+                  <span>혜택<em class="category-count"></em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="for-sale" id="for-sale" />
+                    <label for="for-sale">할인상품<span class="sub-count">18</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="limit" id="limit" />
+                    <label for="limit">한정수량<span class="sub-count">3</span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-type">
+                <button type="button">
+                  <span>유형<em class="category-count"></em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="karly-only" id="karly-only" />
+                    <label for="karly-only">Karly Only<span class="sub-count">3</span></label>
+                  </li>
+                  <li class="category-list">
+                    <input type="checkbox" name="scarcity" id="scarcity" />
+                    <label for="scarcity">희소가치 프로젝트<span class="sub-count">1</span></label>
+                  </li>
+                </ul>
+              </div>
+              <div class="nav-except">
+                <button type="button">
+                  <span>특정상품 제외<em class="category-count"></em></span>
+                  <img src="/images/menu/downarrow.svg" alt="펼치기" />
+                </button>
+                <ul>
+                  <li class="category-list">
+                    <input type="checkbox" name="pet-products" id="pet-products" />
+                    <label for="pet-products">반려동물 상품<span class="sub-count">6</span></label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <section class="list-area">
+            <div class="list-info">
+              <h3 class="products-area-title">상품 목록 영역</h3>
+              <strong class="products-total-count"></strong>
+              <ul class="sort-area">
+                <li>
+                  <a href="" id="sort-review">추천순</a>
+                  <div><img src="/images/menu/help.svg" alt="추천순 이란?" /></div>
+                </li>
+                <li>
+                  <a href="" id="sort-new">신상품순</a>
+                </li>
+                <li>
+                  <a href="" id="sort-sale">판매량순</a>
+                </li>
+                <li>
+                  <a href="" id="sort-discount">혜택순</a>
+                </li>
+                <li>
+                  <a href="" id="sort-row-price">낮은 가격순</a>
+                </li>
+                <li>
+                  <a href="" id="sort-high-price">높은 가격순</a>
+                </li>
+              </ul>
+              <div class="checked-item-list"></div>
+            </div>
+            <div class="product-wrapper">
+
+
+            </div>                
+            <div class="pagination-area"></div>
+
+          </section>
+        </div>
+      </div>
+    </main>
+    
+    <aside class="recently">
+      <span class="recently__title">최근 본 상품</span>
+      <div class="recently__cover swiper-container">
+        <ul class="recently__product-list swiper-wrapper"></ul>
+        <button
+          class="recently__button up swiper-button-prev"
+          value="up"
+        ></button>
+        <button
+          class="recently__button down swiper-button-next"
+          value="down"
+        ></button>
+      </div>
+    </aside>
+
+    <footer class="footer">
+      <div class="footer__wrapper">
+        <div class="footer__wrapper--info">
+          <div class="customer-service">
+            <div class="center-name">고객행복센터</div>
+            <div class="center-info">
+              <em>1644-1107</em>
+              <span>월~토요일 오전 7시 - 오후 6시</span>
+            </div>
+            <div class="inquiry">
+              <div class="inquiry__kakao">
+                <button type="button">카카오톡 문의</button>
+                <p>
+                  <span>월~토요일 | 오전 7시 - 오후 6시</span>
+                  <span>일/공휴일 | 오전 7시 - 오후 1시</span>
+                </p>
+              </div>
+              <div class="inquiry__one-on-one">
+                <button type="button">1:1 문의</button>
+                <p>
+                  <span>365일</span>
+                  <span>고객센터 운영시간에 순차적으로 답변드리겠습니다.</span>
+                </p>
+              </div>
+              <div class="inquiry__bulk">
+                <button type="button">대량주문 문의</button>
+                <p>
+                  <span>월~금요일 | 오전 9시 - 오후 6시</span>
+                  <span>점심시간 | 낮 12시 - 오후 1시</span>
+                </p>
+              </div>
+            </div>
+            <div class="inquiry-mail">
+              <p>비회원 문의 :<a href="mailto:help@karlycorp.com">help@karlycorp.com</a></p>
+              <p>비회원 대량주문 문의 :<a href="mailto:help@karlycorp.com">help@karlycorp.com</a></p>
+            </div>
+          </div>
+          <div class="karly-about">
+            <ul class="karly-about__link">
+              <li>
+                <a href="#">칼리소개</a>
+              </li>
+              <li>
+                <a href="#">칼리소개영상</a>
+              </li>
+              <li>
+                <a href="#">인재채용</a>
+              </li>
+              <li>
+                <a href="#">이용약관</a>
+              </li>
+              <li>
+                <a href="#">개인정보처리방침</a>
+              </li>
+              <li>
+                <a href="#">이용안내</a>
+              </li>
+            </ul>
+            <div class="karly-about__area">
+              <p>법인명 (상호) : 주식회사 칼리 | 사업자등록번호 : 261-81-23567 | <a href="#">사업자정보 확인</a></p>
+              <p>통신판매업 : 제 2018-서울강남-01646호 | 개인정보보호책임자 : 이원준</p>
+              <p>주소 : 서울특별시 강남구 테헤란로 133, 18층(역삼동) | 대표이사 : 김슬아</p>
+              <p>입점문의 : 입점문의하기 | 제휴문의 : <a href="mailto:business@karlycorp.com">business@karlycorp.com</a></p>
+              <p>채용문의 : <a href="mailto:recruit@karlycorp.com">recruit@karlycorp.com</a></p>
+              <p>팩스 : 070 - 7500 - 6098</p>
+            </div>
+            <div class="karly-about__sns">
+              <a href="#">
+                <img src="/images/sns/blog.png" alt="블로그" />
+              </a>
+              <a href="#">
+                <img src="/images/sns/facebook.png" alt="페이스북" />
+              </a>
+              <a href="#">
+                <img src="/images/sns/instagram.png" alt="인스타그램" />
+              </a>
+              <a href="#">
+                <img src="/images/sns/post.png" alt="포스트" />
+              </a>
+              <a href="#">
+                <img src="/images/sns/youtube.png" alt="유튜브" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__wrapper--family">
+          <div class="isms">
+            <img src="/images/family/isms.png" alt="isms logo" />
+            <p>
+              <span>[인증범위] 마켓칼리 쇼핑몰 서비스 개발 운영</span>
+              <span>(심사받지 않은 물리적 인프라 제외)</span>
+              <span>[유효기간] 2022.01.19 - 2025.01.18</span>
+            </p>
+          </div>
+          <div class="privacy">
+            <img src="/images/family/privacy.png" alt="privacy logo" />
+            <p>
+              <span>개인정보보호 우수 웹사이트</span>
+              <span>개인정보처리시스템 인증 (ePRIVACY PLUS)</span>
+            </p>
+          </div>
+          <div class="toss-payments">
+            <img src="/images/family/tosspayments.png" alt="toss payments logo" />
+            <p>
+              <span>토스페이먼츠 구매안전(에스크로) 서비스를 이용하실 수 있습니다.</span>
+            </p>
+          </div>
+          <div class="wooribank">
+            <img src="/images/family/wooribank.png" alt="wooribank logo" />
+            <p>
+              <span>고객님이 현금으로 결제한 금액에 대해 우리은행과 채무지급보증 계약을 체결하여 안전거래를 보장하고 있습니다.</span>
+            </p>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>마켓칼리에서 판매되는 상품 중에는 마켓칼리에 입점한 개별 판매자가 판매하는 마켓플레이스(오픈마켓) 상품이 포함되어 있습니다.</p>
+          <p>마켓플레이스(오픈마켓) 상품의 경우 칼리는 통신판매중개자로서 통신판매의 당사자가 아닙니다. 칼리는 해당 상품의 주문, 품질, 교환/환불 등 의무와 책임을 부담하지 않습니다.</p>
+          <em>&copy; KARLY CORP. ALL RIGHTS RESERVED</em>
+        </div>
+        
+      </div>
+    </footer>
+
+
+  </body>
 </html>

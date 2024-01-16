@@ -1,0 +1,11 @@
+@use '/src/styles/abstracts' as *;
+
+body {
+  font-family: $pretendard;
+}
+
+// normalize ??
+a {
+  text-decoration: none;
+  color: inherit;
+}

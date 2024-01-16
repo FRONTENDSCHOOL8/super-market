@@ -1,0 +1,409 @@
+@use '/src/styles/base' as *;
+@use '/src/styles/abstracts' as *;
+
+img {
+  content-visibility : auto;
+}
+
+.header {
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
+  position: relative;
+  z-index: 10;
+  background: white;
+
+  &__wrapper {
+    @include mx(auto);
+    @include flex-container(column items-end);
+    @include gap(32);
+    @include py(0 20);
+    @include size(1050px);
+  }
+
+  &.fixed {
+    @include size(100vw);
+    top: 0;
+    position: fixed;
+    z-index: 10;
+
+    & .header__wrapper {
+      @include size(1050px, auto);
+      @include py(0);
+      
+      & .sign_menu, & .visual__title {
+        @include show(none);
+      }
+
+      & .search_box {
+        @include absolute(t 17px r 160px);
+        @include size(194px, 36px);
+        @include px(8);
+
+        & input[type="text"] {
+          @include font(size $paraGraphSmall weight 400 lh 1.6);
+          @include size(98%);
+        }
+
+        & .erase {
+          @include absolute(t 9px r 35px);
+          @include size(16px, 16px);
+          background-size: 40%;
+
+        }
+      }
+
+      & .menu_link {
+        @include absolute(t 17px r 0);
+      }
+    }
+
+    & .menu {
+      @include justify-content(start);
+
+      &__info {
+        @include show(none);
+      }
+    }
+  }
+}
+
+.sign_menu {
+  @include flex-container(row);
+  @include py($paraGraphSmall 0);
+
+  & li {
+    @include font(size $paraGraphSmall weight 500);
+
+    & * {
+      vertical-align: middle;
+    }
+
+    &:first-child {
+      @include mx(0 12);
+      @include px(0 12);
+      border-right: 1px solid #d9d9d9;
+      color: $primary;
+    }    
+
+    &:last-child {
+      @include mx(12 0);
+      @include px(12 0);
+      border-left: 1px solid #d9d9d9;
+    }
+
+    & .menu_welcome {
+      color: $content;
+
+      & em {
+        @include font(weight 700);
+      }
+    }
+
+    & .menu_logout {
+      @include py(0);
+      @include px(0);
+      border: none;
+      background-color: white;
+
+    }
+  }
+
+  & .icon_down {
+    @include my(0 2);
+    @include show(inline-block);
+    @include size(8px, 5px);
+    background-image: url('/icon_down.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+
+  }
+}
+
+.visual {
+  @include flex-container(row items-center);
+  @include justify-content(between);
+  @include align-self(stretch);
+  @include relative();
+
+  & > .search_box {
+    @include absolute(t -11 r 310);
+
+    & input[type="text"] {
+      @include size(100%);
+    }
+  }
+
+  &__title {
+    @include flex-container(row items-center);
+    @include gap(12);
+  }
+}
+
+.logo {
+  @include size(82px, 42px);
+
+  & > img {
+    @include size(100%, 100%);
+  }
+}
+
+.karly-wrapper {
+  @include flex-container(row items-center);
+
+  & > button {
+    @include font(size $paraGraphLarge weight 600 lh 1.5);
+    background: transparent;
+    border: none;
+  }
+}
+
+.market-karly {
+  color: $primary;
+
+  &::after {
+    @include mx(12 0);
+    @include show(inline-block);
+    @include size(1px, 16px);
+    content: '';
+    background-color: #d9d9d9;
+  }
+}
+
+.beauty-karly {
+  @include relative();
+  color: $gray400;
+
+  &::after {
+    @include absolute(t 0 r -5);
+    @include size(7px, 7px);
+    content: '';
+    color: #fa622f;
+    background-image: url('/src/assets/new.svg');
+  }
+}
+
+.search_box {
+  @include flex-container(row items-center);
+  @include justify-content(between);
+  @include px(20);
+  @include py(12);
+  @include size(400px, 60px);
+  border: 1px solid $primary;
+  border-radius: 4px;
+
+  & .erase {
+    @include absolute(r 60 t 19);
+    @include size(20px, 20px);
+    @include show(none);
+    border: none;
+    border-radius: 10px;
+    background:  url('/images/search/cancel.svg') no-repeat 50% / 50% $gray400;
+
+  }
+
+  & .search {
+    @include size(36px, 36px);
+    border: none;
+    background: url('/images/search/search.svg') transparent no-repeat 50%;
+  }
+
+  & input[type='text'] {
+    @include font(size $paraGraphLarge);
+    outline: none;
+    border: none;
+  }
+}
+
+.menu_link {
+  @include flex-container(row items-center);
+  @include gap(20);
+  @include relative();
+
+  %menu_link-icon {
+    @include size(36px, 36px);
+    background-color: white;
+    border: none;
+  }
+    
+  &__address {
+    @extend %menu_link-icon;
+    background: url('/images/menu/menulink-Icon.svg') no-repeat 0 50%;
+    &:hover {
+      background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 0 50%;
+    }
+  }
+  &__like {
+    @extend %menu_link-icon;
+    background: url('/images/menu/menulink-Icon.svg') no-repeat 50% 50%;
+    &:hover {
+      background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 50% 50%;
+    }
+  }
+  
+  &__cart {
+    @extend %menu_link-icon;
+    background: url('/images/menu/menulink-Icon.svg') no-repeat 100% 50%;
+    &:hover {
+      background: url('/images/menu/menulink-Icon-hover.svg') no-repeat 100% 50%;
+    }
+  }
+
+
+  &__address-box {
+    @include absolute(t 55 r 0);
+    @include px(17px);
+    @include py(18px 17px);
+    @include size(267px);
+
+    border: 1px solid $gray100;
+    background-color: white;
+
+    & p {
+      @include font(size 1.17rem weight 300 lh 1.6);
+
+      & strong {
+        color: $primary;
+      }
+
+      &.deliver_type {
+        @include font(size 1.1rem weight 400);
+        color: $primary;
+      }
+    }
+
+    &--container {
+      @include flex-container(row items-center);
+      @include justify-content(between);
+      @include my(10px 0);
+
+      & a {
+        @include flex-container(row items-center);
+        @include justify-content(center);
+        @include size(80px, 36px);
+        @include rounded(sm);
+        @include font(weight 600);
+        @include px(10);
+        
+        border: 1px solid $primary;
+        color: $primary
+        
+      }
+
+      & .address-box-search {
+        @include size(135px, 36px);
+        @include rounded(sm);
+        @include font(weight 400);
+
+        background-color: $primary;
+        color: white;
+        border: none;
+
+        &.research {
+          @include size(100%, 36px);
+          @include rounded(sm);
+          @include font(size 0.9rem weight 600);
+  
+          background-color: white;
+          color: $primary;
+          border: 1px solid $primary;
+        }
+      }
+    }
+
+    
+  }  
+}
+
+.menu {
+  @include flex-container(row items-center);
+  @include justify-content(between);
+  @include mx(auto);
+  @include size(1050px);
+
+  &__category {
+    @include font(weight 600 lh 1.5);
+    @include size(auto, 72px);
+    @include relative();
+
+    &--button {
+      @include flex-container(row items-center);
+      @include size(auto, 100%);
+      @include gap(12);
+
+      & span {
+        @include show(block);
+        @include size(16px, 14px);
+        background-image: url('/images/menu/burger.svg');
+        background-size: cover;
+      }
+    }
+
+    &:hover .menu__category--list {
+      @include show(block !important);
+    }
+
+    &--list {
+      @include absolute(t 72 z 1);
+      @include flex-container(column items-start);
+      @include size(247px);
+      @include show(none);
+      background-color: white;
+      border: 1px solid $gray100;
+
+      & li {
+        @include px(12 0);
+        @include py(8);
+        @include size(100%);
+
+        & img {
+          @include size(24px, 24px);
+        }
+
+        & a {
+          @include flex-container(row);
+          @include gap(8);
+        }
+
+        &:hover {
+          background-color: $gray50;
+        }        
+      }
+    }
+  }
+
+  &__list ul {
+    @include flex-container(row items-center);
+    @include justify-content(center);
+    @include py(16);
+
+    & li {
+      @include py(8);
+      @include font(weight 600 lh 1.5);
+      @include size(150px);
+      text-align: center;
+    }
+  }
+
+  &__info {
+    @include flex-container(row items-start);
+    @include gap(4);
+    @include px(4);
+    @include py(8);
+    @include font(size $labelSmall weight 400);
+
+    border: 1px solid $gray300;
+    border-radius: 16px;
+
+    & em {
+      color: $primary;
+    }
+  }
+}
+
+
+
+
+
+
+
+

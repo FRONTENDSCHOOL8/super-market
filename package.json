@@ -9,8 +9,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "pocketbase": "^0.20.1",
     "sass": "^1.69.5",
     "vite": "^5.0.8",
     "vite-plugin-style-import": "^2.0.0"
+  },
+  "dependencies": {
+    "swiper": "^11.0.5"
   }
 }
