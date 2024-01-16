@@ -242,6 +242,9 @@ export const handleAddCartDetail = (e) => {
     description: thumbnail.alt,
     title: productName.textContent,
   };
+  const productId = window.location.hash.slice(1);
+  const productCount = getNode('.count');
+  setProductCount(productId, productCount.value);
   const template = generateTemplate('cartPopup', cartData);
   insertLast(menuLink, template);
   closeCartPopup();
