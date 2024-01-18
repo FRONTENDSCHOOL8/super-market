@@ -38,7 +38,6 @@ const fillTagContent = (target, value, element = 'textContent') => {
   getNode(target)[element] = value;
 };
 const renderDetailData = async () => {
-  console.log('renderDetailData start');
   const hash = window.location.hash.slice(1);
   const detailData = await pb.collection('products').getOne(hash);
   let {
@@ -108,12 +107,10 @@ const handleButton = (target) => {
 
 const handleLike = () => {
   handleButton(zzimButton);
-  console.log(`찜 : ${isClick}`);
 };
 
 const handleNotify = () => {
   handleButton(notifyButton);
-  console.log(`알림 : ${isClick}`);
 };
 
 const setRewards = async () => {
@@ -123,7 +120,6 @@ const setRewards = async () => {
       element.textContent = '구매시, 5원 적립';
     });
   }
-  console.log(isAuth, detailReward);
 };
 setRewards();
 
