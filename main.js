@@ -1,5 +1,5 @@
 import pb from '/src/lib/api/pocketbase';
-import './src/styles/style.scss';
+import '/src/styles/style.scss';
 import {
   initHeader,
   getNode,
