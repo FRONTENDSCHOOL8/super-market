@@ -2,7 +2,13 @@ import { getNode, insertFirst } from '/src/lib';
 
 export const hideElementNoExist = () => {
   updateRecentlyViewedProducts();
-  const isExist = getNode('.recently__product-list .recently__product');
+  /*
+  TODO: Falsy, Truthy 를 boolean 으로 간주하고 사용하는 것은 찾기 어려운 에러를 만들어 낼 수 있습니다.
+  이걸 변수에 담아서 사용하는건 문제를 키울 수 있습니다.
+  이럴 때는 Falsy 앞에 !!를 붙여서 boolean 으로 타입을 변환해 보세요.
+  Falsy, Truthy 를 boolean 으로 바꾸는 가장 간단한 테크닉입니다.
+   */
+  const isExist = !!getNode('.recently__product-list .recently__product');
   const currentBar = getNode('aside.recently');
   currentBar.style.display = !isExist ? 'none' : 'flex';
 };
@@ -47,14 +53,15 @@ const renderProduct = (target, product) => {
 
   if (existingProduct) {
     target.insertBefore(existingProduct.closest('li'), target.firstChild);
-  } else {
-    const template = createProductTemplate(
-      product.url,
-      product.thumbnailSrc,
-      product.thumbnailAlt
-    );
-    insertFirst(target, template);
+    return
   }
+
+  const template = createProductTemplate(
+    product.url,
+    product.thumbnailSrc,
+    product.thumbnailAlt
+  );
+  insertFirst(target, template);
 };
 
 export const updateRecentlyViewedProducts = () => {
