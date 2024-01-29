@@ -1,4 +1,12 @@
-import { setSearchAddressEvent, getNode, getStorage, setStorage, promiseInsertLast, insertLast } from '/src/lib';
+import {
+  setSearchAddressEvent,
+  getNode,
+  getStorage,
+  setStorage,
+  promiseInsertLast,
+  insertLast,
+  addClass, removeClass
+} from '/src/lib';
 import defaultAuthData from '/src/lib/api/defaultAuthData';
 
 const header = document.querySelector('.header');
@@ -16,11 +24,11 @@ const handleScrollHeader = e => {
   const headerMenubarPosition = headerMenubar.getBoundingClientRect().height;
 
   if(headerPosition - headerMenubarPosition < currentPosition) {
-    header.classList.add('fixed')
+    addClass(header, 'fixed');
+    return;
   }
-  else {
-    header.classList.remove('fixed')
-  }
+
+  removeClass(header, 'fixed');
 }
 
 
@@ -63,7 +71,7 @@ const handleAddressBox = async () => {
     isShowAddressBox = !isShowAddressBox;
     promiseInsertLast(menuLink, template)
     .then(setSearchAddressEvent(getNode('.address-box-search'), closeAddressBox));
-    
+
   } else {
     isShowAddressBox = !isShowAddressBox;
     menuLink.removeChild(getNode('.menu_link__address-box'));

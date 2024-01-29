@@ -1,4 +1,15 @@
-import { initHeader, getStorage, setStorage, comma, getPbImageURL, getNode, getNodes, insertLast, setSearchAddressEvent } from '/src/lib';
+import {
+  initHeader,
+  getStorage,
+  setStorage,
+  comma,
+  getPbImageURL,
+  getNode,
+  getNodes,
+  insertLast,
+  setSearchAddressEvent,
+  addClass, removeClass
+} from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 
 import '/src/styles/style.scss';
@@ -18,7 +29,7 @@ const checkUserAuth = async () => {
     alert('로그인 후 이용해 주세요.')
     location.href = '/src/pages/login/';
   }
-  
+
 }
 
 checkUserAuth();
@@ -40,7 +51,7 @@ const setCartItem = async () => {
       const product = await getProductItem(key);
       const template = createProductCart(product, cartItem[key]);
 
-  
+
       if(product.packaging_type == "1") {
         ambientTemplate += template;
       }
@@ -54,8 +65,8 @@ const setCartItem = async () => {
     insertAmbientProductList(ambientTemplate);
     insertFridgeProductList(fridgeTemplate);
     insertFreezerProductList(freezerTemplate);
-    
-    
+
+
   }
 
 
@@ -93,14 +104,14 @@ const calculateTotalPrice = () => {
   const salePrice = originPrice - discountPrice;
 
   getNode('.origin-price').textContent = comma(originPrice) + ' 원';
-  getNode('.sale-price').textContent = salePrice == 0 ? 
+  getNode('.sale-price').textContent = salePrice == 0 ?
       comma(salePrice) + ' 원' : '-' + comma(salePrice) + ' 원';
-  getNode('.delivery-tax').textContent = (discountPrice >= 43000 || discountPrice == 0) ? 
+  getNode('.delivery-tax').textContent = (discountPrice >= 43000 || discountPrice == 0) ?
       '0 원' : ' +3,000 원';
-  getNode('.payment__result__price b').textContent = (discountPrice >= 43000 || discountPrice == 0) ? 
+  getNode('.payment__result__price b').textContent = (discountPrice >= 43000 || discountPrice == 0) ?
       `${comma(discountPrice)}` : `${comma(discountPrice + 3000)}`
   getNode('.payment__grade__description').textContent = `최대 ${comma(~~(discountPrice * 0.001))}원 적립 일반 0.1%`;
-  
+
 }
 
 const handleCalculatePrice = async (e) => {
@@ -120,7 +131,7 @@ const handleCalculatePrice = async (e) => {
     displayNumber.textContent = number;
     displayOrigin.textContent = `${comma(origin + originPerItem)}원`
     displayDiscount.textContent = `${comma(discount + discountPerItem)}원`
-    currentMinusButton.classList.add('is--active');
+    addClass(currentMinusButton, 'is--active')
   } else {
     if(number == 1) {
       return;
@@ -131,7 +142,7 @@ const handleCalculatePrice = async (e) => {
     displayDiscount.textContent = `${comma(discount - discountPerItem)}원`
 
     if(number == 1) {
-      currentMinusButton.classList.remove('is--active');
+      removeClass(currentMinusButton, 'is--active');
     }
   }
 
@@ -147,7 +158,7 @@ const cartDataUpdateObject = (nodeList) => {
   Array.from(nodeList).forEach(item => {
     const id = Array.from(item.querySelector('.cart-product__count__result').classList)
       .filter(classItem => classItem != 'cart-product__count__result')[0];
-    
+
     updateCartItem[id.split('_')[1]] = item.querySelector('.cart-product__count__result').textContent;
 
   })
@@ -171,7 +182,7 @@ const getItemPrice = (origin, discount, number) => {
 
 const sumPrice = (nodeList) => {
   let sum = 0;
-  
+
   Array.from(nodeList).forEach(node => {
 
     if(node.closest('.cart-product').querySelector('input[type="checkbox"]:checked'))
@@ -213,7 +224,7 @@ const setSelectedCount = () => {
 }
 
 const setActive = (node) => {
-  getNode(`${node}`).closest('.product__list').classList.add('is--active');
+  addClass(getNode(`${node}`).closest('.product__list'), 'is--active');
   getNode(`${node} > .arrow`).style.transform = 'rotate(90deg)'
 }
 
@@ -264,7 +275,7 @@ const createProductCart = (product, number) => {
 }
 
 const getCartItem = async (cart_id) => {
-  
+
     const cartItem = (await pb.collection('cart').getOne(cart_id)).product;
   return cartItem
 }
@@ -278,10 +289,10 @@ const handleExpandArea = (e) => {
   const currentArea = e.target.closest('.product__list')
 
   if(!currentArea.classList.contains('is--active')) {
-    currentArea.classList.add('is--active')
+    addClass(currentArea, 'is--active')
     e.target.style.transform = 'rotate(90deg)';
   } else {
-    currentArea.classList.remove('is--active');
+    removeClass(currentArea, 'is--active');
     e.target.style.transform = 'rotate(-90deg)';
   }
 }
@@ -460,13 +471,13 @@ const handleOrderProduct = async (e) => {
   const remainProductList = cartList.filter(
     item => !selectedProductList.includes(item)
   )
-  
+
   const orderList = {};
   const remainList = {};
 
   selectedProductList.forEach(id => {
     orderList[id] = {
-      number: getNode(`span.id_${id}`).textContent, 
+      number: getNode(`span.id_${id}`).textContent,
       price: getNode(`#id_${id}`).closest('.cart-product')
                               .querySelector('.cart-product__price__discount')
                               .textContent
@@ -486,7 +497,7 @@ const handleOrderProduct = async (e) => {
     product: JSON.stringify(remainList)
   }
 
-  
+
 
   if(!confirm('주문하시겠습니까?')) return;
   else {
@@ -504,8 +515,8 @@ const displayOrderComplete = async () => {
 
   const paidPrice = getNode('.payment__result__price b').textContent;
   const paidPriceToNumber = parseInt(paidPrice.split(',').join(''));
-  const accumulate = paidPriceToNumber >= 43000 ? 
-    comma(Math.round(paidPriceToNumber * 0.001)) : 
+  const accumulate = paidPriceToNumber >= 43000 ?
+    comma(Math.round(paidPriceToNumber * 0.001)) :
     comma(Math.round((paidPriceToNumber - 3000) * 0.001));
 
   const template = /* html */ `
