@@ -334,18 +334,18 @@ const handleCheckRecommenderIdDuplication = async () => {
   if (recommenderIdInput.value === '') {
     alert('추천인 아이디를 입력해 주세요.');
     return;
+  }
+  // TODO: return 을 했다면 else는 필요하지 않습니다.
+  const userData = await pb.collection('users').getList(1, 1, {
+    filter: `username = "${recommenderIdInput.value}"`,
+  });
+  if (userData.totalItems) {
+    alert('추천인 아이디가 확인되었습니다.');
+    checkRecommenderIdDuplication = true;
+    recommenderIdVerifyBtn.disabled = true;
   } else {
-    const userData = await pb.collection('users').getList(1, 1, {
-      filter: `username = "${recommenderIdInput.value}"`,
-    });
-    if (userData.totalItems) {
-      alert('추천인 아이디가 확인되었습니다.');
-      checkRecommenderIdDuplication = true;
-      recommenderIdVerifyBtn.disabled = true;
-    } else {
-      alert('입력하신 추천인 아이디가 존재하지 않습니다.');
-      checkRecommenderIdDuplication = false;
-    }
+    alert('입력하신 추천인 아이디가 존재하지 않습니다.');
+    checkRecommenderIdDuplication = false;
   }
 };
 

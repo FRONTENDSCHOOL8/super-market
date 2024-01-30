@@ -1,6 +1,12 @@
 import { getPbImageURL, comma } from '/src/lib';
 
 export const createCardTemplate = (product) => {
+/**
+ * TODO: 고생은 많이 하셨을 것 같지만 유지보수하기 어려운 코드입니다.
+ * 처음부터 끝가지 읽어도 부수효과를 예측하기 어려운 코드는 업보를 쌓습니다.
+ * 후임이 인수인계를 받으면 손을 대기가 어렵겠습니다.
+ * 프레임워크를 사용하거나 Array.prototype.join 등을 이용해서 자연어처럼 읽을 수 있게 만들어 보시길 권합니다.
+ */
   const {
     id,
     product_name,

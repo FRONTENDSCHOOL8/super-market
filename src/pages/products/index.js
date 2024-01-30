@@ -1,13 +1,14 @@
-import { 
-  initHeader, 
-  insertLast, 
-  getStorage, 
-  setStorage, 
-  hideElementNoExist, 
-  createCardTemplate, 
-  createSkeletonCardTemplate, 
-  getNode, 
-  openCartModal } from '/src/lib';
+import {
+  initHeader,
+  insertLast,
+  getStorage,
+  setStorage,
+  hideElementNoExist,
+  createCardTemplate,
+  createSkeletonCardTemplate,
+  getNode,
+  openCartModal, addClass, removeClass
+} from '/src/lib';
 import pb from '/src/lib/api/pocketbase';
 import '/src/styles/style.scss';
 
@@ -30,10 +31,10 @@ const handleExpandNavigation = (e) => {
   }
 
   if(!menu.classList.contains('is--open')) {
-    menu.classList.add('is--open');
+    addClass(menu, 'is--open')
     openStatusImage.style.transform = 'rotate(180deg)';
   } else {
-    menu.classList.remove('is--open');
+    removeClass(menu, 'is--open');
     openStatusImage.style.transform = '';
   }
 
@@ -81,9 +82,9 @@ const handleCheckboxSelect = (e) => {
   if(checkBoxGroup === 'price') {
     selectedItemList[checkBoxGroup] = selectedItem.id;
   } else {
-    
+
     if(selectedItem.checked) {
-      
+
       if(!selectedItemList[checkBoxGroup] || selectedItemList[checkBoxGroup] == []) {
         valueArray.push(selectedItem.id);
         selectedItemList[checkBoxGroup] = valueArray;
@@ -92,11 +93,11 @@ const handleCheckboxSelect = (e) => {
         valueArray.push(selectedItem.id);
         selectedItemList[checkBoxGroup] = valueArray;
       }
-      
+
     } else {
       selectedItemList[checkBoxGroup] = selectedItemList[checkBoxGroup].split(',').filter(item => item != selectedItem.id);
     }
-    
+
   }
   location.href = setCurrentUrl(selectedItemList);
 }
@@ -111,13 +112,13 @@ const setCurrentUrl = (itemList) => {
 
     if(filter[key] == '') continue;
     filters += `${key}:${filter[key]}|`;
-  }  
+  }
   filters = filters.slice(0, -1);
-  
+
   if(filters === 'filters') filters = '';
 
   return `${target.split('pages=')[0]}pages=1&${filters}`;
-  
+
 }
 
 const handleSetCheckItem = (e) => {
@@ -129,7 +130,7 @@ const handleSetCheckItem = (e) => {
   let deleteUrl;
 
   if(!filters) return;
-  
+
   filters.split('|').map(item => {
     selectedItemList[item.split(':')[0]] = item.split(':')[1];
   });
@@ -154,16 +155,16 @@ const handleSetCheckItem = (e) => {
       `)
 
       checkedItemList.style.display = 'flex';
-      
+
     })
 
     changeImgStyle(needCheckNode.closest('ul'));
   }
-  
+
 }
 
 const changeImgStyle = (node) => {
-  node.classList.add('is--open')
+  addClass(node, 'is--open');
   node.closest('div[class^="nav-"]').querySelector('button img').style.transform = 'rotate(180deg)';
 
 }
@@ -205,7 +206,7 @@ const setCheckBoxEvent = () => {
 
   Array.from(navCheckBox).forEach(checkbox => {
     checkbox.addEventListener('change', handleCheckboxSelect);
-  })  
+  })
   handleSetCheckItem();
   handleCheckboxCount();
 }
@@ -241,7 +242,7 @@ const displayProductCard = async () => {
 }
 
 const setPaginationButton = (number) => {
-  
+
   const currentPage = +(window.location.href.split('pages=')[1].split('')[0]);
   needPageNumber = number % 30 == 0? number / 30 : parseInt(number / 30)+1;
 
@@ -252,7 +253,7 @@ const setPaginationButton = (number) => {
 
   for(let i=1; i<=needPageNumber; i++) {
     if(i == currentPage) {
-      template += /* html */ `<button class="current-page" type="button">${i}</button>`; 
+      template += /* html */ `<button class="current-page" type="button">${i}</button>`;
     } else {
       template += /* html */ `<button type="button">${i}</button>`;
     }
@@ -264,64 +265,72 @@ const setPaginationButton = (number) => {
   `
 
   insertLast(paginationArea, template);
-  
+
 }
 
 const handlePagination = (e) => {
+  /**
+   * TODO: 어려운 작업을 하셨네요. 수고하셨습니다.
+   * 마지막에 처리를 집중하기 보다는 처리를 분산해서 머리를 비우시길 추천합니다.
+   * let 을 사용하지 않고 처리를 해 보세요.
+   * 중첩 블록은 코드를 유지보수하기 어렵게 만듭니다. early return 을 좀더 적극적으로 사용해 보시길 권합니다.
+   */
   const targetPage = e.target.closest('button').textContent;
   const buttonClass = e.target.closest('button').classList.value;
+  // TODO: URL 생성자 함수에 location 객체를 넘기면 쿼리스트링을 조금 더 쉽게 가져올 수 있습니다.
+  const currentPage = new URL(location).searchParams.get('pages')
 
-  let currentUrl = window.location.href;
-  const split = currentUrl.split('pages=');
+  if(currentPage == targetPage) return;
 
-  let currentPage;
-  let targetUrl;
-  
-  if(split[1]) {
-    currentPage = split[1].split('')[0];
-    split[1] = split[1].slice(1);
-    if(currentPage == targetPage) return; 
+  if (targetPage) {
+    location.href=chunk.join(`pages=${targetPage}`);
+    return;
   }
 
-  if(!targetPage) {
-    switch(buttonClass) {
-      case 'page-first': {
-        if(currentPage == 1) return;
-        targetUrl = split.join(`pages=1`);
-        break;
-      };
-      case 'page-prev': {
-        if(currentPage == 1) return;
-        targetUrl = split.join(`pages=${(+currentPage)-1}`);
-        break;
-      };
-      case 'page-next': {
-        if(currentPage == needPageNumber) return;
-        targetUrl = split.join(`pages=${(+currentPage)+1}`);
-        break;
-      };
-      case 'page-last': {
-        if(currentPage == needPageNumber) return;
-        targetUrl = split.join(`pages=${needPageNumber}`);
-        break;
-      };
-    }
+  switch(buttonClass) {
+    case 'page-first': {
+      if(currentPage == 1) return;
+      location.href = chunk.join(`pages=1`);
+      break;
+    };
+    case 'page-prev': {
+      if(currentPage == 1) return;
+      location.href = chunk.join(`pages=${(+currentPage)-1}`);
+      break;
+    };
+    case 'page-next': {
+      if(currentPage == needPageNumber) return;
+      location.href = chunk.join(`pages=${(+currentPage)+1}`);
+      break;
+    };
+    case 'page-last': {
+      if(currentPage == needPageNumber) return;
+      location.href = chunk.join(`pages=${needPageNumber}`);
+      break;
+    };
   }
-  else {
-    targetUrl = split.join(`pages=${targetPage}`);
-  }
-
-  location.href=targetUrl;
 }
 
 
 
 const getProductData = () => {
-
+  /**
+   * TODO: 정말 어려운 작업을 하셨네요!
+   * DB 사용법을 모르면 손대기 어려운 코드인데, 그 짧은 시간에 공부해 내셨군요.
+   * 축하합니다.
+   * 필터 조건을 URL에 저장하고 읽어오는 부분이 훌륭합니다.
+   * 이것을 자바스크립트 메모리에 저장하면 유지보수 지옥에 빠지게 됩니다.
+   * 사람의 욕심은 무한하기 때문입니다.
+   */
   const filter = new URLSearchParams(window.location.search);
   let filters = [];
-  
+
   const page = filter.get('pages');
+  /**
+   * TODO: 쿼리스트링 filter는 구분자를 | 로 사용하는 비표준 자료구조를 사용하고 있나요?
+   * 특별한 상황이 아니라면 이런 부분은 힘을 조금 빼도 좋습니다.
+   * 웹 브라우저에 내장된 함수를 이용해서 유지보수 비용을 줄이시길 권합니다.
+   */
   const selectData = findSelectedFilter(filter.get('filters'));
   const {category, price, bonus, type } = selectData;
 
@@ -340,14 +349,14 @@ const getProductData = () => {
       if(item == 'scarcity') filters.push('karly_only = 2')
     })
   }
-  
+
   if(filters.length) {
     filters = ('('+filters+')').split(',').join(' || ');
   };
 
 
 
-  
+
   if(price) {
     if(filter.length) filters += ' && '
     switch(price) {

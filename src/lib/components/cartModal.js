@@ -73,10 +73,17 @@ const extractCartData = (product) => {
     point: switchPrice(findDataObj.price.result, 0.01),
   };
 };
+
 const generateTemplate = (
   target,
   { id, title, price, thumbnail, description, count, sum, point }
 ) => {
+  /**
+   * TODO: 함수 하나가 2가지 일을 하고 있네요!
+   * 변수들을 재활용하고 싶은 마음은 이해가 가지만 맥락이 길어질수록 계속 길어질 것입니다.
+   * 이런 만능 함수는 업보를 쌓습니다. 피하는 것이 좋습니다.
+   * generateModalTemplate , generateCartTemplate 으로 분리하시길 권합니다.
+   */
   const headerPopupTemplate = /* HTML */ `
     <div class="cart-popup is--active">
       <div class="cart-popup__wrapper">

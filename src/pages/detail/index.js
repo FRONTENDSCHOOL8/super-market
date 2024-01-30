@@ -9,7 +9,7 @@ import {
   insertBefore,
   insertLast,
   handleAddCartDetail,
-  getStorage,
+  getStorage, toggleClass,
 } from '/src/lib';
 import pb from '/src/lib/api/pocketbase.js';
 
@@ -102,7 +102,7 @@ const renderDetailData = async () => {
 
 const handleButton = (target) => {
   isClick = !target.classList.contains('is--active');
-  target.classList.toggle('is--active');
+  toggleClass(target, 'is--active')
 };
 
 const handleLike = () => {

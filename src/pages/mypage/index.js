@@ -24,16 +24,11 @@ const handleLeaveKarly = async () => {
   );
   let leaveConfirm = confirm('정말 저희 슈퍼마켙을 떠나버리시겠습니까?');
   if (leaveConfirm) {
-    await pb
-      .collection('users')
-      .delete(user.id)
-      .then(() => {
-        alert(
-          `${user.name}님 그동안 이용해 주셔서 감사했습니다. 메인 페이지로 이동합니다.`
-        );
-        setStorage('auth', defaultAuthData);
-        location.href = '/';
-      });
+    await pb.collection('users').delete(user.id);
+    // TODO: async ~ await 을 사용했다면 비동기 처리를 동기 처리처럼 연출할 수 있습니다.
+    alert(`${user.name}님 그동안 이용해 주셔서 감사했습니다. 메인 페이지로 이동합니다.`);
+    await setStorage('auth', defaultAuthData);
+    location.href = '/';
   }
 };
 

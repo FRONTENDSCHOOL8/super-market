@@ -1,7 +1,9 @@
+import {toggleClass} from "../dom/index.js";
+
 export const validationInput = (inputSelector, reg) => {
   const RegTestInput = (inputNode, reg) => {
     if (inputNode.value === '') {
-      inputNode.classList.remove('is--invalid');
+      removeClass(inputNode, 'is--invalid');
       return;
     }
     const isValid = reg.test(String(inputNode.value).toLowerCase());
